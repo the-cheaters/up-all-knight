@@ -18,8 +18,9 @@ RSpec.describe GamesController, type: :controller do
 
   describe "games#create action" do
     it "should create a new game in the database" do
-      post :create, game: {}
-      expect(response).to have_http_status(:success)
+      post :create, game: { name: 'Chess' }
+      game = Game.last
+      expect(game.name).to eq('Chess')
     end
   end
 
@@ -32,16 +33,19 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe "games#update action" do
-    it "should update a game" do
-      # need more info about the database before writing this
+    it "should update a game in the database" do
+      game = FactoryGirl.create(:game)
+      patch :update, id: game.id, game: { name: 'Chess' }
+      game.reload
+      expect(game.name).to eq('Chess')
     end
   end
 
   describe "games#destroy action" do
-    it "should destroy a game" do
+    it "should destroy a game in the database" do
       game = FactoryGirl.create(:game)
       delete :destroy, id: game.id
-      expect(response).to redirect_to root_path
+      expect(response).to have_http_status(:ok)
       game = Game.find_by_id(game.id)
       expect(game).to eq nil
     end
