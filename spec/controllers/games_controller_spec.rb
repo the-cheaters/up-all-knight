@@ -22,6 +22,12 @@ RSpec.describe GamesController, type: :controller do
       game = Game.last
       expect(game.name).to eq('Chess')
     end
+
+    it "should create a new game in the database if in json format" do
+      post :create, format: :json, game: { name: 'Chess' }
+      game = Game.last
+      expect(game.name).to eq('Chess')
+    end
   end
 
   describe "games#show action" do
@@ -39,13 +45,19 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.name).to eq('Chess')
     end
+
+    it "should update a game in the database if in json format" do
+      game = FactoryGirl.create(:game)
+      patch :update, id: game.id, format: :json, game: { name: 'Chess' }
+      game.reload
+      expect(game.name).to eq('Chess')
+    end
   end
 
   describe "games#destroy action" do
     it "should destroy a game in the database" do
       game = FactoryGirl.create(:game)
       delete :destroy, id: game.id
-      expect(response).to have_http_status(:ok)
       game = Game.find_by_id(game.id)
       expect(game).to eq nil
     end
