@@ -1,0 +1,12 @@
+<h1>It works!</h1>
+
+  <% if !@games.nil? %>
+    <% @games.each do |game| %>
+      <%= link_to 'Show', game %>
+      <%= link_to 'Edit', edit_game_path(game) %>
+        <%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+<br/>
+<% end %>
+
+<%= link_to 'New Game', new_game_path %>
