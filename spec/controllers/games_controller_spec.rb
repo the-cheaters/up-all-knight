@@ -18,9 +18,9 @@ RSpec.describe GamesController, type: :controller do
 
   describe "games#create action" do
     it "should create a new game in the database" do
-      post :create, game: { name: 'Chess!' }
+      post :create, game: { name: 'Chess!'}
       game = Game.last
-      expect(game.name).to eq('Chess!')
+      expect(game.name).to eq("Chess!")
     end
 
     it "should create a new game in the database if in json format" do
