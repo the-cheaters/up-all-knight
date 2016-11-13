@@ -27,6 +27,8 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.current_turn = 0
     @game.save
+    @game.name = "Game #{@game.id}"
+    @game.save
 
     respond_to do |format|
       if @game.save
