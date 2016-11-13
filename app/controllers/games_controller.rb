@@ -1,6 +1,12 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
+  attr_accessor :name
+
+  def name
+    "Game #{self.id}"
+  end
+
   # GET /games
   # GET /games.json
   def index
@@ -26,8 +32,6 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.current_turn = 0
-    @game.save
-    @game.name = "Game #{@game.id}"
     @game.save
 
     respond_to do |format|
