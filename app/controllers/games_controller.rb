@@ -1,6 +1,12 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
+  attr_accessor :name
+
+  def name
+    "Game #{self.id}"
+  end
+
   # GET /games
   # GET /games.json
   def index
@@ -25,6 +31,7 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
+    @game.current_turn = 0
 
     respond_to do |format|
       if @game.save
@@ -64,6 +71,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:name)
+      params.require(:game).permit(:current_turn)
     end
 end

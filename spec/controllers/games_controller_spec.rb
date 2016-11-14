@@ -18,15 +18,15 @@ RSpec.describe GamesController, type: :controller do
 
   describe "games#create action" do
     it "should create a new game in the database" do
-      post :create, game: { name: 'Chess!' }
-      game = Game.last
-      expect(game.name).to eq('Chess!')
+      count = Game.count
+      post :create, game: { current_turn: 0 }
+      expect(Game.count).to eq(count + 1)
     end
 
     it "should create a new game in the database if in json format" do
-      post :create, format: :json, game: { name: 'Chess!' }
-      game = Game.last
-      expect(game.name).to eq('Chess!')
+      count = Game.count
+      post :create, format: :json, game: { current_turn: 0 }
+      expect(Game.count).to eq(count + 1)
     end
   end
 
@@ -41,16 +41,16 @@ RSpec.describe GamesController, type: :controller do
   describe "games#update action" do
     it "should update a game in the database" do
       game = FactoryGirl.create(:game)
-      patch :update, id: game.id, game: { name: 'Chess!!' }
+      patch :update, id: game.id, game: { current_turn: 1 }
       game.reload
-      expect(game.name).to eq('Chess!!')
+      expect(game.current_turn).to eq(1)
     end
 
     it "should update a game in the database if in json format" do
       game = FactoryGirl.create(:game)
-      patch :update, id: game.id, format: :json, game: { name: 'Chess!!' }
+      patch :update, id: game.id, format: :json, game: { current_turn: 1 }
       game.reload
-      expect(game.name).to eq('Chess!!')
+      expect(game.current_turn).to eq(1)
     end
   end
 
