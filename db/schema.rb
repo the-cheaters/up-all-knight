@@ -53,11 +53,9 @@ ActiveRecord::Schema.define(version: 20161115154942) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    <<<<<<< HEAD
-    =======
     t.string   "provider"
     t.string   "uid"
-    >>>>>>> added provider and uid strings to players table
+    
   end
   
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
