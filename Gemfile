@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-
 gem 'devise'
 gem 'omniauth-facebook'
 gem "figaro"

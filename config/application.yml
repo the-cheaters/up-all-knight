@@ -12,4 +12,4 @@
 
 FACEBOOK_KEY: "1766735706910742"
 FACEBOOK_SECRET: "6f04fbd8f7c80dd2dbf5d62098afb8d6"
-CALLBACK_URL: '/players/auth/facebook/callback'
+CALLBACK_URL: 'http://localhost:3000/players/auth/facebook/callback'
