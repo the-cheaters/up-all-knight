@@ -23,6 +23,4 @@ Things you may want to cover:
 
 * ...
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+[ ![Codeship Status for THP-nov-2016/up-all-knight](https://app.codeship.com/projects/4a444d90-8d9f-0134-2fd1-0298e52abb1b/status?branch=master)](https://app.codeship.com/projects/185059)
