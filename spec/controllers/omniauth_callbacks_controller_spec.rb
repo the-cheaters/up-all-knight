@@ -22,6 +22,22 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     
   end
   
+  describe 'Twitter' do
+    
+    context 'Success handling' do
+      
+      before(:each) do
+        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :twitter)
+        get :facebook
+      end
+      
+      let(:player) { Player.find_by(email: 'testuser@twitter.com') }
+      
+    end
+    
+    
+  end
+  
   describe 'Google' do
     
     context 'Success handling' do

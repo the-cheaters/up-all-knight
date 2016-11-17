@@ -40,6 +40,12 @@ FactoryGirl.define do
         email "testuser@gmail.com"
       end
       
+      trait :twitter do
+        provider "twitter"
+        sequence(:uid)
+        email "testuser@twitter.com"
+      end
+      
       trait :does_not_persist do
         email ""
       end
