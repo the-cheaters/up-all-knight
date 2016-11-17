@@ -13,6 +13,9 @@
   <% if alert.present? %>
   <p class="alert alert-danger"><%= alert %></p>
   <% end %>
+  <%= link_to 'Sign In', new_player_session_path  %>
+  <%= link_to 'Sign out', destroy_player_session_path, method: :delete %>
+  
   <%= yield %>
   
 </body>
