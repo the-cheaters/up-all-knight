@@ -1,16 +1,13 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
-  # alias_method :facebook, :provider_omniauth
-  # alias_method :twitter, :provider_omniauth
   def twitter
-    #raise request.env["omniauth.auth"].to_yaml
+    
     @player = Player.from_omniauth(request.env["omniauth.auth"])
     
     if @player.persisted?
       sign_in_and_redirect @player
-      set_flash_message(:notice, :success, :kind => "Twitter") if is_navigational_format?
+      set_flash_message(:notice, :success, :kind => twitter) if is_navigational_format?
     else
-      
       redirect_to new_player_registration_url
     end
   end
@@ -31,9 +28,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
   
-  def failure
-    redirect_to root_path
-  end
   def facebook
     
     @player = Player.from_omniauth(request.env["omniauth.auth"])
@@ -47,7 +41,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
   
-  def failure
-    redirect_to root_path
-  end
+  
 end
