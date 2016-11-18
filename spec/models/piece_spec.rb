@@ -23,7 +23,6 @@ RSpec.describe Piece, type: :model do
         FactoryGirl.create(:piece, x_position: 4, y_position: 6, game_id: game.id, player_id: black_player.id)
         expect(subject).to eq(true)
       end
-
     end
 
     context "down" do
@@ -38,7 +37,6 @@ RSpec.describe Piece, type: :model do
         FactoryGirl.create(:piece, x_position: 4, y_position: 1, game_id: game.id, player_id: black_player.id)
         expect(subject).to eq(true)
       end
-
     end
 
     context "right" do
@@ -93,6 +91,20 @@ RSpec.describe Piece, type: :model do
 
       it "should return true if it's diagonally blocked" do
         FactoryGirl.create(:piece, x_position: 2, y_position: 6, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
+      end
+    end
+
+    context "down and right" do
+      let (:destination_x) { 7 }
+      let (:destination_y) { 1 }
+
+      it "should return false if it's not diagonally blocked" do
+        expect(subject).to eq(false)
+      end
+
+      it "should return true if it's diagonally blocked" do
+        FactoryGirl.create(:piece, x_position: 6, y_position: 2, game_id: game.id, player_id: black_player.id)
         expect(subject).to eq(true)
       end
     end
