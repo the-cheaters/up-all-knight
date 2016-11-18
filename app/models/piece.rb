@@ -30,6 +30,17 @@ class Piece < ActiveRecord::Base
       return false
     elsif (location_x - destination_x).abs == (location_y - destination_y).abs
       # check for diagonal obstruction
+      location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
+      location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
+      position_x = location_x + x_incrementer
+      position_y = location_y + y_incrementer
+      while position_x != destination_x && position_y != destination_y
+        if game.pieces.where(x_position: position_x, y_position: position_y).any?
+          return true
+        end
+        position_x += x_incrementer
+        position_y += y_incrementer
+      end
       return false
     end
   end
