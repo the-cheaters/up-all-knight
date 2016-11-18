@@ -21,9 +21,9 @@ RSpec.describe Game, type: :model do
   describe "is_available" do
     
     it "should return only games that are available" do
-      @game = Game.create("name" => "touchdown", "available" => true)
+      Game.create("name" => "touchdown", "black_player_id" => 1)
       @games = Game.all.is_available
-      expect(@game.name).to eq("touchdown")
+      expect(@games.last.name).to eq("touchdown")
     end
   end
 end
