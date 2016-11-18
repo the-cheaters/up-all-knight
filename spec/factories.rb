@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :timer do
+    
+  end
   factory :player do
     
   end
