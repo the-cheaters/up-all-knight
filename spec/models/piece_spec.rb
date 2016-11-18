@@ -1,5 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
+
+  let(:game) { FactoryGirl.create(:game) }
+  let(:piece) { FactoryGirl.create(:piece, x_position: 4, y_position: 4, game_id: game.id) }
+
+  describe "Piece#is_obstructed?" do
+
+    subject { piece.is_obstructed?(destination_x, destination_y) }
+
+    context "up" do
+      let(:destination_x) { 4 }
+      let(:destination_y) { 7 }
+
+      it "should return false if it's not vertically blocked" do
+        expect(subject).to eq(false)
+      end
+
+      it "should return true if it's vertically blocked" do
+        FactoryGirl.create(:piece, x_position: 4, y_position: 6, game_id: game.id)
+        expect(subject).to eq(true)
+      end
+
+    end
+
+  end
   
 end
