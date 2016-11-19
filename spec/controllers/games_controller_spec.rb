@@ -28,6 +28,22 @@ RSpec.describe GamesController, type: :controller do
       post :create, format: :json, game: { current_turn: 0 }
       expect(Game.count).to eq(count + 1)
     end
+
+    let(:player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
+
+    it "should make the current player white if 'white player' is selected" do
+      sign_in player
+      post :create, game: { white_player_id: player.id }
+      game = Game.last
+      expect(game.white_player_id).to eq(player.id)
+    end
+
+    it "should make the current player black if 'black player' is selected" do
+      sign_in player
+      post :create, game: { white_player_id: 0 }
+      game = Game.last
+      expect(game.black_player_id).to eq(player.id)
+    end
   end
 
   describe "games#show action" do
