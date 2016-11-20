@@ -2,7 +2,7 @@
 
 <%= simple_form_for @game do |f| %>
   <p>I want to be the...</p>
-  <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[nil, 'Black Player']], :first, :last %>
+  <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
   <br/>
   <%= f.button :submit %>
 <% end %>
