@@ -11,6 +11,7 @@ class GamesController < ApplicationController
   # GET /games.json
   def index
     @games = Game.all.is_available
+    puts "#{@games}"
   end
   
   # GET /games/1
