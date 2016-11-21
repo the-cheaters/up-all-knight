@@ -1,5 +1,10 @@
 <h1>New game</h1>
 
-<%= render 'form' %>
+<%= simple_form_for @game do |f| %>
+  <p>I want to be the...</p>
+  <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
+  <br/>
+  <%= f.button :submit %>
+<% end %>
 
 <%= link_to 'Back', games_path %>
