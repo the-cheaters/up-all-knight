@@ -16,6 +16,7 @@ FactoryGirl.define do
     sequence :id do |n|
       n
     end
+    
   end
 
   # Factories for Omniauth
