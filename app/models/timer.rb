@@ -1,48 +1,39 @@
 class Timer < ActiveRecord::Base
 
   belongs_to :player
+  belongs_to :game
 
-  # ALTERNATIVE start and stop methods
+  def timed_game
+    game_message = "Ready to challenge yourself at blitz chess? How many minutes?"
+    puts game_message
+    game(%Q{say -v "White Player" #{game_message}})
+    minutes = gets.chomp.to_i
+  end
+
+  def start_time  
+    @running = true 
+    @start_time = Time.now
+    seconds = minutes * 60
+  end
   
-  # def start_time
-  #   @running = true
-  #   @start_time = Time.now
-
-  #   limit if @time_limit
-
-  #   self
-  # end
-
-  # def stop_time
-  #   if @running
-  #     defuse
-  #     @end_time = Time.now
-  #     @running = false
-  #     @total_time += (@end_time - @start_time)
-  #   else
-  #     nil
-  #   end
-  # end
-
-
-  def start_time
-    Timer.create(player_id: current_player.id, time: Time.now)
-  end
-
   def stop_time
-    last_attempt = Timer.where(player_id: current_player.id).last_attempt
-    if (last_attempt.time + 5.minutes) < Time.now   # time is up
-      return false
-    end
-  end
-
-  def timer_reset
-    if running?
-      r = stop
+    if @running
+      defuse
+      @stop_time = Time.now
+      @running = false
+      @time_left -= (@stop_time - @start_time)
+      time = @time_left
     else
-      r = 0
+      nil
     end
-    @total_time = 0
-    return r
+    puts "Your time is up."
   end
 end
+# ----------------------------------------------------
+# EXAMPLE OF COUNTDOWN CODE
+# t = Time.new(0)
+# countdown_time_in_minutes = 300 # change this value
+
+# countdown_time_in_minutes.downto(0) do |minutes|
+#   puts (t + seconds).strftime('%H:%M:%S')
+# end
