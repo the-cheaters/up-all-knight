@@ -134,5 +134,4 @@ RSpec.describe Piece, type: :model do
 
   end
   
->>>>>>> 05cb235623408f1e2ae83eeeabdb75672537b84b
 end
