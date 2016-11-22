@@ -14,17 +14,20 @@ RSpec.describe Player, type: :model do
     end
     context 'create' do
       
+      
+      let(:auth) { FactoryGirl.create(:auth_hash, :facebook) }
+      
+      
       it "player count increases by 1" do
-        auth = FactoryGirl.create(:auth_hash, :facebook)
         expect { Player.from_omniauth(auth) }.to change{ Player.count }.by(1)
       end
       
       it "should return correct player" do
-        auth = FactoryGirl.create(:auth_hash, :facebook)
-        Player.from_omniauth(auth)
-        expect(Player.last.provider).to eq(auth.provider)
-        expect(Player.last.uid).to eq(auth.uid.to_s)
-        expect(Player.last.email).to eq(auth.info.email)
+        
+        player = Player.from_omniauth(auth)
+        expect(player.provider).to eq(auth.provider)
+        expect(player.uid).to eq(auth.uid.to_s)
+        expect(player.email).to eq(auth.info.email)
       end
     end
   end

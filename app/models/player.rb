@@ -8,7 +8,7 @@ class Player < ActiveRecord::Base
     
     where(provider: auth.provider, uid: auth.uid.to_s).first_or_create do |player|
       player.provider = auth.provider
-      player.uid = auth.uid
+      player.uid = auth.uid.to_s
       if player.provider == "twitter"
         player.email = "#{auth.info.nickname}@twitter.com"
       else
