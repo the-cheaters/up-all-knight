@@ -3,22 +3,31 @@ class Timer < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
 
+  def initialize
+    @start_time = nil
+    @stop_time = nil
+    @running = false
+    @time_left = 0
+    @minutes = seconds / 60
+    
+  end
+
   def timed_game
     game_message = "Ready to challenge yourself at blitz chess? How many minutes?"
     puts game_message
     game(%Q{say -v "White Player" #{game_message}})
-    minutes = gets.chomp.to_i
+    @minutes = gets.chomp.to_i
   end
 
-  def start_time  
+  def start  
     @running = true 
     @start_time = Time.now
-    seconds = minutes * 60
+    @minutes = seconds / 60
   end
   
-  def stop_time
+  def stop
     if @running
-      defuse
+      defuse # record running time
       @stop_time = Time.now
       @running = false
       @time_left -= (@stop_time - @start_time)

@@ -8,7 +8,7 @@ RSpec.describe Timer, type: :model do
     it "should determine how much time each player has" do 
       expect(Time.new).to be_a(Time)
     end
-
+    
     it "should start timer for current players" do
       expect(@start_time).to eq(Time.now)
     end
