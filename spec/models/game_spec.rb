@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe Piece, type: :model do
-  
-end
-
 RSpec.describe Game, type: :model do
   
   describe "is_available" do
@@ -15,3 +11,4 @@ RSpec.describe Game, type: :model do
     end
   end
 end
+
