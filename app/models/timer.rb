@@ -9,7 +9,7 @@ class Timer < ActiveRecord::Base
     @running = false
     @time_left = 0
     @minutes = seconds / 60
-    
+    @seconds = minutes * 60
   end
 
   def timed_game
@@ -22,7 +22,7 @@ class Timer < ActiveRecord::Base
   def start  
     @running = true 
     @start_time = Time.now
-    @minutes = seconds / 60
+    @minutes
   end
   
   def stop
