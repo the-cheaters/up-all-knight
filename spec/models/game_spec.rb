@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   
-end
-
-RSpec.describe Game, type: :model do
-  
   describe "is_available" do
     
     it "should return only games that are available" do
