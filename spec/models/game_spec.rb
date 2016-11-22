@@ -1,9 +1,12 @@
 require 'rails_helper'
 
+<<<<<<< HEAD
 RSpec.describe Game, type: :model do
   
 end
 
+=======
+>>>>>>> master
 RSpec.describe Game, type: :model do
   
   describe "is_available" do

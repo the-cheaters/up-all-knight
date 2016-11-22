@@ -32,6 +32,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.current_turn = 0
+    @game.black_player_id = current_player.id if @game.white_player_id == 0
 
     respond_to do |format|
       if @game.save
@@ -71,6 +72,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:current_turn)
+      params.require(:game).permit(:current_turn, :white_player_id)
     end
 end
