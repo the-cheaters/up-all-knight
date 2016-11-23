@@ -12,14 +12,13 @@ RSpec.describe Timer, type: :model do
     it "should start timer for current players" do
       timer = Timer.new
       timer.start
-      expect(@minutes).to eq(seconds / 60)
-      expect(@start_time).to eq(Time.now)
+      expect(timer.start).to eq(Time.now.round(0))
     end
 
     it "should stop timer for current players" do 
       timer = Timer.new
-      timer.stop
-      expect(@stop_time).to eq(Time.now)
+      timer.start
+      expect(timer.stop).to eq(Time.now.round(0))
     end
 
     it "should end game for a player" do 

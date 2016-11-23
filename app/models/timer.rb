@@ -8,41 +8,18 @@ class Timer < ActiveRecord::Base
     @stop_time = nil
     @running = false
     @time_left = 0
-    @minutes = seconds / 60
-    @seconds = minutes * 60
-  end
-
-  def timed_game
-    game_message = "Ready to challenge yourself at blitz chess? How many minutes?"
-    puts game_message
-    game(%Q{say -v "White Player" #{game_message}})
-    @minutes = gets.chomp.to_i
   end
 
   def start  
     @running = true 
-    @start_time = Time.now
-    @minutes
+    @start_time = Time.now.round(0)
   end
   
   def stop
     if @running
-      defuse # record running time
-      @stop_time = Time.now
+      @stop_time = Time.now.round(0)
       @running = false
-      @time_left -= (@stop_time - @start_time)
-      time = @time_left
-    else
-      nil
     end
-    puts "Your time is up."
-  end
+    @stop_time
+  end      
 end
-# ----------------------------------------------------
-# EXAMPLE OF COUNTDOWN CODE
-# t = Time.new(0)
-# countdown_time_in_minutes = 300 # change this value
-
-# countdown_time_in_minutes.downto(0) do |minutes|
-#   puts (t + seconds).strftime('%H:%M:%S')
-# end
