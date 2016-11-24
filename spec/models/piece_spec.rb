@@ -5,18 +5,75 @@ RSpec.describe Piece, type: :model do
   let(:white_player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
-  let(:piece) { FactoryGirl.create(:piece, x_position: 4, y_position: 4, game_id: game.id, player_id: white_player.id) }
 
-  let(:pawn) { FactoryGirl.create(:pawn, x_position: 2, y_position: 1, game_id: game.id, player_id: black_player.id) }
+  describe "King#valid_move?" do
+
+    let(:king) { FactoryGirl.create(:king, x_position: 4, y_position: 4, game_id: game.id, player_id: black_player.id) }
+    
+    subject { king.valid_move?(destination_x, destination_y) }
+
+    context "valid move" do
+      let(:destination_x) { 5 }
+      let(:destination_y) { 5 }
+
+      it "should return true if the move is valid" do
+        expect(subject).to eq(true)
+      end
+    end
+
+    context "invalid move" do
+      let(:destination_x) { 7 }
+      let(:destination_y) { 7 }
+
+      it "should return false if the king tries to move too far" do
+        expect(subject).to eq(false)
+      end
+    end
+
+  end
+
+  describe 'a King' do
+    it 'should be a King' do
+      king = FactoryGirl.create(:king, player_id: black_player.id)
+      expect(king.type).to eq 'King'
+    end
+  end
 
   describe 'a Pawn' do
+
+    let(:pawn) { FactoryGirl.create(:pawn, x_position: 2, y_position: 1, game_id: game.id, player_id: black_player.id) }
+
     it 'should be a pawn' do
       pawn = FactoryGirl.create(:pawn, player_id: black_player.id)
       expect(pawn.type).to eq 'Pawn'
     end
   end
 
+  describe "Piece#valid_move?" do
+
+    let(:piece) { FactoryGirl.create(:piece, x_position: 4, y_position: 4, game_id: game.id, player_id: white_player.id) }
+
+    subject { piece.valid_move?(7, 4) }
+
+    it "should return true if the piece is not obstructed" do
+      expect(subject).to eq(true)
+    end
+
+    it "should return false if the piece is obstructed" do
+      FactoryGirl.create(:piece, x_position: 6, y_position: 4, game_id: game.id, player_id: black_player.id)
+      expect(subject).to eq(false)
+    end
+
+    it "should return false if a piece of the same color is occupying the destination" do
+      FactoryGirl.create(:piece, x_position: 7, y_position: 4, game_id: game.id, player_id: white_player.id)
+      expect(subject).to eq(false)
+    end
+
+  end
+
   describe "Piece#is_obstructed?" do
+
+    let(:piece) { FactoryGirl.create(:piece, x_position: 4, y_position: 4, game_id: game.id, player_id: white_player.id) }
 
     subject { piece.is_obstructed?(destination_x, destination_y) }
 
