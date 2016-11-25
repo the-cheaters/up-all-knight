@@ -8,18 +8,12 @@ class Game < ActiveRecord::Base
   has_many :pieces
   has_many :players
 
-  def piece_present?(x, y)
-    if self.pieces.where(x_position: x, y_position: y).any?
-      return true
-    else
-      return false
-    end
+  def is_piece_present?(x, y)
+    self.pieces.where(x_position: x, y_position: y).any?
   end
 
   def get_piece(x, y)
-    if self.piece_present?(x, y)
-      return self.pieces.where(x_position: x, y_position: y).take
-    end
+    self.pieces.where(x_position: x, y_position: y).take
   end
   
 end

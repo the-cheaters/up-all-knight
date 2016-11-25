@@ -6,12 +6,16 @@ FactoryGirl.define do
   factory :piece do
     association :game
     association :player
+    x_position 4
+    y_position 4
   end
 
   factory :pawn do
   end
 
   factory :king do
+    x_position 4
+    y_position 4
   end
 
 

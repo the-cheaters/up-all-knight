@@ -8,7 +8,7 @@ RSpec.describe Piece, type: :model do
 
   describe "King#valid_move?" do
 
-    let(:king) { FactoryGirl.create(:king, x_position: 4, y_position: 4, game_id: game.id, player_id: black_player.id) }
+    let(:king) { FactoryGirl.create(:king, game_id: game.id, player_id: black_player.id) }
     
     subject { king.valid_move?(destination_x, destination_y) }
 
@@ -26,6 +26,15 @@ RSpec.describe Piece, type: :model do
       let(:destination_y) { 7 }
 
       it "should return false if the king tries to move too far" do
+        expect(subject).to eq(false)
+      end
+    end
+
+    context "no move" do
+      let(:destination_x) { 4 }
+      let(:destination_y) { 4 }
+
+      it "should return false if the king tries to move on top of itself" do
         expect(subject).to eq(false)
       end
     end
@@ -51,7 +60,7 @@ RSpec.describe Piece, type: :model do
 
   describe "Piece#valid_move?" do
 
-    let(:piece) { FactoryGirl.create(:piece, x_position: 4, y_position: 4, game_id: game.id, player_id: white_player.id) }
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
 
     subject { piece.valid_move?(7, 4) }
 
