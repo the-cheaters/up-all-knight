@@ -7,10 +7,11 @@ class Timer < ActiveRecord::Base
     @start_time = nil
     @stop_time = nil
     @running = false
-    @time_left = 0
+    @time_left = 500
   end
 
-  def start  
+  def start
+    @time_left 
     @running = true 
     @start_time = Time.now.round(0)
   end
@@ -19,7 +20,12 @@ class Timer < ActiveRecord::Base
     if @running
       @stop_time = Time.now.round(0)
       @running = false
+      @time_left = @time_left - elapsed_time
     end
     @stop_time
+  end
+
+  def elapsed_time
+    @stop_time - @start_time
   end      
 end
