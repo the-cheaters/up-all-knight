@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   root 'games#index'
-  resources :games
-    resources :enrollments, only: :created
+  resources :games do
+    resources :enrollments, only: :create
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
