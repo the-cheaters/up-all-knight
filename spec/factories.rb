@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :enrollment do
+    
+  end
 
   factory :player do
   end
