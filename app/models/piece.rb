@@ -2,6 +2,38 @@ class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
 
+  WHITE = "white"
+  BLACK = "black"
+
+  def valid_move?(destination_x, destination_y)
+    valid = true
+    game = self.get_game
+    # Check if piece is obstructed
+    if self.is_obstructed?(destination_x, destination_y)
+      valid = false
+    # Check if destination is occupied by a piece of the same color
+    elsif game.is_piece_present?(destination_x, destination_y)
+      other_piece = game.get_piece(destination_x, destination_y)
+      if self.get_color == other_piece.get_color
+        valid = false
+      end
+    end
+    return valid
+  end
+
+  def get_color
+    game = self.get_game
+    if self.player_id = game.white_player_id
+      return WHITE
+    elsif self.player_id = game.black_player_id
+      return BLACK
+    end
+  end
+
+  def get_game
+    return Game.find(self.game_id)
+  end
+
   def is_obstructed?(destination_x, destination_y)
     location_x = self.x_position
     location_y = self.y_position
