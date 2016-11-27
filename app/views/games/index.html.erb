@@ -13,7 +13,7 @@
         <p class="game_num">Game #<%= game.id %></p>
         <p class="game_name"><%= game.name%> hosted by test@test.com.</p>
       </div>
-      <%= link_to 'Join', game, class: "join_game col-xs-2 btn btn-primary" %>
+      <%= link_to 'Join', game_enrollments_path(@game), class: "join_game col-xs-2 btn btn-primary", method: :post %>
     </li>
     <% end %>
   </ul>
