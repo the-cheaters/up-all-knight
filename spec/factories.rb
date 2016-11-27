@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  factory :enrollment do
+
+  end
 
   factory :player do
+
   end
 
   factory :piece do
@@ -17,7 +21,7 @@ FactoryGirl.define do
     sequence :id do |n|
       n
     end
-    
+
   end
 
   # Factories for Omniauth
