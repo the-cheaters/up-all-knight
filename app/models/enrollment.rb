@@ -1,6 +1,5 @@
 class Enrollment < ActiveRecord::Base
 
   belongs_to :game
-  belongs_to :white_player_id, class_name: "Player"
-  belongs_to :white_player_id, class_name: "Player"
+  has_many :players
 end

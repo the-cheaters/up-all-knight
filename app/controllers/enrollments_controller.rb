@@ -1,18 +1,14 @@
 class EnrollmentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_player!
 
   def create
-    current_available_game.add_player(current_user)
-    current_available_game.save
+    current_player.enrollments.create(game: @current_game)
   end
 
-  def add_player
-    current_user.enrollments.create(game: current_available_game)
-  end
 
   private
 
-  def current_available_game
-    @current_available_game ||= Game.is_available.find(params[:id])
+  def current_game
+    @current_game ||= Game.is_available.find(params[:game_id])
   end
 end
