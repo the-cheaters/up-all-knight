@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ChessBoardsController, type: :controller do
-  render_views
 
-  describe "index" do
-    it "renders the index template with chessboard" do
-      get :index
+
+  describe "show" do
+    it "renders the show template with chessboard" do
+      get :show, id: 1
       expect(response).to have_http_status(:success)
     end
   end
