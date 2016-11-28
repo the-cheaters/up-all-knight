@@ -37,9 +37,9 @@ class Piece < ActiveRecord::Base
 
   def get_color
     game = self.get_game
-    if self.player_id = game.white_player_id
+    if self.player_id == game.white_player_id
       return WHITE
-    elsif self.player_id = game.black_player_id
+    elsif self.player_id == game.black_player_id
       return BLACK
     end
   end
