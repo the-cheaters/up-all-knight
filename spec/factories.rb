@@ -1,4 +1,5 @@
 FactoryGirl.define do
+  
   factory :player do
     email "testuser@facebook.com"
     password "catsarecool"
@@ -11,6 +12,7 @@ FactoryGirl.define do
     factory :pawn do
       type 'Pawn'
     end
+    
   end
   
   
