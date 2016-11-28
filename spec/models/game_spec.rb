@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Game, type: :model do
+RSpec.describe Piece, type: :model do
   
   describe "is_available" do
     
