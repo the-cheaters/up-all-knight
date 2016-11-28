@@ -26,6 +26,7 @@ RSpec.describe Piece, type: :model do
     it "should capture a piece of the opposite color that exists on the correct coordinates" do
       piece_to_capture = FactoryGirl.create(:piece, x_position: 5, y_position: 4, game_id: game.id, player_id: black_player.id)
       piece.capture_piece(5,4)
+      piece_to_capture.reload
       expect(piece_to_capture.captured).to eq(true)
     end
   end
