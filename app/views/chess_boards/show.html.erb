@@ -14,9 +14,9 @@
     <br><br><br>
 
     <div class="chessboard">
-      <div class="wrapper">
+
         <% (0..7).each do |row| %>
-          <div class="row">
+          <div id="row">
          <% (0..7).each do |column| %>
            <% if (row % 2 == 0) %>
              <% if (column % 2 == 0) %>
@@ -34,14 +34,14 @@
          <% end %>
           </div>
         <% end %>
-      </div>
+
     </div>
 
 
 
 
 
-    
+
 
     <br><br><br>
   </body>
