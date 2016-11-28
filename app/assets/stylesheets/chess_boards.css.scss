@@ -2,50 +2,32 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// * {  box-sizing: border-box; }
+
 
 .chessboard {
     width: 640px;
     height: 640px;
-    margin: 0 auto;
-    // text-align: center;
-    // border: 1px solid #333;
+    margin: auto;
+    
 }
+
+
+
+.row {
+  width: 640px;
+
+}
+
 .black {
     float: left;
     width: 80px;
     height: 80px;
     background-color: #000;
-    // margin:0;
-    // font-size:50px;
-    // text-align:center;
-    // display: table-cell;
-    // vertical-align:middle;
 }
+
 .white {
     float: left;
     width: 80px;
     height: 80px;
     background-color: #fff;
-    // margin:0;
-    // font-size:50px;
-    // text-align:center;
-    // display: table-cell;
-    // vertical-align:middle;
-}
-
-.white-top {
-  border-top: 3px solid #333;
-}
-
-.white-right {
-  border-right: 3px solid #333;
-}
-
-.white-bottom {
-  border-bottom: 3px solid #333;
-}
-
-.white-left {
-  border-left: 3px solid #333;
 }
