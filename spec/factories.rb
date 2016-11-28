@@ -8,11 +8,17 @@ FactoryGirl.define do
   factory :piece do
     association :game
     association :player
-    
-    factory :pawn do
-      type 'Pawn'
-    end
-    
+    x_position 4
+    y_position 4
+  end
+  
+  factory :pawn do
+    type 'Pawn'
+  end
+  
+  factory :king do
+    x_position 4
+    y_position 4
   end
   
   
