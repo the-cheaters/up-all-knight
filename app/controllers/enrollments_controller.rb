@@ -2,9 +2,8 @@ class EnrollmentsController < ApplicationController
   before_action :authenticate_player!
 
   def create
-    current_player.enrollments.create(game: @current_game)
+    current_player.join_game(@current_game)
   end
-
 
   private
 
