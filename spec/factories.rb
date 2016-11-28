@@ -1,6 +1,9 @@
 FactoryGirl.define do
 
   factory :player do
+    sequence :id do |n|
+      n
+    end
   end
 
   factory :piece do
