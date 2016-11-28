@@ -23,11 +23,11 @@ RSpec.describe Piece, type: :model do
       expect(piece.captured).to eq(true)
     end
 
-    # it "should capture a piece of the opposite color that exists on the correct coordinates" do
-    #   piece_to_capture = FactoryGirl.create(:piece, x_position: 5, y_position: 4, game_id: game.id, player_id: black_player.id)
-    #   piece.capture_piece(5,4)
-    #   expect(piece_to_capture.captured).to eq(true)
-    # end
+    it "should capture a piece of the opposite color that exists on the correct coordinates" do
+      piece_to_capture = FactoryGirl.create(:piece, x_position: 5, y_position: 4, game_id: game.id, player_id: black_player.id)
+      piece.capture_piece(5,4)
+      expect(piece_to_capture.captured).to eq(true)
+    end
   end
 
   describe "King#valid_move?" do
