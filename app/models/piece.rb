@@ -5,6 +5,20 @@ class Piece < ActiveRecord::Base
   WHITE = "white"
   BLACK = "black"
   
+  def capture!
+    self.update_attributes(:captured => true, :captured_at => Time.now, :x_position => nil, :y_position => nil)
+  end
+  
+  def capture_piece(x, y)
+    game = self.get_game
+    piece_to_capture = game.get_piece(x, y)
+    if !piece_to_capture.nil? && piece_to_capture.get_color != self.get_color
+      piece_to_capture.capture!
+    else
+      fail "There is no piece of the opposite color to capture."
+    end
+  end
+  
   def valid_move?(destination_x, destination_y)
     valid = true
     game = self.get_game
@@ -23,9 +37,9 @@ class Piece < ActiveRecord::Base
   
   def get_color
     game = self.get_game
-    if self.player_id = game.white_player_id
+    if self.player_id == game.white_player_id
       return WHITE
-    elsif self.player_id = game.black_player_id
+    elsif self.player_id == game.black_player_id
       return BLACK
     end
   end
