@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/player.rb": [
+      "/vagrant/src/chess/app/models/player.rb": [
         1,
         null,
         null,
@@ -23,23 +23,46 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/helpers/application_helper.rb": [
+      "/vagrant/src/chess/app/helpers/application_helper.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/helpers/games_helper.rb": [
+      "/vagrant/src/chess/app/helpers/chess_boards_helper.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/helpers/omniauth_callbacks_helper.rb": [
+      "/vagrant/src/chess/app/helpers/games_helper.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/helpers/players_helper.rb": [
+      "/vagrant/src/chess/app/helpers/omniauth_callbacks_helper.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/controllers/games_controller.rb": [
+      "/vagrant/src/chess/app/helpers/players_helper.rb": [
+        1,
+        null
+      ],
+      "/vagrant/src/chess/app/controllers/chess_boards_controller.rb": [
+        1,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/vagrant/src/chess/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        64,
+        null,
+        null
+      ],
+      "/vagrant/src/chess/app/controllers/games_controller.rb": [
         1,
         1,
         null,
@@ -120,17 +143,7 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/controllers/application_controller.rb": [
-        1,
-        null,
-        null,
-        1,
-        1,
-        63,
-        null,
-        null
-      ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/controllers/omniauth_callbacks_controller.rb": [
+      "/vagrant/src/chess/app/controllers/omniauth_callbacks_controller.rb": [
         1,
         1,
         null,
@@ -186,11 +199,11 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/controllers/players_controller.rb": [
+      "/vagrant/src/chess/app/controllers/players_controller.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/piece.rb": [
+      "/vagrant/src/chess/app/models/piece.rb": [
         1,
         1,
         1,
@@ -283,7 +296,7 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/game.rb": [
+      "/vagrant/src/chess/app/models/game.rb": [
         1,
         null,
         3,
@@ -304,7 +317,7 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/king.rb": [
+      "/vagrant/src/chess/app/models/king.rb": [
         1,
         null,
         1,
@@ -319,27 +332,27 @@
         null,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/pawn.rb": [
+      "/vagrant/src/chess/app/models/pawn.rb": [
         1,
         null
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/bishop.rb": [
+      "/vagrant/src/chess/app/models/bishop.rb": [
         0,
         0
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/knight.rb": [
+      "/vagrant/src/chess/app/models/knight.rb": [
         0,
         0
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/queen.rb": [
+      "/vagrant/src/chess/app/models/queen.rb": [
         0,
         0
       ],
-      "/Users/matttaylor/Desktop/vagrant/src/chess/app/models/rook.rb": [
+      "/vagrant/src/chess/app/models/rook.rb": [
         0,
         0
       ]
     },
-    "timestamp": 1480429750
+    "timestamp": 1480444090
   }
 }
