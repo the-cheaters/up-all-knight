@@ -1,12 +1,8 @@
 FactoryGirl.define do
-<<<<<<< HEAD
   factory :timer do
    association :player
   end
 
-=======
-  
->>>>>>> master
   factory :player do
     
     email "testuser@facebook.com"
