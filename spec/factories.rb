@@ -1,8 +1,10 @@
 FactoryGirl.define do
   
   factory :player do
+    
     email "testuser@facebook.com"
     password "catsarecool"
+    
   end
   
   factory :piece do
