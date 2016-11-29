@@ -2,52 +2,47 @@ require 'rails_helper'
 
 RSpec.describe OmniauthCallbacksController, type: :controller do
   
-  before(:each) do
-    request.env['devise.mapping'] = Devise.mappings[:player]
-  end
+  providers = [:facebook, :twitter, :google]
   
-  describe 'Facebook' do
-    
-    context 'Success handling' do
-      
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :facebook)
-        get :facebook
-      end
-      
-      let(:player) { Player.find_by(email: 'testuser@facebook.com') }
-      
+  
+  providers.each do |provider|
+    before(:each) do
+      request.env['devise.mapping'] = Devise.mappings[:player]
     end
     
-    
-  end
-  
-  describe 'Twitter' do
-    
-    context 'Success handling' do
+    describe '#{provider}' do
       
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :twitter)
-        get :facebook
+      context 'Success handling' do
+        
+        before(:each) do
+          request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, provider)
+          get provider
+        end
+        
+        
+        it "should be found" do
+          expect(response).to have_http_status(302)
+        end
+        it "should redirect_to root" do
+          expect(response).to redirect_to(root_path)
+        end
       end
       
-      let(:player) { Player.find_by(email: 'testuser@twitter.com') }
-      
-    end
-    
-    
-  end
-  
-  describe 'Google' do
-    
-    context 'Success handling' do
-      
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :google)
-        get :facebook
+      context 'Failure handling' do
+        
+        it "should redirect_to new_player_registration_url" do
+          get provider
+          expect(response).to redirect_to(new_player_registration_path)
+        end
+        
+        it "should redirect_to new_player_registration_url" do
+          request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :does_not_persist)
+          get provider
+          expect(response).to redirect_to(new_player_registration_path)
+        end
+        
+        
       end
-      
-      let(:player) { Player.find_by(email: 'testuser@gmail.com') }
       
     end
     
@@ -55,29 +50,16 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
   
   describe 'Failure' do
     
-    after(:each) do
-      Rails.application.reload_routes!
-    end
-    
-    before(:each) do
-      
+    it 'should redirectto root path' do
       Rails.application.routes.draw do
         devise_scope :Player do
           get '/player/auth/failure' => 'omniauth_callbacks#failure'
         end
-        root 'static_pages#index'
+        root 'games#index'
       end
-      
+      request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :twitter)
       get :failure
-      
-    end
-    
-    it 'should redirectto root path' do
       expect(response).to redirect_to root_path
     end
-    
-    
-    
   end
-  
 end

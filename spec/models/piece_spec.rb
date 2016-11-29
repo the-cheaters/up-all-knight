@@ -2,9 +2,34 @@ require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
 
-  let(:white_player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
-  let(:black_player) { FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT') }
+  let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
+  let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
+
+  describe "Piece#capture!" do
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
+
+    it "should fail if there is no piece to capture" do
+      expect { piece.capture_piece(5,4) }.to raise_error(RuntimeError)
+    end
+
+    it "should fail if the piece is the same color" do
+      piece_to_capture = FactoryGirl.create(:piece, x_position: 5, y_position: 4, game_id: game.id, player_id: white_player.id)
+      expect { piece.capture_piece(5,4) }.to raise_error(RuntimeError)
+    end
+
+    it "should update the attributes of a captured piece" do
+      piece.capture!
+      expect(piece.captured).to eq(true)
+    end
+
+    it "should capture a piece of the opposite color that exists on the correct coordinates" do
+      piece_to_capture = FactoryGirl.create(:piece, x_position: 5, y_position: 4, game_id: game.id, player_id: black_player.id)
+      piece.capture_piece(5,4)
+      piece_to_capture.reload
+      expect(piece_to_capture.captured).to eq(true)
+    end
+  end
 
   describe "King#valid_move?" do
 
