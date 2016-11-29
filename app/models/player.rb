@@ -17,6 +17,10 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def join_game(game)
+    @enrollment = Enrollment.create
+  end
+
   has_many :games
   has_many :enrollments
 end

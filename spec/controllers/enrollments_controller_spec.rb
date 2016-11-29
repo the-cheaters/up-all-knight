@@ -7,8 +7,8 @@ RSpec.describe EnrollmentsController, type: :controller do
 
   describe 'enrollments#create' do
     it 'should successfully enroll a player in a game' do
-      game = FactoryGirl.create(:game, white_player_id: black_player.id, black_player_id: 0)
-      player = FactoryGirl.create(:player, email: 'hey@meow.com', password: 'MONORAILCAT')
+      game = FactoryGirl.create(:game)
+      player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
       sign_in player
       post :create, :game_id => game.id
       expect(response).to have_http_status(:success)
