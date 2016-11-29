@@ -2,112 +2,46 @@ require 'rails_helper'
 
 RSpec.describe OmniauthCallbacksController, type: :controller do
   
-  before(:each) do
-    request.env['devise.mapping'] = Devise.mappings[:player]
-  end
+  providers = [:facebook, :twitter, :google]
   
-  describe 'Facebook' do
-    
-    context 'Success handling' do
-      
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :facebook)
-        get :facebook
-      end
-      
-      
-      it "should be found" do
-        expect(response).to have_http_status(302)
-      end
-      it "should redirect_to root" do
-        expect(response).to redirect_to(root_path)
-      end
-    end
-    
-    context 'Failure handling' do
-      
-      it "should redirect_to new_player_registration_url" do
-        get :facebook
-        expect(response).to redirect_to(new_player_registration_path)
-      end
-      
-      it "should redirect_to new_player_registration_url" do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :does_not_persist)
-        get :facebook
-        expect(response).to redirect_to(new_player_registration_path)
-      end
-      
-      
-    end
-    
-  end
   
-  describe 'Twitter' do
-    
-    context 'Success handling' do
-      
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :twitter)
-        get :twitter
-      end
-      
-      
-      it "should be found" do
-        expect(response).to have_http_status(302)
-      end
-      it "should redirect_to root" do
-        expect(response).to redirect_to(root_path)
-      end
+  providers.each do |provider|
+    before(:each) do
+      request.env['devise.mapping'] = Devise.mappings[:player]
     end
     
-    context 'Failure handling' do
+    describe '#{provider}' do
       
-      it "should redirect_to new_player_registration_url" do
-        get :twitter
-        expect(response).to redirect_to(new_player_registration_path)
+      context 'Success handling' do
+        
+        before(:each) do
+          request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, provider)
+          get provider
+        end
+        
+        
+        it "should be found" do
+          expect(response).to have_http_status(302)
+        end
+        it "should redirect_to root" do
+          expect(response).to redirect_to(root_path)
+        end
       end
       
-      it "should redirect_to new_player_registration_url" do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :does_not_persist)
-        get :twitter
-        expect(response).to redirect_to(new_player_registration_path)
-      end
-      
-      
-    end
-    
-    
-  end
-  
-  describe 'Google' do
-    
-    context 'Success handling' do
-      
-      before(:each) do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :google)
-        get :google
-      end
-      
-      
-      it "should be found" do
-        expect(response).to have_http_status(302)
-      end
-      it "should redirect_to root" do
-        expect(response).to redirect_to(root_path)
-      end
-    end
-    
-    context 'Failure handling' do
-      
-      it "should redirect_to new_player_registration_url" do
-        get :google
-        expect(response).to redirect_to(new_player_registration_path)
-      end
-      
-      it "should redirect_to new_player_registration_url" do
-        request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :does_not_persist)
-        get :google
-        expect(response).to redirect_to(new_player_registration_path)
+      context 'Failure handling' do
+        
+        it "should redirect_to new_player_registration_url" do
+          get provider
+          expect(response).to redirect_to(new_player_registration_path)
+        end
+        
+        it "should redirect_to new_player_registration_url" do
+          request.env['omniauth.auth'] = FactoryGirl.create(:auth_hash, :does_not_persist)
+          get provider
+          expect(response).to redirect_to(new_player_registration_path)
+        end
+        
+        
       end
       
     end
