@@ -1,23 +1,20 @@
 class Timer < ActiveRecord::Base
-  after_initialize do |timer|
-  end
 
   belongs_to :player
   belongs_to :game
 
-  def start
+  def start!
     @time_left = self.time_left
     @running = true 
-    @start_time = Time.now.round(0)
+    @start_time = Time.now
   end
   
-  def stop
+  def stop!
     if @running
-      @stop_time = Time.now.round(0)
+      @stop_time = Time.now
       @running = false
-      self.time_left = @time_left.to_i - elapsed_time
+      self.time_left = @time_left.to_i - elapsed_time.to_i
     end
-    @stop_time
   end
 
   def elapsed_time
