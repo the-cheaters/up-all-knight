@@ -4,15 +4,6 @@ class Piece < ActiveRecord::Base
   
   WHITE = "white"
   BLACK = "black"
-
-  def piece_display
-    @chess_board = Chessboard.where(:game_id)
-    display = Hash.new { |h, k| h[k] = {} }
-    pieces.active.each do |piece|
-      display[piece.x_position][piece.y_position] = piece
-    end
-    display 
-  end
   
   def capture!
     self.update_attributes(:captured => true, :captured_at => Time.now, :x_position => nil, :y_position => nil)

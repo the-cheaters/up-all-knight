@@ -12,7 +12,7 @@
   </head>
   <body>
     <br><br><br>
-
+    <%= @pieces.count %>
     <div class="chessboard">
 
         <% (0..7).each do |row| %>
@@ -21,8 +21,8 @@
 
           <!-- Piece Display -->
 
-          <% piece = @chess_board.piece_display[row][column] %>
-          <% pieces.each do |piece| %>
+          
+          <% @pieces.each do |piece| %>
             <% if piece.x_position == column && piece.y_position == row %>
               <div class="piece" display-piece-id="<%piece.id%>">
                 <%= piece.unicode_symbol.html.safe %>
