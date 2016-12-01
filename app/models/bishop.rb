@@ -1,7 +1,7 @@
 class Bishop < Piece
 
   def unicode_symbol
-    if white?
+    if "white"
       return "&#9815;"
     else
       return "&#9821;"

@@ -12,51 +12,72 @@
   </head>
   <body>
     <br><br><br>
-    <%= @pieces.count %>
+    
     <div class="chessboard">
 
         <% (0..7).each do |row| %>
           <div id="row">
-         <% (0..7).each do |column| %>
-
-          <!-- Piece Display -->
-
-          
-          <% @pieces.each do |piece| %>
-            <% if piece.x_position == column && piece.y_position == row %>
-              <div class="piece" display-piece-id="<%piece.id%>">
-                <%= piece.unicode_symbol.html.safe %>
-              </div>
-            <% end %>  
-          <% end %>  
-
-          <!-- END Piece Display -->
-
+        <% (0..7).each do |column| %>
            <% if (row % 2 == 0) %>
              <% if (column % 2 == 0) %>
-                <div class="white"></div>
+
+                <div class="white">
+                <% @pieces.each do |piece| %>
+                  <% if piece.x_position == column && piece.y_position == row %>
+                    <div class="piece" display-piece-id="<%piece.id%>">
+                      <%= piece.unicode_symbol.html_safe %>
+                    </div>
+                  <% end %>  
+                <% end %>  
+                </div>
+
              <% else %>
-                <div class="black"></div>
-             <% end %>
-          <% else %>
+
+                <div class="black">
+                <% @pieces.each do |piece| %>
+                  <% if piece.x_position == column && piece.y_position == row %>
+                    <div class="piece" display-piece-id="<%piece.id%>">
+                      <%= piece.unicode_symbol.html_safe %>
+                    </div>
+                  <% end %>  
+                <% end %>  
+                </div>
+                <% end %>
+
+              <% else %>
+
              <% if (column % 2 == 1) %>
-                <div class="white"></div>
-             <% else %>
-                <div class="black"></div>
+                
+                <div class="white">
+                <% @pieces.each do |piece| %>
+                  <% if piece.x_position == column && piece.y_position == row %>
+                  <div class="piece" display-piece-id="<%piece.id%>">
+                    <%= piece.unicode_symbol.html_safe %>
+                  </div>
+                  <% end %>  
+                <% end %>  
+                </div>
+
+              <% else %>
+                
+                <div class="black">
+                <% @pieces.each do |piece| %>
+                  <% if piece.x_position == column && piece.y_position == row %>
+                  <div class="piece" display-piece-id="<%piece.id%>">
+                    <%= piece.unicode_symbol.html_safe %>
+                  </div>
+                <% end %>  
+              <% end %>  
+               </div>
              <% end %>
            <% end %>
          <% end %>
-          </div>
-        <% end %>
+        </div>
+      <% end %>
 
     </div>
 
-
-
-
-
-
-
-    <br><br><br>
+     <br><br><br>
   </body>
 </html>
+
