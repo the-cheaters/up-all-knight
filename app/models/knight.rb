@@ -7,6 +7,7 @@ class Knight < Piece
     else
       return "&#9822;"
     end
+  end
 
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
