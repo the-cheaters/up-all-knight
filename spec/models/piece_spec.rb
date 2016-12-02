@@ -73,6 +73,48 @@ RSpec.describe Piece, type: :model do
     end
   end
   
+  describe "Knight#valid_move?" do
+    
+    let(:knight) { FactoryGirl.create(:knight, game_id: game.id, player_id: black_player.id) }
+    
+    subject { knight.valid_move?(destination_x, destination_y) }
+    
+    context "valid move" do
+      let(:destination_x) { 3 }
+      let(:destination_y) { 4 }
+      
+      it "should return true if the move is valid" do
+        expect(subject).to eq(true)
+      end
+    end
+    
+    context "invalid move" do
+      let(:destination_x) { 7 }
+      let(:destination_y) { 7 }
+      
+      it "should return false if the knight tries to move outside of its constraints" do
+        expect(subject).to eq(false)
+      end
+    end
+    
+    context "no move" do
+      let(:destination_x) { 5 }
+      let(:destination_y) { 5 }
+      
+      it "should return false if the knight tries to move on top of itself" do
+        expect(subject).to eq(false)
+      end
+    end
+    
+  end
+  
+  describe 'a Knight' do
+    it 'should be a Knight' do
+      knight = FactoryGirl.create(:knight, player_id: black_player.id)
+      expect(knight.type).to eq 'Knight'
+    end
+  end
+  
   describe 'a Pawn' do
     
     let(:pawn) { FactoryGirl.create(:pawn, x_position: 2, y_position: 1, game_id: game.id, player_id: black_player.id) }

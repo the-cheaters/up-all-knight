@@ -22,11 +22,15 @@ class Piece < ActiveRecord::Base
   def valid_move?(destination_x, destination_y)
     valid = true
     game = self.get_game
-    # Check if piece is obstructed
-    if self.is_obstructed?(destination_x, destination_y)
-      valid = false
-      # Check if destination is occupied by a piece of the same color
-    elsif game.is_piece_present?(destination_x, destination_y)
+    #Check to see if piece is not a knight
+    if self.type != "Knight"
+      # Check if piece is obstructed
+      if self.is_obstructed?(destination_x, destination_y)
+        valid = false
+      end
+    end
+    # Check if destination is occupied by a piece of the same color
+    if valid && game.is_piece_present?(destination_x, destination_y)
       other_piece = game.get_piece(destination_x, destination_y)
       if self.get_color == other_piece.get_color
         valid = false
