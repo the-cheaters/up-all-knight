@@ -9,7 +9,7 @@ class King < Piece
     end
     return valid
   end
-<<<<<<< HEAD
+
 
   def unicode_symbol
     if self.get_color == WHITE
@@ -18,7 +18,5 @@ class King < Piece
       return "&#9818;"
     end
   end
-=======
-  
->>>>>>> 8eb4ce026b010840246662ef6f9317fbb50dd2f0
+
 end
