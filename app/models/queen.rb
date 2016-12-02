@@ -1,7 +1,7 @@
 class Queen < Piece
   
   def unicode_symbol
-    if "white"
+    if self.get_color == WHITE
       return "&#9813;"
     else
       return "&#9819;"
