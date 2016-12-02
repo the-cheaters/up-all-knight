@@ -26,6 +26,11 @@ FactoryGirl.define do
     y_position 4
   end
   
+  factory :knight do
+    x_position 5
+    y_position 5
+  end
+  
   
   factory :game do
     sequence :id do |n|
