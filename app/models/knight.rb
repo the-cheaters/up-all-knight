@@ -10,4 +10,8 @@ class Knight < Piece
     end
     return valid
   end
+  
+  def  is_obstructed?(destination_x, destination_y)
+    return false
+  end
 end
