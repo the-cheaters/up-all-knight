@@ -5,7 +5,35 @@ RSpec.describe Piece, type: :model do
   let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
-  
+
+  describe "Queen#valid_move?(destination_x, destination_y)" do
+    let(:queen) { FactoryGirl.create(:queen, game_id: game.id, player_id: white_player.id) }
+
+    subject { queen.valid_move?(destination_x, destination_y) }
+
+    # shared examples
+
+    context "north" do
+
+      let(:destination_x) { 4 }
+      let(:destination_y) { 5 }
+
+      it "should be a valid move" do
+        expect(subject).to eq(true)
+      end
+
+      it "should return false if the queen is obstructed" do
+      end
+
+      it "should return false if the square is occupied by a piece of the same color" do
+        piece = FactoryGirl.create(:piece, x_position: 4, y_position: 5, game_id: game.id, player_id: white_player.id)
+
+      end
+
+    end
+
+  end
+
   describe "Piece#capture!" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
     

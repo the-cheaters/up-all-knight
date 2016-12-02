@@ -32,6 +32,7 @@ class Piece < ActiveRecord::Base
         valid = false
       end
     end
+    # check to make sure destination exists on board (x, y between 0 and 7)
     return valid
   end
   
