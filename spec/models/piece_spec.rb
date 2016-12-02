@@ -47,8 +47,8 @@ RSpec.describe Piece, type: :model do
     end
     
     context "invalid move" do
-      let(:destination_x) { 7 }
-      let(:destination_y) { 7 }
+      let(:destination_x) { 2 }
+      let(:destination_y) { 2 }
       
       it "should return false if the king tries to move too far" do
         expect(subject).to eq(false)
