@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20161129180238) do
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true, using: :btree
 
+<<<<<<< HEAD
   create_table "timers", force: true do |t|
     t.time     "time"
     t.integer  "player_id"
@@ -70,4 +71,6 @@ ActiveRecord::Schema.define(version: 20161129180238) do
     t.boolean  "running"
   end
 
+=======
+>>>>>>> f31b89c0ec985409ee51da1e87baa138b91caca1
 end
