@@ -236,5 +236,20 @@ RSpec.describe Piece, type: :model do
     end
     
   end
+
+  describe 'unicode_symbol to change pieces color' do 
+
+    it "should return true for WHITE piece" do 
+      game = Game.create(white_player_id: 0, black_player_id: 1)
+      pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 0)
+      expect(pawn.unicode_symbol).to eq "&#9817;"
+    end
+
+    it "should return true for BLACK piece" do 
+      game = Game.create(white_player_id: 0, black_player_id: 1)
+      pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 1)
+      expect(pawn.unicode_symbol).to eq "&#9823;"
+    end
+  end
   
 end

@@ -7,7 +7,7 @@
       <% (0..7).each do |row| %>
         <div id="row">
           <% (0..7).each do |column| %>
-            <div class="<%= square_color(row, column) %>">
+            <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
               <% @pieces.each do |piece| %>
               <% if piece.x_position == column && piece.y_position == row %>
                 <div class="piece" data-piece-id="<%piece.id%>">
