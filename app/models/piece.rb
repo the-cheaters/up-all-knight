@@ -10,7 +10,6 @@ class Piece < ActiveRecord::Base
   end
   
   def capture_piece(x, y)
-    game = self.get_game
     piece_to_capture = game.get_piece(x, y)
     if !piece_to_capture.nil? && piece_to_capture.get_color != self.get_color
       piece_to_capture.capture!
@@ -21,7 +20,6 @@ class Piece < ActiveRecord::Base
   
   def valid_move?(destination_x, destination_y)
     valid = true
-    game = self.get_game
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
       valid = false
@@ -37,7 +35,6 @@ class Piece < ActiveRecord::Base
   end
   
   def get_color
-    game = self.get_game
     if self.player_id == game.white_player_id
       return WHITE
     elsif self.player_id == game.black_player_id
@@ -45,9 +42,6 @@ class Piece < ActiveRecord::Base
     end
   end
   
-  def get_game
-    return Game.find(self.game_id)
-  end
   
   def is_obstructed?(destination_x, destination_y)
     location_x = self.x_position

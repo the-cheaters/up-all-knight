@@ -1,5 +1,5 @@
 class King < Piece
-
+  
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
     if valid
@@ -9,5 +9,5 @@ class King < Piece
     end
     return valid
   end
-
+  
 end
