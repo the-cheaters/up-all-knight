@@ -1,5 +1,8 @@
 FactoryGirl.define do
-  
+  factory :timer do
+    association :player
+  end
+ 
   factory :player do
     
     email "testuser@facebook.com"
@@ -21,6 +24,11 @@ FactoryGirl.define do
   factory :king do
     x_position 4
     y_position 4
+  end
+  
+  factory :knight do
+    x_position 5
+    y_position 5
   end
   
   
