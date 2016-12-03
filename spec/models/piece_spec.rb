@@ -11,10 +11,16 @@ RSpec.describe Piece, type: :model do
 
     subject { queen.valid_move?(destination_x, destination_y) }
 
-    it "should not allow an invalid move" do
+    context "invalid move" do
+      let(:destination_x) { 5 }
+      let(:destination_y) { 7 }
+
+      it "should not allow an invalid move" do
+        expect(subject).to eq(false)
+      end
     end
 
-    context "north" do
+    context "up" do
 
       let(:destination_x) { 4 }
       let(:destination_y) { 5 }
@@ -23,12 +29,103 @@ RSpec.describe Piece, type: :model do
         expect(subject).to eq(true)
       end
 
-      it "should return false if the queen is obstructed" do
+      it "should return true if the square is occupied by a piece of the opposing color" do
+        piece = FactoryGirl.create(:piece, x_position: 4, y_position: 5, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
       end
 
       it "should return false if the square is occupied by a piece of the same color" do
         piece = FactoryGirl.create(:piece, x_position: 4, y_position: 5, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
 
+    end
+
+    context "up and right" do
+
+      let(:destination_x) { 5 }
+      let(:destination_y) { 5 }
+
+      it "should be a valid move" do
+        expect(subject).to eq(true)
+      end
+
+      it "should return true if the square is occupied by a piece of the opposing color" do
+        piece = FactoryGirl.create(:piece, x_position: 5, y_position: 5, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
+      end
+
+      it "should return false if the square is occupied by a piece of the same color" do
+        piece = FactoryGirl.create(:piece, x_position: 5, y_position: 5, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
+
+    end
+
+    context "right" do
+
+      let(:destination_x) { 7 }
+      let(:destination_y) { 4 }
+
+      it "should be a valid move" do
+        expect(subject).to eq(true)
+      end
+
+      it "should return true if the square is occupied by a piece of the opposing color" do
+        piece = FactoryGirl.create(:piece, x_position: 7, y_position: 4, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
+      end
+
+      it "should return false if the square is occupied by a piece of the same color" do
+        piece = FactoryGirl.create(:piece, x_position: 7, y_position: 4, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
+
+      it "should return false if the queen is obstructed" do
+        piece = FactoryGirl.create(:piece, x_position: 6, y_position: 4, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
+
+    end
+
+    context "down and right" do
+
+      let(:destination_x) { 5 }
+      let(:destination_y) { 3 }
+
+      it "should be a valid move" do
+        expect(subject).to eq(true)
+      end
+
+      it "should return true if the square is occupied by a piece of the opposing color" do
+        piece = FactoryGirl.create(:piece, x_position: 5, y_position: 3, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
+      end
+
+      it "should return false if the square is occupied by a piece of the same color" do
+        piece = FactoryGirl.create(:piece, x_position: 5, y_position: 3, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
+
+    end
+
+    context "down" do
+
+      let(:destination_x) { 4 }
+      let(:destination_y) { 2 }
+
+      it "should be a valid move" do
+        expect(subject).to eq(true)
+      end
+
+      it "should return true if the square is occupied by a piece of the opposing color" do
+        piece = FactoryGirl.create(:piece, x_position: 4, y_position: 2, game_id: game.id, player_id: black_player.id)
+        expect(subject).to eq(true)
+      end
+
+      it "should return false if the square is occupied by a piece of the same color" do
+        piece = FactoryGirl.create(:piece, x_position: 4, y_position: 2, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
       end
 
     end
