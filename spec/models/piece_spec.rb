@@ -11,7 +11,8 @@ RSpec.describe Piece, type: :model do
 
     subject { queen.valid_move?(destination_x, destination_y) }
 
-    # shared examples
+    it "should not allow an invalid move" do
+    end
 
     context "north" do
 
