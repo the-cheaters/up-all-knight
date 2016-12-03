@@ -47,8 +47,8 @@ RSpec.describe Piece, type: :model do
     end
     
     context "invalid move" do
-      let(:destination_x) { 7 }
-      let(:destination_y) { 7 }
+      let(:destination_x) { 2 }
+      let(:destination_y) { 2 }
       
       it "should return false if the king tries to move too far" do
         expect(subject).to eq(false)
@@ -70,6 +70,48 @@ RSpec.describe Piece, type: :model do
     it 'should be a King' do
       king = FactoryGirl.create(:king, player_id: black_player.id)
       expect(king.type).to eq 'King'
+    end
+  end
+  
+  describe "Knight#valid_move?" do
+    
+    let(:knight) { FactoryGirl.create(:knight, game_id: game.id, player_id: black_player.id) }
+    
+    subject { knight.valid_move?(destination_x, destination_y) }
+    
+    context "valid move" do
+      let(:destination_x) { 3 }
+      let(:destination_y) { 4 }
+      
+      it "should return true if the move is valid" do
+        expect(subject).to eq(true)
+      end
+    end
+    
+    context "invalid move" do
+      let(:destination_x) { 7 }
+      let(:destination_y) { 7 }
+      
+      it "should return false if the knight tries to move outside of its constraints" do
+        expect(subject).to eq(false)
+      end
+    end
+    
+    context "no move" do
+      let(:destination_x) { 5 }
+      let(:destination_y) { 5 }
+      
+      it "should return false if the knight tries to move on top of itself" do
+        expect(subject).to eq(false)
+      end
+    end
+    
+  end
+  
+  describe 'a Knight' do
+    it 'should be a Knight' do
+      knight = FactoryGirl.create(:knight, player_id: black_player.id)
+      expect(knight.type).to eq 'Knight'
     end
   end
   
@@ -235,6 +277,21 @@ RSpec.describe Piece, type: :model do
       end
     end
     
+  end
+
+  describe 'unicode_symbol to change pieces color' do 
+
+    it "should return true for WHITE piece" do 
+      game = Game.create(white_player_id: 0, black_player_id: 1)
+      pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 0)
+      expect(pawn.unicode_symbol).to eq "&#9817;"
+    end
+
+    it "should return true for BLACK piece" do 
+      game = Game.create(white_player_id: 0, black_player_id: 1)
+      pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 1)
+      expect(pawn.unicode_symbol).to eq "&#9823;"
+    end
   end
   
 end
