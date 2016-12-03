@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   scope :is_available, -> { where("black_player_id is null or white_player_id = 0") }
   
   after_create do
-    unless rails.environment.test?
+    unless Rails.env.test?
       populate_board!
     end
   end
