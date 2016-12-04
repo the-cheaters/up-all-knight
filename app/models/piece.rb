@@ -30,7 +30,6 @@ class Piece < ActiveRecord::Base
         valid = false
       end
     end
-    # check to make sure destination exists on board (x, y between 0 and 7)
     return valid
   end
   
@@ -50,9 +49,12 @@ class Piece < ActiveRecord::Base
       # check for vertical obstruction
       location_y > destination_y ? incrementer = -1 : incrementer = 1
       position_y = location_y + incrementer
+      min, max = [position_y, destination_y].minmax
       range = nil
-      if position_y != destination_y
-        min, max = [position_y, destination_y].minmax
+      if min != max
+        if incrementer < 0
+          min = min - incrementer
+        end
         range = min...max
       end
       if game.pieces.where(x_position: location_x, y_position: range).any?
@@ -64,7 +66,13 @@ class Piece < ActiveRecord::Base
       location_x > destination_x ? incrementer = -1 : incrementer = 1
       position_x = location_x + incrementer
       min, max = [position_x, destination_x].minmax
-      range = min...max
+      range = nil
+      if min != max
+        if incrementer < 0
+          min = min - incrementer
+        end
+        range = min...max
+      end
       if game.pieces.where(x_position: range, y_position: location_y).any?
         return true
       end
