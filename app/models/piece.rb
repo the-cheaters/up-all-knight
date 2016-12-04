@@ -55,7 +55,7 @@ class Piece < ActiveRecord::Base
         if incrementer < 0
           min = min - incrementer
         end
-        range = min...max
+        min == max ? range = min : range = min...max
       end
       if game.pieces.where(x_position: location_x, y_position: range).any?
         return true
@@ -71,7 +71,7 @@ class Piece < ActiveRecord::Base
         if incrementer < 0
           min = min - incrementer
         end
-        range = min...max
+        min == max ? range = min : range = min...max
       end
       if game.pieces.where(x_position: range, y_position: location_y).any?
         return true
@@ -86,12 +86,22 @@ class Piece < ActiveRecord::Base
       min_x, max_x = [position_x, destination_x].minmax
       range_x = nil
       if min_x != max_x
-        range_x = min_x..max_x
+        if x_incrementer > 0
+          max_x = max_x - x_incrementer
+        else
+          min_x = min_x - x_incrementer
+        end
+        min_x == max_x ? range_x = min_x : range_x = min_x...max_x
       end
       min_y, max_y = [position_y, destination_y].minmax
       range_y = nil
       if min_y != max_y
-        range_y = min_y..max_y
+        if y_incrementer > 0
+          max_y = max_y - y_incrementer
+        else
+          min_y = min_y - y_incrementer
+        end
+        min_y == max_y ? range_y = min_y : range_y = min_y...max_y
       end
       if game.pieces.where(x_position: range_x, y_position: range_y).any?
         return true
