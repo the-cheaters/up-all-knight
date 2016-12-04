@@ -1,6 +1,7 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
+  validate :valid_move?
   
   WHITE = "white"
   BLACK = "black"
@@ -29,6 +30,9 @@ class Piece < ActiveRecord::Base
       if self.get_color == other_piece.get_color
         valid = false
       end
+    end
+    if !valid
+      errors.add(:base, "Invalid Move")
     end
     return valid
   end
