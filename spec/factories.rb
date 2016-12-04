@@ -1,5 +1,8 @@
 FactoryGirl.define do
-  
+  factory :timer do
+    association :player
+  end
+ 
   factory :player do
     
     email "testuser@facebook.com"
@@ -30,10 +33,10 @@ FactoryGirl.define do
   
   
   factory :game do
-    sequence :id do |n|
-      n
+    after(:build) { |game| game.class.skip_callback(:create, :after, :populate_board!) }
+    trait :populated do
+      after(:create) { |game| game.send(:populate_board!) }
     end
-    
   end
   
   # Factories for Omniauth
