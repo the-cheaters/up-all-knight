@@ -1,7 +1,7 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
-  validate :valid_move?
+  validate :valid_move?, :on => :update
   
   WHITE = "white"
   BLACK = "black"
