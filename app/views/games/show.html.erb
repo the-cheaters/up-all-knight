@@ -3,26 +3,20 @@
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 
-<div class="chessboard">
-
-    <% (0..7).each do |row| %>
-      <div id="row">
-     <% (0..7).each do |column| %>
-       <% if (row % 2 == 0) %>
-         <% if (column % 2 == 0) %>
-            <div class="white"></div>
-         <% else %>
-            <div class="black"></div>
-         <% end %>
-      <% else %>
-         <% if (column % 2 == 1) %>
-            <div class="white"></div>
-         <% else %>
-            <div class="black"></div>
-         <% end %>
-       <% end %>
-     <% end %>
-      </div>
-    <% end %>
-
-</div>
+    <div class="chessboard">
+      <% (0..7).each do |row| %>
+        <div id="row">
+          <% (0..7).each do |column| %>
+            <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
+              <% @pieces.each do |piece| %>
+              <% if piece.x_position == column && piece.y_position == row %>
+                <div class="piece" data-piece-id="<%piece.id%>">
+                <%= piece.unicode_symbol.html_safe %>
+                </div>
+              <% end %>  
+              <% end %>  
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
