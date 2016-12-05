@@ -10,7 +10,7 @@
     <div data-column="<%= column %>" data-row="<%= row %>" class="<%= square_color(row, column) %> tile">
       <% @pieces.each do |piece| %>
       <% if piece.x_position == column && piece.y_position == row %>
-      <div class="piece" data-piece-id="<%=piece.id%>" data-update-url="http://localhost:3000<%=game_piece_path(piece.game, piece) %>"
+      <div class="piece" data-piece-id="<%=piece.id%>" data-update-url="<%=game_piece_path(piece.game, piece) %>"
         
         >
         <%= piece.unicode_symbol.html_safe %>
