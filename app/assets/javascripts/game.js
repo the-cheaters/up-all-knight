@@ -4,11 +4,18 @@ $(document).ready(function() {
       type: 'PUT',
       url: url,
       dataType: 'json',
-      data: { piece: { x_position: new_x_position, y_position: new_y_position } }
+      data: { piece: { x_position: new_x_position, y_position: new_y_position } },
+      error: function() {
+        alert("Invalid Move!!! Try Again")
+      },
+      success: function() {
+        window.location.reload()
+      }
     });
   }
   var  update_url = "";
   var click_number = 0;
+  
   $('.tile').click(function() {
     click_number += 1
     if (click_number === 1) {
@@ -23,7 +30,5 @@ $(document).ready(function() {
       $('div').removeClass("selected_piece")
     }
   });
-  
-  
   
 });

@@ -21,6 +21,9 @@ class Piece < ActiveRecord::Base
   
   def valid_move?(destination_x, destination_y)
     valid = true
+    if destination_x == nil || destination_y == nil
+      valid = false
+    end
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
       valid = false
@@ -30,9 +33,6 @@ class Piece < ActiveRecord::Base
       if self.get_color == other_piece.get_color
         valid = false
       end
-    end
-    if !valid
-      errors.add(:base, "Invalid Move")
     end
     return valid
   end
