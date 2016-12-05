@@ -1,6 +1,6 @@
 class Knight < Piece
-
-
+  
+  
   def unicode_symbol
     if self.get_color == WHITE
       return "&#9816;"
@@ -8,7 +8,7 @@ class Knight < Piece
       return "&#9822;"
     end
   end
-
+  
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
     if valid
@@ -18,11 +18,13 @@ class Knight < Piece
         end
       end
     end
+    if valid && game.is_piece_present?(destination_x, destination_y)
+      capture_piece(destination_x, destination_y)
+    end
     return valid
   end
   
   def  is_obstructed?(destination_x, destination_y)
     return false
-
   end
 end

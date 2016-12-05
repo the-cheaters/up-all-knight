@@ -19,7 +19,8 @@ $(document).ready(function() {
       click_number = 0
       var x = $(this).attr('data-column');
       var y = $(this).attr('data-row');
-      move_piece(update_url,x,y)
+      move_piece(update_url,x,y);
+      $('div').removeClass("selected_piece")
     }
   });
   
