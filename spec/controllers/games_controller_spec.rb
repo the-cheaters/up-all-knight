@@ -68,6 +68,15 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
+
+      it "should update the free player with the current player" do
+        game = FactoryGirl.create(:game, white_player_id: 0)
+        player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
+        sign_in player
+        patch :update, id: game.id, game: { white_player_id: player.id }
+        game.reload
+        expect(game.white_player_id).to eq(player.id)
+      end
   end
 
   describe "games#destroy action" do
@@ -78,5 +87,5 @@ RSpec.describe GamesController, type: :controller do
       expect(game).to eq nil
     end
   end
-  
+
 end
