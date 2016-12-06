@@ -50,13 +50,7 @@ class Piece < ActiveRecord::Base
       location_y > destination_y ? incrementer = -1 : incrementer = 1
       position_y = location_y + incrementer
       min, max = [position_y, destination_y].minmax
-      range = nil
-      if min != max
-        if incrementer < 0
-          min = min - incrementer
-        end
-        min == max ? range = min : range = min...max
-      end
+      range = range(min, max, incrementer)
       if game.pieces.where(x_position: location_x, y_position: range).any?
         return true
       end
@@ -66,13 +60,7 @@ class Piece < ActiveRecord::Base
       location_x > destination_x ? incrementer = -1 : incrementer = 1
       position_x = location_x + incrementer
       min, max = [position_x, destination_x].minmax
-      range = nil
-      if min != max
-        if incrementer < 0
-          min = min - incrementer
-        end
-        min == max ? range = min : range = min...max
-      end
+      range = range(min, max, incrementer)
       if game.pieces.where(x_position: range, y_position: location_y).any?
         return true
       end
@@ -84,30 +72,27 @@ class Piece < ActiveRecord::Base
       position_x = location_x + x_incrementer
       position_y = location_y + y_incrementer
       min_x, max_x = [position_x, destination_x].minmax
-      range_x = nil
-      if min_x != max_x
-        if x_incrementer > 0
-          max_x = max_x - x_incrementer
-        else
-          min_x = min_x - x_incrementer
-        end
-        min_x == max_x ? range_x = min_x : range_x = min_x...max_x
-      end
+      range_x = range(min_x, max_x, x_incrementer, true)
       min_y, max_y = [position_y, destination_y].minmax
-      range_y = nil
-      if min_y != max_y
-        if y_incrementer > 0
-          max_y = max_y - y_incrementer
-        else
-          min_y = min_y - y_incrementer
-        end
-        min_y == max_y ? range_y = min_y : range_y = min_y...max_y
-      end
+      range_y = range(min_y, max_y, y_incrementer, true)
       if game.pieces.where(x_position: range_x, y_position: range_y).any?
         return true
       end
       return false
     end
+  end
+
+  def range(min, max, incrementer, diagonal=false)
+    range = nil
+    if min != max
+      if incrementer > 0 && diagonal
+        max = max - incrementer
+      elsif incrementer < 0
+        min = min - incrementer
+      end
+      min == max ? range = min : range = min...max
+    end
+    return range
   end
   
 end
