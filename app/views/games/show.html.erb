@@ -26,3 +26,10 @@
     <% end %>
 
 </div>
+
+<div class="captured-pieces">
+  <h1>Captured Pieces</h1>
+  <% @game.pieces.where(captured: true).each do |piece| %>
+    <li><%= piece %></li>
+  <% end %>
+</div>
