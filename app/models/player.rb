@@ -21,10 +21,10 @@ class Player < ActiveRecord::Base
   end
 
   def join_game
-    if current_game.white_player_id == 0
-      current_game.update_attribute(:white_player_id, current_player.id)
+    if @game.white_player_id == 0
+      @game.update_attribute(:white_player_id, current_player.id)
     else
-      current_game.update_attribute(:black_player_id, current_player.id)
+      @game.update_attribute(:black_player_id, current_player.id)
     end
   end
 end
