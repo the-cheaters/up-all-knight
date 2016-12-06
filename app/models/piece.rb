@@ -37,7 +37,7 @@ class Piece < ActiveRecord::Base
   def is_obstructed?(destination_x, destination_y)
     location_x = self.x_position
     location_y = self.y_position
-    if location_x == destination_x
+    if vertical(destination_x)
       # check for vertical obstruction
       location_y > destination_y ? incrementer = -1 : incrementer = 1
       position_y = location_y + incrementer
@@ -47,7 +47,7 @@ class Piece < ActiveRecord::Base
         return true
       end
       return false
-    elsif location_y == destination_y
+    elsif horizontal(destination_y)
       # check for horizontal obstruction
       location_x > destination_x ? incrementer = -1 : incrementer = 1
       position_x = location_x + incrementer
@@ -57,7 +57,7 @@ class Piece < ActiveRecord::Base
         return true
       end
       return false
-    elsif (location_x - destination_x).abs == (location_y - destination_y).abs
+    elsif diagonal(destination_x, destination_y)
       # check for diagonal obstruction
       location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
       location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
@@ -72,6 +72,21 @@ class Piece < ActiveRecord::Base
       end
       return false
     end
+  end
+
+  private
+
+  def horizontal(destination_y)
+    destination_y == self.y_position
+  end
+
+  def vertical(destination_x)
+    destination_x == self.x_position
+  end
+
+  def diagonal(destination_x, destination_y)
+    (destination_x - self.x_position).abs == 
+    (destination_y - self.y_position).abs
   end
   
 end
