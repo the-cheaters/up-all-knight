@@ -3,11 +3,11 @@ class Player < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook,:twitter, :google]
- 
+
   has_many :timers
-   
+
   def self.from_omniauth(auth)
-    
+
     where(provider: auth.provider, uid: auth.uid.to_s).first_or_create do |player|
       player.provider = auth.provider
       player.uid = auth.uid.to_s
@@ -17,6 +17,14 @@ class Player < ActiveRecord::Base
         player.email = auth.info.email
       end
       player.password = Devise.friendly_token[0,20]
+    end
+  end
+
+  def join_game
+    if current_game.white_player_id == 0
+      current_game.update_attribute(:white_player_id, current_player.id)
+    else
+      current_game.update_attribute(:black_player_id, current_player.id)
     end
   end
 end
