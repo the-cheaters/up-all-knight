@@ -82,6 +82,8 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  private
+
   def range(min, max, incrementer, diagonal=false)
     range = nil
     if min != max
