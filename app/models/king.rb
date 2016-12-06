@@ -1,5 +1,5 @@
 class King < Piece
-
+  
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
     if valid
@@ -8,6 +8,15 @@ class King < Piece
       end
     end
     return valid
+  end
+
+
+  def unicode_symbol
+    if self.get_color == WHITE
+      return "&#9812;"
+    else
+      return "&#9818;"
+    end
   end
 
 end

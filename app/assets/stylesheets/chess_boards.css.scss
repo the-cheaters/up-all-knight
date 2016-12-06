@@ -1,0 +1,24 @@
+// Place all the styles related to the ChessBoards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.chessboard {
+    width: 650px;
+    height: 650px;
+    margin: 0 auto;
+    border: 5px solid grey;
+}
+
+#row {
+  width: 640px;
+  height: 80px;
+  margin-left: 0;
+}
+
+.piece {
+  font-size: 60px;
+  font-family: Tahoma;
+  margin-left: 5px;
+}

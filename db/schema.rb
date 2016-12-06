@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161118012333) do
+ActiveRecord::Schema.define(version: 20161129180238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(version: 20161118012333) do
     t.integer  "game_id"
     t.integer  "x_position"
     t.integer  "y_position"
-    t.boolean  "captured"
+    t.boolean  "captured",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "captured_at"
   end
 
   create_table "players", force: true do |t|
@@ -57,5 +58,16 @@ ActiveRecord::Schema.define(version: 20161118012333) do
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true, using: :btree
+
+  create_table "timers", force: true do |t|
+    t.time     "time"
+    t.integer  "player_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "time_left"
+    t.datetime "start_time"
+    t.boolean  "running"
+  end
 
 end
