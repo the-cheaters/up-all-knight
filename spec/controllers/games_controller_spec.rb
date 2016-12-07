@@ -73,7 +73,7 @@ RSpec.describe GamesController, type: :controller do
         game = FactoryGirl.create(:game, white_player_id: 0)
         player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
         sign_in player
-        patch :update, id: game.id, game: { white_player_id: player.id }
+        player.join_game!(game)
         game.reload
         expect(game.white_player_id).to eq(player.id)
       end

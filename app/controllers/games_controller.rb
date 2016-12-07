@@ -67,7 +67,7 @@ class GamesController < ApplicationController
   end
 
   def add_player
-    current_player.join_game(@game)
+    current_player.join_game!(@game)
   end
 
   private
