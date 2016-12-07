@@ -10,7 +10,7 @@ class Pawn < Piece
 
   def valid_move?(destination_x, destination_y)
     valid = super
-    if valid 
+    if valid
       if pawn_diagonal?(destination_x, destination_y)
         capture_piece(destination_x, destination_y)
         return true
@@ -34,7 +34,7 @@ class Pawn < Piece
   end
 
   def pawn_diagonal?(destination_x, destination_y)
-    if game.is_piece_present?(destination_x, destination_y) && self.get_color == other_piece.get_color 
+    if game.is_piece_present?(destination_x, destination_y) && self.get_color != game.get_piece(destination_x, destination_y).get_color
       return (destination_y - self.y_position).abs == 1 && (destination_x – self.x_position).abs == 1
     else
       return false
