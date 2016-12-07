@@ -14,9 +14,10 @@ class Pawn < Piece
       if pawn_diagonal?(destination_x, destination_y)
         capture_piece(destination_x, destination_y)
         return true
-      elsif move_backward?(destination_y) && (one_square?(destination_x, destination_y) || two_squares?(destination_x, destination_y))
+      elsif moving_backward?(destination_y) && (one_square?(destination_x, destination_y) || two_squares?(destination_x, destination_y))
         return false
       end
+      moving_backward?(destination_y)
     end
     return valid
   end
@@ -34,16 +35,16 @@ class Pawn < Piece
   end
 
   def pawn_diagonal?(destination_x, destination_y)
-    if game.is_piece_present?(destination_x, destination_y) && self.get_color != game.get_piece(destination_x, destination_y).get_color
-      return (destination_y - self.y_position).abs == 1 && (destination_x – self.x_position).abs == 1
+    if game.is_piece_present?(destination_x, destination_y) 
+      return (destination_y - self.y_position).abs == 1 && (destination_x - self.x_position).abs == 1
     else
       return false
     end
   end
 
-  def move_backward?(destination_y)
-    return self.get_color == WHITE && (destination_y - self.y_position) > 0
-    return self.get_color == BLACK && (destination_y - self.y_position) < 0
+  def moving_backward?(destination_y)
+    return (destination_y - self.y_position) > 0 if self.get_color == WHITE 
+    return (destination_y - self.y_position) < 0 if self.get_color == BLACK 
   end
 
   # def move_horizontal?(destination_x)

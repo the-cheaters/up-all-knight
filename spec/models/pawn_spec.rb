@@ -44,9 +44,8 @@ RSpec.describe Pawn, type: :model do
           let(:destination_y) { 2 }
 
           it "should return true if a piece is present and available for capture" do 
-            # FactoryGirl.create(:pawn, x_position: 2, y_position: 2, game_id: game.id, player_id: black_player.id)
-            # FactoryGirl.create(:pawn, x_position: 2, y_position: 2, game_id: game.id, player_id: white_player.id)
-            piece = FactoryGirl.create(:pawn, x_position: 2, y_position: 2, game_id: game.id, player_id: black_player.id)
+            FactoryGirl.create(:pawn, x_position: 2, y_position: 2, game_id: game.id, player_id: black_player.id)
+            expect(subject).to eq(true)
           end
         end
 
