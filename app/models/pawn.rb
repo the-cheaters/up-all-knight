@@ -9,7 +9,7 @@ class Pawn < Piece
   end
 
   def valid_move?(destination_x, destination_y)
-    valid = super(destination_x, destination_y)
+    valid = super
     if valid 
       if pawn_diagonal?(destination_x, destination_y)
         capture_piece(destination_x, destination_y)
@@ -17,13 +17,12 @@ class Pawn < Piece
       elsif move_backward?(destination_y) && (one_square?(destination_x, destination_y) || two_squares?(destination_x, destination_y))
         return false
       end
-      move_backward?(destination_y) 
     end
     return valid
   end
 
   def on_home_row?
-    return true if (self.get_color == WHITE && y_position == 1) || y_position == 6
+    return true if (self.get_color == WHITE && y_position == 1) || self.get_color == BLACK && y_position == 6
   end
 
   def one_square?(destination_x, destination_y)
@@ -35,7 +34,7 @@ class Pawn < Piece
   end
 
   def pawn_diagonal?(destination_x, destination_y)
-    if game.is_piece_present?(destination_x, destination_y) 
+    if game.is_piece_present?(destination_x, destination_y) && self.get_color == other_piece.get_color 
       return (destination_y - self.y_position).abs == 1 && (destination_x – self.x_position).abs == 1
     else
       return false
@@ -48,12 +47,10 @@ class Pawn < Piece
   end
 
   # def move_horizontal?(destination_x)
-  #   byebug
-  #   (x_position - destination_x).abs != 0
+  #  (x_position - destination_x).abs != 0
   # end
 
   # def promotion?(destination_y)
-  #   byebug
   #   destination_y == 7 && self.get_color == WHITE || destination_y == 0 && self.get_color == BLACK
   # end
 
