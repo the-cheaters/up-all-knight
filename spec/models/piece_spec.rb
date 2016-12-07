@@ -31,6 +31,22 @@ RSpec.describe Piece, type: :model do
     end
   end
   
+  describe "opposite_piece_present?" do
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: black_player.id) }
+    
+    subject { piece.is_obstructed?(destination_x, destination_y) }
+    
+    context "is_obstructed?" do
+      let(:destination_x) { 5 }
+      let(:destination_y) { 5 }
+      
+      it "should return false if a piece is present and of opposite color" do
+        FactoryGirl.create(:piece, x_position: 5, y_position: 5, game_id: game.id, player_id: white_player.id)
+        expect(subject).to eq(false)
+      end
+    end
+  end
+  
   describe "King#valid_move?" do
     
     let(:king) { FactoryGirl.create(:king, game_id: game.id, player_id: black_player.id) }
@@ -278,16 +294,16 @@ RSpec.describe Piece, type: :model do
     end
     
   end
-
-  describe 'unicode_symbol to change pieces color' do 
-
-    it "should return true for WHITE piece" do 
+  
+  describe 'unicode_symbol to change pieces color' do
+    
+    it "should return true for WHITE piece" do
       game = Game.create(white_player_id: 0, black_player_id: 1)
       pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 0)
       expect(pawn.unicode_symbol).to eq "&#9817;"
     end
-
-    it "should return true for BLACK piece" do 
+    
+    it "should return true for BLACK piece" do
       game = Game.create(white_player_id: 0, black_player_id: 1)
       pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 1)
       expect(pawn.unicode_symbol).to eq "&#9823;"
