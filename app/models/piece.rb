@@ -23,12 +23,6 @@ class Piece < ActiveRecord::Base
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
       valid = false
-      # Check if destination is occupied by a piece of the same color
-    elsif game.is_piece_present?(destination_x, destination_y)
-      other_piece = game.get_piece(destination_x, destination_y)
-      if self.get_color == other_piece.get_color
-        valid = false
-      end
     end
     return valid
   end
@@ -41,7 +35,6 @@ class Piece < ActiveRecord::Base
     end
   end
   
-  
   def is_obstructed?(destination_x, destination_y)
     location_x = self.x_position
     location_y = self.y_position
@@ -52,7 +45,7 @@ class Piece < ActiveRecord::Base
       min, max = [position_y, destination_y].minmax
       range = min..max
       if game.pieces.where(x_position: location_x, y_position: range).any?
-        return true
+        return true if !opposite_piece_present?(destination_x, destination_y)
       end
       return false
     elsif horizontal(destination_y)
@@ -62,7 +55,7 @@ class Piece < ActiveRecord::Base
       min, max = [position_x, destination_x].minmax
       range = min..max
       if game.pieces.where(x_position: range, y_position: location_y).any?
-        return true
+        return true if !opposite_piece_present?(destination_x, destination_y)
       end
       return false
     elsif diagonal(destination_x, destination_y)
@@ -75,26 +68,38 @@ class Piece < ActiveRecord::Base
       range_x = min_x..max_x
       min_y, max_y = [position_y, destination_y].minmax
       range_y = min_y..max_y
+      
       if game.pieces.where(x_position: range_x, y_position: range_y).any?
-        return true
+        return true if !opposite_piece_present?(destination_x, destination_y)
       end
       return false
     end
   end
-
+  
   private
-
+  
   def horizontal(destination_y)
     destination_y == self.y_position
   end
-
+  
   def vertical(destination_x)
     destination_x == self.x_position
   end
-
+  
   def diagonal(destination_x, destination_y)
-    (destination_x - self.x_position).abs == 
+    
+    (destination_x - self.x_position).abs ==
     (destination_y - self.y_position).abs
   end
   
+  def opposite_piece_present?(destination_x, destination_y)
+    if game.is_piece_present?(destination_x, destination_y)
+      other_piece = game.get_piece(destination_x, destination_y)
+      if self.get_color == other_piece.get_color
+        return false
+      else
+        return true
+      end
+    end
+  end
 end
