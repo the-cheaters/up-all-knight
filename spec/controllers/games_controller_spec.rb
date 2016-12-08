@@ -53,12 +53,6 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "should display captured pieces" do
-      game = FactoryGirl.create(:game)
-      piece = Piece.first
-      piece.captured = true
-
-    end
   end
 
   describe "games#update action" do
