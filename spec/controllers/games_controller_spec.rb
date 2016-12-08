@@ -68,8 +68,12 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
+  end
 
-      it "should update the free player with the current player" do
+  describe "games#joingame action" do
+
+    context "white player is free" do
+    it "should update the white player with the current player" do
         game = FactoryGirl.create(:game, white_player_id: 0)
         player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
         sign_in player
@@ -77,6 +81,18 @@ RSpec.describe GamesController, type: :controller do
         game.reload
         expect(game.white_player_id).to eq(player.id)
       end
+    end
+
+    context "black player is free" do
+      it "should update the black player with the current player" do
+        game = FactoryGirl.create(:game, black_player_id: 0)
+        player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
+        sign_in player
+        player.join_game!(game)
+        game.reload
+        expect(game.black_player_id).to eq(player.id)
+      end
+    end
   end
 
   describe "games#destroy action" do
