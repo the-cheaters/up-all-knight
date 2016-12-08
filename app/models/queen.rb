@@ -2,7 +2,11 @@ class Queen < Piece
 
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
-    valid && (horizontal || vertical || diagonal)
+    valid && (
+      horizontal(destination_y) || 
+      vertical(destination_x) || 
+      diagonal(destination_x, destination_y)
+      )
   end
   
   def unicode_symbol
