@@ -46,13 +46,4 @@ class Pawn < Piece
     return (destination_y - self.y_position) > 0 if self.get_color == WHITE 
     return (destination_y - self.y_position) < 0 if self.get_color == BLACK 
   end
-
-  # def move_horizontal?(destination_x)
-  #  (x_position - destination_x).abs != 0
-  # end
-
-  # def promotion?(destination_y)
-  #   destination_y == 7 && self.get_color == WHITE || destination_y == 0 && self.get_color == BLACK
-  # end
-
 end
