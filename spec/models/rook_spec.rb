@@ -37,7 +37,7 @@ RSpec.describe Piece, type: :model do
         expect(subject).to eq(false)
       end
 
-      it "should return false if the queen is obstructed" do
+      it "should return false if the rook is obstructed" do
         piece = FactoryGirl.create(:piece, x_position: 4, y_position: 6, game_id: game.id, player_id: white_player.id)
         expect(subject).to eq(false)
       end
@@ -61,7 +61,7 @@ RSpec.describe Piece, type: :model do
         expect(subject).to eq(false)
       end
 
-      it "should return false if the queen is obstructed" do
+      it "should return false if the rook is obstructed" do
         piece = FactoryGirl.create(:piece, x_position: 4, y_position: 3, game_id: game.id, player_id: white_player.id)
         expect(subject).to eq(false)
       end
@@ -85,7 +85,7 @@ RSpec.describe Piece, type: :model do
         expect(subject).to eq(false)
       end
 
-      it "should return false if the queen is obstructed" do
+      it "should return false if the rook is obstructed" do
         piece = FactoryGirl.create(:piece, x_position: 6, y_position: 4, game_id: game.id, player_id: white_player.id)
         expect(subject).to eq(false)
       end
@@ -109,7 +109,7 @@ RSpec.describe Piece, type: :model do
         expect(subject).to eq(false)
       end
 
-      it "should return false if the queen is obstructed" do
+      it "should return false if the rook is obstructed" do
         piece = FactoryGirl.create(:piece, x_position: 3, y_position: 4, game_id: game.id, player_id: white_player.id)
         expect(subject).to eq(false)
       end
