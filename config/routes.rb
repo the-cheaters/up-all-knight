@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   root 'games#index'
-  resources :games
+  resources :games do
+    patch 'add_player', on: :member
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
