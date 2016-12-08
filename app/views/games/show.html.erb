@@ -3,6 +3,29 @@
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 
+    <!-- <div class="captured-pieces">
+      <h1>Captured Pieces</h1>
+
+      <% @game.pieces.where(captured: true).each do |piece| %>
+      <li>
+        <h2>
+          <%= piece.unicode_symbol.html_safe %>
+        </h2>
+      </li>
+      <% end %>
+
+    </div>
+     -->
+
+      <h1>Captured Pieces:
+        <% @game.pieces.where(captured: true).each do |piece| %>
+            <%= piece.unicode_symbol.html_safe %>
+        <% end %>
+      </h1>
+
+
+
+
 
 
     <div class="chessboard">
@@ -20,16 +43,5 @@
             </div>
           <% end %>
         </div>
-      <% end %>
-    </div>
-
-
-    <div class="captured-pieces">
-      <h1>Captured Pieces</h1>
-      <% @game.pieces.where(captured: true).each do |piece| %>
-        <% if piece.type == "Pawn"%>
-          <% if piece.get_color == WHITE %>
-            
-
       <% end %>
     </div>
