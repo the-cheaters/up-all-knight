@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Piece, type: :model do
+RSpec.describe Rook, type: :model do
   let(:white_player) { FactoryGirl.create(:player, id: 212, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 213, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
