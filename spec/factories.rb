@@ -19,9 +19,18 @@ FactoryGirl.define do
   
   factory :pawn do
     type 'Pawn'
+    x_position 1
+    y_position 1
+  end
+
+  factory :queen do
+    type 'Queen'
+    x_position 4
+    y_position 4
   end
   
   factory :king do
+    type 'King'
     x_position 4
     y_position 4
   end
