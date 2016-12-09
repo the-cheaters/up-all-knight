@@ -1,10 +1,13 @@
 <h1>New game</h1>
 
 <%= simple_form_for @game do |f| %>
-  <p>I want to be the...</p>
-  <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
-  <br/>
-  <%= f.button :submit %>
+<p>I want to be the...</p>
+<%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
+<br/>
+<p>How many seconds on blitz timer?</p>
+<%= number_field_tag :time_left %>
+<br/>
+<%= f.button :submit %>
 <% end %>
 
 <%= link_to 'Back', games_path %>
