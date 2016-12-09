@@ -24,7 +24,6 @@ class Piece < ActiveRecord::Base
       move_counter = self.moves
       move_counter += 1 if self.moves < 2
       self.update_attributes(:x_position => destination_x, :y_position => destination_y, :moves => move_counter)
-      # Integrate capture_piece
       if self.game.is_piece_present?(destination_x, destination_y) && 
         self.game.get_piece(destination_x, destination_y).get_color != self.get_color
         self.capture_piece(destination_x, destination_y)
