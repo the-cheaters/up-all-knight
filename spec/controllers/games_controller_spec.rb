@@ -52,6 +52,10 @@ RSpec.describe GamesController, type: :controller do
       get :show, id: game.id
       expect(response).to have_http_status(:success)
     end
+    it "should display all captured pieces" do
+      game = FactoryGirl.create(:game)
+      expect(@captured_count).to eq(nil)
+    end
   end
 
   describe "games#update action" do

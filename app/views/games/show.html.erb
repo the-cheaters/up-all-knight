@@ -3,25 +3,12 @@
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 
-    <!-- <div class="captured-pieces">
-      <h1>Captured Pieces</h1>
 
+    <h1>Captured Pieces:
       <% @game.pieces.where(captured: true).each do |piece| %>
-      <li>
-        <h2>
           <%= piece.unicode_symbol.html_safe %>
-        </h2>
-      </li>
       <% end %>
-
-    </div>
-     -->
-
-      <h1>Captured Pieces:
-        <% @game.pieces.where(captured: true).each do |piece| %>
-            <%= piece.unicode_symbol.html_safe %>
-        <% end %>
-      </h1>
+    </h1>
 
 
 

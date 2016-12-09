@@ -18,6 +18,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
+    @captured_count = @game.pieces.where(captured: true).count
   end
 
   # GET /games/new
@@ -65,17 +66,15 @@ class GamesController < ApplicationController
     @game.destroy
     redirect_to root_path
   end
-<<<<<<< HEAD
 
-=======
-  
+
   def add_player
     set_game
     current_player.join_game!(@game)
     redirect_to game_path
   end
-  
->>>>>>> 2c8bf2d13c4587143665eeb69d159d41817f7f12
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
