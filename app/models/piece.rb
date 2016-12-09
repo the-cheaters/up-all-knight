@@ -17,6 +17,36 @@ class Piece < ActiveRecord::Base
       fail "There is no piece of the opposite color to capture."
     end
   end
+
+  def move_to(destination_x, destination_y)
+    if self.valid_move?(destination_x, destination_y)
+      move_counter = self.moves
+      move_counter += 1 if self.moves < 2
+      self.update_attributes(:x_position => destination_x, :y_position => destination_y, :moves => move_counter)
+      # Integrate capture_piece
+      if self.game.is_piece_present?(destination_x, destination_y) && 
+        self.game.get_piece(destination_x, destination_y).get_color != self.get_color
+        self.capture_piece(destination_x, destination_y)
+      else
+        self.en_passant(destination_x, destination_y)
+      end
+    end
+  end
+
+  def en_passant(destination_x, destination_y)
+    if destination_y == 2 || destination_y == 5
+      destination_y == 2 ? incrementer = 1 : incrementer = -1
+      incremented_y = destination_y + incrementer
+      if self.game.is_piece_present?(destination_x, incremented_y)
+        other_piece = game.get_piece(destination_x, incremented_y)
+        if other_piece.type == 'Pawn' && 
+          other_piece.moves == 1 &&
+          other_piece.get_color != self.get_color
+            self.capture_piece(destination_x, incremented_y)
+        end
+      end
+    end
+  end
   
   def valid_move?(destination_x, destination_y)
     valid = true
