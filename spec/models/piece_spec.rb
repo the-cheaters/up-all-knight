@@ -11,15 +11,23 @@ RSpec.describe Piece, type: :model do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
 
     it "should have its x and y position updated when it moves" do
-      piece.move_to(5, 5)
+      piece.move_to(5,5)
       piece.reload
       expect(piece.x_position).to eq(5)
     end
 
-    it "should have its moves count increased by one" do
+    it "should increase the moves count of a new piece by one" do
       piece.move_to(5,5)
       piece.reload
       expect(piece.moves).to eq(1)
+    end
+
+    it "should not increase the moves count of a piece by more than two" do
+      piece.move_to(5,5)
+      piece.move_to(6,6)
+      piece.move_to(7,7)
+      piece.reload
+      expect(piece.moves).to eq(2)
     end
   end
 

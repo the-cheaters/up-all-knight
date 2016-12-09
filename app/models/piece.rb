@@ -21,9 +21,12 @@ class Piece < ActiveRecord::Base
 
   def move_to(destination_x, destination_y)
     if self.valid_move?(destination_x, destination_y)
-      move_counter = self.moves
-      move_counter += 1 if self.moves < 2
-      self.update_attributes(:x_position => destination_x, :y_position => destination_y, :moves => move_counter)
+      if self.moves < 2
+        moves_updated = self.moves + 1
+        self.update_attributes(:x_position => destination_x, :y_position => destination_y, :moves => moves_updated)
+      else
+        self.update_attributes(:x_position => destination_x, :y_position => destination_y)
+      end
       if self.game.is_piece_present?(destination_x, destination_y) && 
         self.game.get_piece(destination_x, destination_y).get_color != self.get_color
         self.capture_piece(destination_x, destination_y)
