@@ -7,6 +7,9 @@
 <p>I want game type to be...</p>
 <%= f.collection_radio_buttons :is_blitz, [[false, 'Standard'] ,[true, 'Blitz']], :first, :last %>
 <br/>
+<p>How many seconds on blitz timer?</p>
+<%= number_field_tag :time_left %>
+<br/>
 <%= f.button :submit %>
 <% end %>
 
