@@ -37,47 +37,61 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.current_turn = 0
     @game.black_player_id = current_player.id if @game.white_player_id == 0
+    <<<<<<< HEAD
     if @game.save && @game.is_blitz
       @game.create_timers(params[:time_left])
+      =======
+      @white_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id,player_id: @game.white_player_id)
+      @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
+      respond_to do |format|
+        if @game.save
+          format.html { redirect_to @game, notice: 'Game was successfully created.' }
+          format.json { render :show, status: :created, location: @game }
+        else
+          format.html { render :new }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
+        end
+        >>>>>>> actually saved file
+      end
+      redirect_to game_path(@game)
     end
-    redirect_to game_path(@game)
-  end
-  
-  # PATCH/PUT /games/1
-  # PATCH/PUT /games/1.json
-  def update
-    respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+    
+    # PATCH/PUT /games/1
+    # PATCH/PUT /games/1.json
+    def update
+      respond_to do |format|
+        if @game.update(game_params)
+          format.html { redirect_to @game, notice: 'Game was successfully updated.' }
+          format.json { render :show, status: :ok, location: @game }
+        else
+          format.html { render :edit }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
+        end
       end
     end
+    
+    def destroy
+      @game.destroy
+      redirect_to root_path
+    end
+    
+    def add_player
+      set_game
+      current_player.join_game!(@game)
+      redirect_to game_path
+    end
+    
+    private
+    
+    # Use callbacks to share common setup or constraints between actions.
+    def set_game
+      @game = Game.find(params[:id])
+    end
+    
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def game_params
+      params.require(:game).permit(:current_turn, :white_player_id, :is_blitz)
+    end
+    
   end
   
-  def destroy
-    @game.destroy
-    redirect_to root_path
-  end
-  
-  def add_player
-    set_game
-    current_player.join_game!(@game)
-    redirect_to game_path
-  end
-  
-  private
-  
-  # Use callbacks to share common setup or constraints between actions.
-  def set_game
-    @game = Game.find(params[:id])
-  end
-  
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def game_params
-    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz)
-  end
-  
-end
