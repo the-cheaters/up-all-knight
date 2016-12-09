@@ -13,17 +13,17 @@ RSpec.describe Pawn, type: :model do
       subject { pawn.valid_move?(destination_x, destination_y) }
       
       context "valid move for first move" do
-        let(:destination_x) { 1 }
-        let(:destination_y) { 3 }
+        let(:destination_x) { 6 }
+        let(:destination_y) { 4 }
         
         it "should return true if the white pawn is moving 2 squares up for first move" do
           expect(subject).to eq(true)
         end
       end
 
-       context "valid move for any move" do
-        let(:destination_x) { 1 }
-        let(:destination_y) { 2 } 
+       context "valid move for white player" do
+        let(:destination_x) { 6 }
+        let(:destination_y) { 5 } 
 
         it "should return true if the white pawn is moving 1 square up for any move" do 
           expect(subject).to eq(true)
@@ -31,8 +31,8 @@ RSpec.describe Pawn, type: :model do
       end
 
         context "diagonal move for capture" do 
-          let(:destination_x) { 2 }
-          let(:destination_y) { 2 }
+          let(:destination_x) { 5 }
+          let(:destination_y) { 5 }
 
           it "should return false if no piece present" do 
             expect(subject).to eq(false)
@@ -40,11 +40,11 @@ RSpec.describe Pawn, type: :model do
         end
 
         context "diagonal move for capture" do 
-          let(:destination_x) { 2 }
-          let(:destination_y) { 2 }
+          let(:destination_x) { 5 }
+          let(:destination_y) { 5 }
 
           it "should return true if a piece is present and available for capture" do 
-            FactoryGirl.create(:pawn, x_position: 2, y_position: 2, game_id: game.id, player_id: black_player.id)
+            FactoryGirl.create(:pawn, x_position: 5, y_position: 5, game_id: game.id, player_id: black_player.id)
             expect(subject).to eq(true)
           end
         end
@@ -57,7 +57,6 @@ RSpec.describe Pawn, type: :model do
             expect(subject).to eq(false)
           end
         end
-     
-      
+  
     end
   end

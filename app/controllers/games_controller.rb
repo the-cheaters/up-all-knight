@@ -65,7 +65,17 @@ class GamesController < ApplicationController
     @game.destroy
     redirect_to root_path
   end
+<<<<<<< HEAD
 
+=======
+  
+  def add_player
+    set_game
+    current_player.join_game!(@game)
+    redirect_to game_path
+  end
+  
+>>>>>>> 2c8bf2d13c4587143665eeb69d159d41817f7f12
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -75,7 +85,7 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:current_turn, :white_player_id)
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz)
   end
 
 end
