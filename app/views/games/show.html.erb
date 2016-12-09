@@ -2,21 +2,21 @@
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
-
-    <div class="chessboard">
-      <% (0..7).each do |row| %>
-        <div id="row">
-          <% (0..7).each do |column| %>
-            <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
-              <% @pieces.each do |piece| %>
-              <% if piece.x_position == column && piece.y_position == row %>
-                <div class="piece" data-piece-id="<%piece.id%>">
-                <%= piece.unicode_symbol.html_safe %>
-                </div>
-              <% end %>  
-              <% end %>  
-            </div>
-          <% end %>
-        </div>
+<%= render partial: 'layouts/timers', :white_player_timer => @white_player_timer, :black_player_timer => @black_player_timer %>
+<div class="chessboard">
+  <% (0..7).each do |row| %>
+  <div id="row">
+    <% (0..7).each do |column| %>
+    <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
+      <% @pieces.each do |piece| %>
+      <% if piece.x_position == column && piece.y_position == row %>
+      <div class="piece" data-piece-id="<%piece.id%>">
+        <%= piece.unicode_symbol.html_safe %>
+      </div>
+      <% end %>
       <% end %>
     </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
