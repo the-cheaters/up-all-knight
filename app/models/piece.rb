@@ -2,6 +2,7 @@ class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
   
+  
   WHITE = "white"
   BLACK = "black"
   
@@ -50,6 +51,9 @@ class Piece < ActiveRecord::Base
   
   def valid_move?(destination_x, destination_y)
     valid = true
+    if destination_x == nil || destination_y == nil
+      valid = false
+    end
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
       valid = false
@@ -105,15 +109,17 @@ class Piece < ActiveRecord::Base
       range_x = range(min_x, max_x, x_incrementer, true)
       min_y, max_y = [position_y, destination_y].minmax
       range_y = range(min_y, max_y, y_incrementer, true)
-      if game.pieces.where(x_position: range_x, y_position: range_y).any?
-        return true
+      if range_x && range_y != nil
+        if game.pieces.where(x_position: range_x, y_position: range_y).any?
+          return true
+        end
       end
       return false
     end
   end
-
+  
   private
-
+  
   def range(min, max, incrementer, diagonal=false)
     range = nil
     if min != max
@@ -126,17 +132,17 @@ class Piece < ActiveRecord::Base
     end
     return range
   end
-
+  
   def horizontal(destination_y)
     destination_y == self.y_position
   end
-
+  
   def vertical(destination_x)
     destination_x == self.x_position
   end
-
+  
   def diagonal(destination_x, destination_y)
-    (destination_x - self.x_position).abs == 
+    (destination_x - self.x_position).abs ==
     (destination_y - self.y_position).abs
   end
   
