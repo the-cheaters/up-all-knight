@@ -5,7 +5,7 @@ RSpec.describe Piece, type: :model do
   let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
-  
+
   describe "Piece#capture!" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
     it "should fail if there is no piece to capture" do

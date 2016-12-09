@@ -66,6 +66,12 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
   
+  def add_player
+    set_game
+    current_player.join_game!(@game)
+    redirect_to game_path
+  end
+  
   private
   
   # Use callbacks to share common setup or constraints between actions.
