@@ -37,6 +37,7 @@ class GamesController < ApplicationController
     @game.black_player_id = current_player.id if @game.white_player_id == 0
     @white_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id,player_id: @game.white_player_id)
     @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
+    byebug
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
