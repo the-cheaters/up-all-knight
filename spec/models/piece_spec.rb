@@ -25,7 +25,7 @@ RSpec.describe Piece, type: :model do
 
   describe "Piece.en_passant" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id, x_position: 7, y_position: 2) }
-    let(:pawn) { FactoryGirl.create(:pawn, game_id: game.id, player_id: black_player.id) }
+    let(:pawn) { FactoryGirl.create(:pawn, game_id: game.id, player_id: black_player.id, x_position: 1, y_position: 1) }
 
     it "should be able to capture the pawn en passant" do
       pawn.move_to(1,3)

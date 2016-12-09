@@ -41,7 +41,7 @@ class Piece < ActiveRecord::Base
       if self.game.is_piece_present?(destination_x, incremented_y)
         other_piece = game.get_piece(destination_x, incremented_y)
         if other_piece.type == 'Pawn' && 
-          other_piece.moves == 1 &&
+          other_piece.moves == 1 && 
           other_piece.get_color != self.get_color
             self.capture_piece(destination_x, incremented_y)
         end
