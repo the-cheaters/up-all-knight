@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161209030606) do
     t.integer  "winning_player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_blitz",          default: false
   end
 
   create_table "pieces", force: true do |t|
