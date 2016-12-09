@@ -67,7 +67,9 @@ class GamesController < ApplicationController
   end
   
   def add_player
+    set_game
     current_player.join_game!(@game)
+    redirect_to game_path
   end
   
   private
