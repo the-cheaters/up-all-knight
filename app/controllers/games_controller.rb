@@ -81,7 +81,6 @@ class GamesController < ApplicationController
     if !@game.white_draw && !@game.black_draw
       @game.update("#{@color}_draw" => true)
       flash[:info] = "Player #{current_user.id} has asked for a draw. Player #{@opponent_id}, you may accept or reject the draw."
-      # option to reject
     elsif !@game.white.draw
       @game.update(:white_draw => true)
       flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."

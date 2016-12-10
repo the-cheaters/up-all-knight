@@ -27,7 +27,7 @@
 
 <% elsif (@color == :white && @game.black_draw) || (@color == :black && @game.white_draw) %>
 
-<button class="request-draw" data-update-url="<%= game_draw_path(game_id: @game) %>">Accept Draw</button><br/>
+<button class="accept-draw" data-update-url="<%= game_draw_path(game_id: @game) %>">Accept Draw</button><br/>
 <button class="reject-draw" data-update-url="<%= game_reject_draw_path(game_id: @game) %>">Reject Draw</button>
 
 <% elsif (@color == :white && @game.white_draw && @game.black_draw == false) || 
