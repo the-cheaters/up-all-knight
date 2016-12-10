@@ -71,12 +71,42 @@ class GamesController < ApplicationController
     current_player.join_game!(@game)
     redirect_to game_path
   end
+
+  def draw
+    set_game
+    color = nil
+    if current_user.id == @game.black_player_id
+      color = :black
+    elsif current_user.id == @game.white_player_id
+      color = :white
+    else
+      render json: { error: "You're not even in this game" }
+      return
+    end
+    if !@game.white_draw && !@game.black_draw
+      game.update("#{color}_draw" => true)
+      # make sure that other user is updated / sent a message
+    elsif !game.white.draw
+      game.update(:white_draw => true)
+      # make sure that other user is updated / sent a message
+    elsif !game.black.draw
+      game.update(:black_draw => true)
+      # make sure that other user is updated / sent a message
+    end
+  end
+
+  def forfeit
+  end
   
   private
   
   # Use callbacks to share common setup or constraints between actions.
   def set_game
-    @game = Game.find(params[:id])
+    if params[:id].nil?
+      @game ||= Game.find(params[:game_id])
+    else
+      @game ||= Game.find(params[:id])
+    end
   end
   
   # Never trust parameters from the scary internet, only allow the white list through.

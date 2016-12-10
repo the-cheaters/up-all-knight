@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'games#index'
   resources :games do
     patch 'add_player', on: :member
+    match 'draw', to: "games#draw", via: :put
   end
 
 
