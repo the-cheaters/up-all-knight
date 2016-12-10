@@ -74,31 +74,49 @@ class GamesController < ApplicationController
 
   def draw
     set_game
-    color = nil
-    if current_user.id == @game.black_player_id
-      color = :black
-    elsif current_user.id == @game.white_player_id
-      color = :white
-    else
-      render json: { error: "You're not even in this game" }
-      return
-    end
+    set_user_color
+    render json: { error: "You're not even in this game" } if @color == nil
     if !@game.white_draw && !@game.black_draw
-      game.update("#{color}_draw" => true)
-      # make sure that other user is updated / sent a message
-    elsif !game.white.draw
-      game.update(:white_draw => true)
-      # make sure that other user is updated / sent a message
-    elsif !game.black.draw
-      game.update(:black_draw => true)
-      # make sure that other user is updated / sent a message
+      @game.update("#{@color}_draw" => true)
+      flash[:info] = "Player #{current_user.id} has asked for a draw."
+      # option to reject
+    elsif !@game.white.draw
+      @game.update(:white_draw => true)
+      flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."
+    elsif !@game.black.draw
+      @game.update(:black_draw => true)
+      flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."
     end
   end
 
   def forfeit
+    set_game
+    set_user_color
+    set_opponent_id
+    render json: { error: "You're not even in this game" } if @color == nil
+    @game.update("#{@color}_forfeit" => true)
+    flash[:info] = "Player #{current_user.id} has forfeited. Congratulations, Player #{@opponent_id} -- you have won!"
   end
   
   private
+
+  def set_user_color
+    if current_user.id == @game.black_player_id
+      @color = :black
+    elsif current_user.id == @game.white_player_id
+      @color = :white
+    else
+      @color = nil
+    end
+  end
+
+  def set_opponent_id
+    if current_user.id == @game.black_player_id
+      @opponent_id = @game.white_player_id
+    elsif current_user.id == @game.white_player_id
+      @opponent_id = @game.black_player_id
+    end
+  end
   
   # Use callbacks to share common setup or constraints between actions.
   def set_game
