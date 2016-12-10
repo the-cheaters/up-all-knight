@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_player!, only: [:show, :new, :create, :update, :destroy, :add_player, :draw, :reject_draw, :forfeit]
   
   attr_accessor :name
   
@@ -80,13 +81,13 @@ class GamesController < ApplicationController
     render json: { error: "You're not even in this game" } if @color == nil
     if !@game.white_draw && !@game.black_draw
       @game.update("#{@color}_draw" => true)
-      flash[:info] = "Player #{current_user.id} has asked for a draw. Player #{@opponent_id}, you may accept or reject the draw."
+      flash[:info] = "Player #{current_player.id} has asked for a draw. Player #{@opponent_id}, you may accept or reject the draw."
     elsif !@game.white.draw
       @game.update(:white_draw => true)
-      flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."
+      flash[:info] = "Player #{current_player.id} has also drawn. This game is now over and has come to a draw."
     elsif !@game.black.draw
       @game.update(:black_draw => true)
-      flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."
+      flash[:info] = "Player #{current_player.id} has also drawn. This game is now over and has come to a draw."
     end
   end
 
@@ -95,7 +96,7 @@ class GamesController < ApplicationController
     set_user_color
     set_opponent_id
     @game.update("#{@color}_draw" => false)
-    flash[:info] = "Player #{current_user.id} has rejected the draw. Player #{@opponent_id}, you may forfeit or play on."
+    flash[:info] = "Player #{current_player.id} has rejected the draw. Player #{@opponent_id}, you may forfeit or play on."
   end
 
   def forfeit
@@ -104,15 +105,15 @@ class GamesController < ApplicationController
     set_opponent_id
     render json: { error: "You're not even in this game" } if @color == nil
     @game.update("#{@color}_forfeit" => true)
-    flash[:info] = "Player #{current_user.id} has forfeited. Congratulations, Player #{@opponent_id} -- you have won!"
+    flash[:info] = "Player #{current_player.id} has forfeited. Congratulations, Player #{@opponent_id} -- you have won!"
   end
   
   private
 
   def set_user_color
-    if current_user.id == @game.black_player_id
+    if current_player.id == @game.black_player_id
       @color = :black
-    elsif current_user.id == @game.white_player_id
+    elsif current_player.id == @game.white_player_id
       @color = :white
     else
       @color = nil
@@ -120,9 +121,9 @@ class GamesController < ApplicationController
   end
 
   def set_opponent_id
-    if current_user.id == @game.black_player_id
+    if current_player.id == @game.black_player_id
       @opponent_id = @game.white_player_id
-    elsif current_user.id == @game.white_player_id
+    elsif current_player.id == @game.white_player_id
       @opponent_id = @game.black_player_id
     end
   end
