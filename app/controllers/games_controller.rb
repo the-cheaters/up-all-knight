@@ -18,6 +18,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
+    set_user_color
   end
   
   # GET /games/new
@@ -75,10 +76,11 @@ class GamesController < ApplicationController
   def draw
     set_game
     set_user_color
+    set_opponent_id
     render json: { error: "You're not even in this game" } if @color == nil
     if !@game.white_draw && !@game.black_draw
       @game.update("#{@color}_draw" => true)
-      flash[:info] = "Player #{current_user.id} has asked for a draw."
+      flash[:info] = "Player #{current_user.id} has asked for a draw. Player #{@opponent_id}, you may accept or reject the draw."
       # option to reject
     elsif !@game.white.draw
       @game.update(:white_draw => true)
@@ -87,6 +89,14 @@ class GamesController < ApplicationController
       @game.update(:black_draw => true)
       flash[:info] = "Player #{current_user.id} has also drawn. This game is now over and has come to a draw."
     end
+  end
+
+  def reject_draw
+    set_game
+    set_user_color
+    set_opponent_id
+    @game.update("#{@color}_draw" => false)
+    flash[:info] = "Player #{current_user.id} has rejected the draw. Player #{@opponent_id}, you may forfeit or play on."
   end
 
   def forfeit
