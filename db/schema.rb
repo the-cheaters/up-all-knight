@@ -26,10 +26,6 @@ ActiveRecord::Schema.define(version: 20161211174954) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_blitz",            default: false
-    t.boolean  "white_draw"
-    t.boolean  "black_draw"
-    t.boolean  "white_forfeit"
-    t.boolean  "black_forfeit"
     t.integer  "last_moved_piece_id"
   end
 
