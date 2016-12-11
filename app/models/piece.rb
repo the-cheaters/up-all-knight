@@ -33,6 +33,7 @@ class Piece < ActiveRecord::Base
       else
         self.en_passant(destination_x, destination_y)
       end
+      self.game.update(:last_moved_piece_id => self.id)
     end
   end
 
@@ -44,7 +45,8 @@ class Piece < ActiveRecord::Base
         other_piece = game.get_piece(destination_x, incremented_y)
         if other_piece.type == 'Pawn' && 
           other_piece.moves == 1 && 
-          other_piece.get_color != self.get_color
+          other_piece.get_color != self.get_color &&
+          other_piece.id == self.game.last_moved_piece_id
             self.capture_piece(destination_x, incremented_y)
         end
       end

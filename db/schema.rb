@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209154845) do
+ActiveRecord::Schema.define(version: 20161211174954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,12 @@ ActiveRecord::Schema.define(version: 20161209154845) do
     t.integer  "winning_player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_blitz",          default: false
+    t.boolean  "is_blitz",            default: false
+    t.boolean  "white_draw"
+    t.boolean  "black_draw"
+    t.boolean  "white_forfeit"
+    t.boolean  "black_forfeit"
+    t.integer  "last_moved_piece_id"
   end
 
   create_table "pieces", force: true do |t|
