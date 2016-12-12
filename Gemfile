@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'jquery-ui-rails'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
