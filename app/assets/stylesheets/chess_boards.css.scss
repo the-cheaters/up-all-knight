@@ -8,6 +8,9 @@
   border: 5px solid grey;
   display: inline-block;
   margin-left: 150px;
+  border: 5px solid grey;
+  display: inline-block;
+  margin-left: 150px;
 }
 
 #row {
@@ -26,6 +29,26 @@
 
 .captured-pieces {
   width: 160px;
+}
+
+.game-wrapper {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.white-player, .black-player {
+  width: 150px;
+  height: 650px;
+  display: inline-block;
+  position: absolute;
+}
+
+.white-player {
+  padding-right: 30px;
+}
+
+.black-player {
+  padding-left: 30px;
 }
 
 .game-wrapper {
