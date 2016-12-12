@@ -3,21 +3,21 @@ require 'rails_helper'
 RSpec.describe PiecesController, type: :controller do
   let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
-  let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
+  let(:game) { FactoryGirl.create(:game,:populated, white_player_id: white_player.id, black_player_id: black_player.id) }
   let(:knight) { FactoryGirl.create(:knight, game_id: game.id,x_position: 4, y_position: 4 ) }
   
   it "has a 200 status code" do
-    xhr :patch, :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '3' }
+    patch :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '3' }
     expect(response.code).to eq('200')
   end
   
   it "has a 422 status code" do
-    xhr :patch, :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '4' }
+    patch :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '4' }
     expect(response.code).to eq('422')
   end
   
   it "has a 422 status code if passing nil" do
-    xhr :patch, :update, game_id: game.id, id: knight.id , piece: { x_position: 'nil', y_position: 'nil' }
+    patch :update, game_id: game.id, id: knight.id , piece: { x_position: nil, y_position: nil }
     expect(response.code).to eq('422')
   end
 end
