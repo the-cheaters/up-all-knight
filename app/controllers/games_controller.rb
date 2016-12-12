@@ -39,6 +39,7 @@ class GamesController < ApplicationController
     @game.black_player_id = current_player.id if @game.white_player_id == 0
     @white_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id,player_id: @game.white_player_id)
     @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
+    
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
@@ -84,7 +85,11 @@ class GamesController < ApplicationController
   
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
+    <<<<<<< HEAD
     params.require(:game).permit(:current_turn, :white_player_id, :time_left)
+    =======
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz)
+    >>>>>>> a536903eafdf64337f4c60a60ef75729da203e28
   end
   
 end
