@@ -85,11 +85,7 @@ class GamesController < ApplicationController
   
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    <<<<<<< HEAD
-    params.require(:game).permit(:current_turn, :white_player_id, :time_left)
-    =======
-    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz)
-    >>>>>>> a536903eafdf64337f4c60a60ef75729da203e28
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :time_left)
   end
   
 end
