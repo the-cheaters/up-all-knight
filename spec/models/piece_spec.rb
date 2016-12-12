@@ -6,6 +6,60 @@ RSpec.describe Piece, type: :model do
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
 
+  describe "Piece.move_to(x, y)" do
+
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
+
+    it "should have its x and y position updated when it moves" do
+      piece.move_to(5,5)
+      piece.reload
+      expect(piece.x_position).to eq(5)
+    end
+
+    it "should increase the moves count of a new piece by one" do
+      piece.move_to(5,5)
+      piece.reload
+      expect(piece.moves).to eq(1)
+    end
+
+    it "should not increase the moves count of a piece by more than two" do
+      piece.move_to(5,5)
+      piece.move_to(6,6)
+      piece.move_to(7,7)
+      piece.reload
+      expect(piece.moves).to eq(2)
+    end
+  end
+
+  describe "Piece.en_passant" do
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id, x_position: 7, y_position: 2) }
+    let(:pawn) { FactoryGirl.create(:pawn, game_id: game.id, player_id: black_player.id, x_position: 1, y_position: 1) }
+
+    it "should be able to capture a pawn en passant" do
+      pawn.move_to(1,3)
+      piece.move_to(1,2)
+      pawn.reload
+      expect(pawn.captured).to eq(true)
+    end
+
+    it "should not be able to capture en passant a pawn that has made two moves" do
+      pawn.move_to(1,2)
+      pawn.move_to(1,3)
+      piece.move_to(1,2)
+      pawn.reload
+      expect(pawn.captured).to eq(false)
+    end
+
+    it "should not able to capture a pawn en passant after another piece moves" do
+      another_piece = FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id)
+      pawn.move_to(1,3)
+      another_piece.move_to(5,5)
+      piece.move_to(1,2)
+      pawn.reload
+      expect(pawn.captured).to eq(false)
+    end
+  end
+
   describe "Piece#capture!" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
     
