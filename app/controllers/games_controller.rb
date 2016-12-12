@@ -18,7 +18,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
-    @captured_count = @game.pieces.where(captured: true).count
   end
 
   # GET /games/new
