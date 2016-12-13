@@ -49,4 +49,8 @@ class Game < ActiveRecord::Base
     self.pieces.where(x_position: x, y_position: y).take
   end
   
+  def create_timers(time_left)
+    self.timers.create(player_id: self.white_player_id,time_left: time_left)
+    self.timers.create(player_id: self.black_player_id,time_left: time_left)
+  end
 end
