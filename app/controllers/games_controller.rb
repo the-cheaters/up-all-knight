@@ -40,7 +40,7 @@ class GamesController < ApplicationController
     @white_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id,player_id: @game.white_player_id)
     @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
     respond_to do |format|
-      if @game.save
+      if @game.save && @game.is_blitz
         @white_player_timer = @game.timers.create(player_id: @game.white_player_id,time_left: params[:time_left])
         @black_player_timer = @game.timers.create(player_id: @game.black_player_id,time_left: params[:time_left])
       end
