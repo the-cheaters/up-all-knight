@@ -18,8 +18,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
-    @white_player_timer = Timer.where(:player_id => @game.white_player_id).first
-    @black_player_timer = Timer.where(:player_id => @game.black_player_id).first
+    @white_player_timer = Timer.where(:player_id => @game.white_player_id).last
+    @black_player_timer = Timer.where(:player_id => @game.black_player_id).last
   end
   
   # GET /games/new
@@ -34,6 +34,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
+    
     @game = Game.new(game_params)
     @game.current_turn = 0
     @game.black_player_id = current_player.id if @game.white_player_id == 0
@@ -41,13 +42,11 @@ class GamesController < ApplicationController
     @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
     respond_to do |format|
       if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
-      else
-        format.html { render :new }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+        @white_player_timer = @game.timers.create(player_id: @game.white_player_id,time_left: params[:time_left])
+        @black_player_timer = @game.timers.create(player_id: @game.black_player_id,time_left: params[:time_left])
       end
     end
+    redirect_to game_path(@game)
   end
   
   # PATCH/PUT /games/1

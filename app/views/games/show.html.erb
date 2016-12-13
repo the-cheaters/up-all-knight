@@ -4,7 +4,7 @@
 <%= link_to 'Back', games_path %>
 
 <div class="game-wrapper">
-  <div class="white-player"><%= render partial: 'layouts/whitetimer', :white_player_timer => @white_player_timer %></div>
+  <div class="white-player"><%= render partial: 'layouts/whitetimer',locals: {:white_player_timer => @white_player_timer} %></div>
   <div class="chessboard">
     <% (0..7).each do |row| %>
     <div id="row">
@@ -22,5 +22,5 @@
     </div>
     <% end %>
   </div>
-  <div class="black-player"><%= render partial: 'layouts/blacktimer', :black_player_timer => @black_player_timer %></div>
+  <div class="black-player"><%= render partial: 'layouts/blacktimer', locals: {:black_player_timer => @black_player_timer}%></div>
 </div>
