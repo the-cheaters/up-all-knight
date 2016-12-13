@@ -43,10 +43,16 @@ $(function() {
     });
   });
 
-  function showMessage() {
+  function sendMessage() {
     // if there is a message for the user, show it
+    $.ajax({
+      type: 'PUT',
+      // url: 'game_message_path(game_id)', // will have to get game id from somewhere
+      success: function(data) {
+        // display message
+      }
   }
 
-  setInterval(showMessage, 1000);
+  setInterval(sendMessage, 1000);
 
 });
