@@ -48,7 +48,7 @@ RSpec.describe GamesController, type: :controller do
     it "should create timers for each player" do
       player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
       sign_in player
-      post :create, game: { white_player_id: 0 }
+      post :create, game: { white_player_id: 0, is_blitz: true }
       @game = Game.last
       expect(@game.timers.count).to eq(2)
       
