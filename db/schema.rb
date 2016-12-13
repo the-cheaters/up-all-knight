@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20161211174954) do
     t.boolean  "captured",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "captured_at"
     t.integer  "moves",       default: 0
+    t.datetime "captured_at"
   end
 
   create_table "players", force: true do |t|
