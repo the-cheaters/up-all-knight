@@ -3,6 +3,18 @@
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 
+
+    <h1>Captured Pieces:
+      <% @game.pieces.where(captured: true).each do |piece| %>
+          <%= piece.unicode_symbol.html_safe %>
+      <% end %>
+    </h1>
+
+
+
+
+
+
     <div class="chessboard">
       <% (0..7).each do |row| %>
         <div id="row">
@@ -13,8 +25,8 @@
                 <div class="piece" data-piece-id="<%piece.id%>">
                 <%= piece.unicode_symbol.html_safe %>
                 </div>
-              <% end %>  
-              <% end %>  
+              <% end %>
+              <% end %>
             </div>
           <% end %>
         </div>

@@ -46,6 +46,12 @@ FactoryGirl.define do
     y_position 5
   end
 
+  factory :bishop do
+    type 'Bishop'
+    x_position 4
+    y_position 4
+  end
+
 
   factory :game do
     after(:build) { |game| game.class.skip_callback(:create, :after, :populate_board!) }
@@ -102,4 +108,3 @@ FactoryGirl.define do
 
 
   end
-

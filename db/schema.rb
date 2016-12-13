@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20161213041610) do
     t.boolean  "black_draw"
     t.boolean  "white_forfeit"
     t.boolean  "black_forfeit"
+    t.integer  "last_moved_piece_id"
   end
 
   create_table "pieces", force: true do |t|
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 20161213041610) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "captured_at"
+    t.integer  "moves",       default: 0
   end
 
   create_table "players", force: true do |t|
