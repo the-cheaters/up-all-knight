@@ -18,8 +18,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
-    @white_player_timer = Timer.where(:player_id => @game.white_player_id).last
-    @black_player_timer = Timer.where(:player_id => @game.black_player_id).last
+    @white_player_timer = @game.timers.where(:player_id => @game.white_player_id).last
+    @black_player_timer = @game.timers.where(:player_id => @game.black_player_id).last
   end
   
   # GET /games/new
