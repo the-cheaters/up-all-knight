@@ -53,5 +53,4 @@ class Game < ActiveRecord::Base
     self.timers.create(player_id: self.white_player_id,time_left: time_left)
     self.timers.create(player_id: self.black_player_id,time_left: time_left)
   end
-  
 end
