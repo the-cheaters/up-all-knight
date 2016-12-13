@@ -34,14 +34,11 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    
-    @game = Game.new(game_params)
-    @game.current_turn = 0
-    @game.black_player_id = current_player.id if @game.white_player_id == 0
-    @white_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id,player_id: @game.white_player_id)
-    @black_player_timer = Timer.create(time_left: params[:time_left], game_id: @game.id, player_id: @game.black_player_id)
-    respond_to do |format|
-      if @game.save
+    ActiveRecord::Base.transaction do
+      @game = Game.new(game_params)
+      @game.current_turn = 0
+      @game.black_player_id = current_player.id if @game.white_player_id == 0
+      if @game.save && @game.is_blitz
         @white_player_timer = @game.timers.create(player_id: @game.white_player_id,time_left: params[:time_left])
         @black_player_timer = @game.timers.create(player_id: @game.black_player_id,time_left: params[:time_left])
       end
