@@ -74,6 +74,9 @@ class GamesController < ApplicationController
     redirect_to game_path
   end
 
+  def message
+  end
+
   def draw
     set_game
     set_user_color

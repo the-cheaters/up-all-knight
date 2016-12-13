@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     match 'draw', to: "games#draw", via: :put
     match 'reject_draw', to: "games#reject_draw", via: :put
     match 'forfeit', to: "games#forfeit", via: :put
+    match 'message', to: "games#message", via: :put
   end
 
 
