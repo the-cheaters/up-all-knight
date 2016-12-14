@@ -67,7 +67,7 @@ class Game < ActiveRecord::Base
   end
 
   def forfeit(color)
-    self.update("#{@color}_forfeit" => true)
+    self.update("#{color}_forfeit" => true)
   end
 
 end
