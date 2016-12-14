@@ -18,7 +18,7 @@ class King < Piece
   end
 
   def can_castle?(destination_x, destination_y)
-    if self.moves == 0 && (castling_kingside?(destination_x, destination_y) || castling_queenside?(destination_x, destination_y)) # &&(!self.check?)
+    if self.moves == 0 && (castling_kingside?(destination_x, destination_y)) || (castling_queenside?(destination_x, destination_y)) # &&(!self.check?)
       return true
     else
       return false
@@ -36,8 +36,9 @@ class King < Piece
   end
 
   def castling_kingside?(destination_x, destination_y)
-    if destination_x == 6 && destination_y == y_position && \
-        is_obstructed?(destination_x, destination_y) == false && castling_rook_kingside(4, y_position) == false
+    if (destination_x == 6 && destination_y == y_position) && 
+        (is_obstructed?(destination_x, destination_y) == false) && 
+        (castling_rook_kingside(4, y_position) == false)
       return true
     else
       return false 
@@ -45,8 +46,9 @@ class King < Piece
   end
 
   def castling_queenside?(destination_x, destination_y)
-    if destination_x == 2 && destination_y == y_position && \
-        is_obstructed?(destination_x, destination_y) == false && castling_rook_queenside(4, y_position) == false
+    if (destination_x == 2 && destination_y == y_position) && 
+        (is_obstructed?(destination_x, destination_y) == false) && 
+        (castling_rook_queenside(4, y_position) == false)
       return true
     else 
       return false
