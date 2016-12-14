@@ -1,13 +1,6 @@
 class King < Piece
 
-  def y_position
-    y_position = 0
-    if self.get_color == WHITE
-      y_position = 7
-    end
-    y_position
-  end  
-  
+    
   def valid_move?(destination_x, destination_y)
     valid = super(destination_x, destination_y)
     if valid
@@ -20,9 +13,6 @@ class King < Piece
     return valid
   end
 
-  
-
-# CASTLING KING
 
   def move_to(destination_x, destination_y)
     valid = super
@@ -43,18 +33,18 @@ class King < Piece
 
   def castle!(destination_x, destination_y)
     if castling_kingside?(destination_x, destination_y)
-      rook = game.pieces.where(x_position: 7, y_position: y_position, player_id: player_id, type: "Rook").last
+      rook = game.pieces.where(x_position: 7, y_position: destination_y, player_id: player_id, type: "Rook").last
       rook.update_attributes(x_position: 5)
     end
     if castling_queenside?(destination_x, destination_y)
-      rook = game.pieces.where(x_position: 0, y_position: y_position, player_id: player_id, type: "Rook").last 
+      rook = game.pieces.where(x_position: 0, y_position: destination_y, player_id: player_id, type: "Rook").last 
       rook.update_attributes(x_position: 3)
     end
   end
 
   def castling_kingside?(destination_x, destination_y)
     if (destination_x == 6 && destination_y == y_position) && 
-        (is_rook_kingside? == true)
+        (is_rook_kingside?(destination_y))
       return true
     else
       return false 
@@ -63,15 +53,15 @@ class King < Piece
 
   def castling_queenside?(destination_x, destination_y)
     if (destination_x == 2 && destination_y == y_position) && 
-        (is_rook_queenside? == true)
+        (is_rook_queenside?(destination_y))
       return true
     else 
       return false
     end
   end
 
-  def is_rook_queenside?
-    rook = game.pieces.where(x_position: 0, y_position: y_position, player_id: player_id, type: "Rook").last
+  def is_rook_queenside?(destination_y)
+    rook = game.pieces.where(x_position: 0, y_position: destination_y, player_id: player_id, type: "Rook").last
     if rook != nil
       if rook.moves == 0 
         return true
@@ -80,8 +70,8 @@ class King < Piece
     return false
   end
 
-  def is_rook_kingside?
-    rook = game.pieces.where(x_position: 7, y_position: y_position, player_id: player_id, type: "Rook").last 
+  def is_rook_kingside?(destination_y)
+    rook = game.pieces.where(x_position: 7, y_position: destination_y, player_id: player_id, type: "Rook").last 
     if rook != nil
       if rook.moves == 0 
         return true
@@ -89,9 +79,6 @@ class King < Piece
     end
     return false
   end
-
-  # END ----- CASTLING KING ------ END
-
 
 
   def unicode_symbol
