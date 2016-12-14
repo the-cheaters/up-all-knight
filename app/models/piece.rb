@@ -89,16 +89,19 @@ class Piece < ActiveRecord::Base
       position_y = location_y + incrementer
       min, max = [position_y, destination_y].minmax
       range = range(min, max, incrementer)
+      byebug
       if game.pieces.where(x_position: location_x, y_position: range).any?
         return true
       end
       return false
     elsif horizontal(destination_y)
       # check for horizontal obstruction
+      byebug
       location_x > destination_x ? incrementer = -1 : incrementer = 1
       position_x = location_x + incrementer
       min, max = [position_x, destination_x].minmax
       range = range(min, max, incrementer)
+      byebug
       if game.pieces.where(x_position: range, y_position: location_y).any?
         return true
       end
@@ -113,7 +116,9 @@ class Piece < ActiveRecord::Base
       range_x = range(min_x, max_x, x_incrementer, true)
       min_y, max_y = [position_y, destination_y].minmax
       range_y = range(min_y, max_y, y_incrementer, true)
+      byebug
       if range_x && range_y != nil
+        byebug
         if game.pieces.where(x_position: range_x, y_position: range_y).any?
           return true
         end

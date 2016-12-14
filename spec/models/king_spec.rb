@@ -91,22 +91,24 @@ RSpec.describe King, type: :model do
   end
 
   describe "king#castle!(destination_x, destination_y)" do
-   let(:king) {FactoryGirl.create(:king, game_id: game.id, white_player_id: white_player.id, black_player_id: black_player.id) }
+   #let(:king) {FactoryGirl.create(:king, game_id: game.id, player_id: white_player.id) }
   
     it 'should move the correct rook to correct position when castling kingside' do
-      king = King.create(x_position: 4, y_position: 0, game_id: game.id)
+      king = King.create(x_position: 4, y_position: 0, game_id: game.id, player_id: black_player.id)
       rook = Rook.create(x_position: 0, y_position: 0, game_id: game.id, player_id: black_player.id)
-      rook = Rook.create(x_position: 7, y_position: 0, game_id: game.id, player_id: black_player.id)
+      rook_2 = Rook.create(x_position: 7, y_position: 0, game_id: game.id, player_id: black_player.id)
+      byebug
       king.move_to(6,0)
-      rook.move_to(5,0)
-      expect(rook.x_position).to eq(5)
+      rook_2.reload
+      byebug
+      expect(rook_2.x_position).to eq(5)
     end
 
     it 'should move the correct rook to correct position when castling queenside' do
       king = King.create(x_position: 4, y_position: 0, game_id: game.id)
       rook = Rook.create(x_position: 0, y_position: 0, game_id: game.id, player_id: black_player.id)
       king.move_to(2,0)
-      rook.move_to(3,0)
+      rook.reload
       expect(rook.x_position).to eq(3)
     end
   end
