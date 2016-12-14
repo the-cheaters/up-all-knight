@@ -25,12 +25,12 @@ ActiveRecord::Schema.define(version: 20161213041610) do
     t.integer  "winning_player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_blitz",          default: false
+    t.boolean  "is_blitz",            default: false
+    t.integer  "last_moved_piece_id"
     t.boolean  "white_draw"
     t.boolean  "black_draw"
     t.boolean  "white_forfeit"
     t.boolean  "black_forfeit"
-    t.integer  "last_moved_piece_id"
   end
 
   create_table "pieces", force: true do |t|
