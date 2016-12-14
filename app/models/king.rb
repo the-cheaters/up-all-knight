@@ -15,15 +15,15 @@ class King < Piece
 # CASTLING KING
 
   def move_to(destination_x, destination_y)
-    super
-    byebug
-    castle!(destination_x, destination_y) 
+    valid = super
+    if valid
+      castle!(destination_x, destination_y) 
+    end
   end
 
   def can_castle?(destination_x, destination_y)
-    byebug
-    if self.moves == 0 && castling_kingside?(destination_x, destination_y) || 
-    castling_queenside?(destination_x, destination_y) # &&(!self.check?)
+    if self.moves == 0 && (castling_kingside?(destination_x, destination_y) || 
+    castling_queenside?(destination_x, destination_y)) # &&(!self.check?)
       return true
     else
       return false
@@ -31,23 +31,19 @@ class King < Piece
   end
 
   def castle!(destination_x, destination_y)
-    byebug
     if castling_kingside?(destination_x, destination_y)
-      rook = game.pieces.where(x_position: 0, y_position: 0, player_id: player_id, type: "Rook").last
-      byebug
+      rook = game.pieces.where(x_position: 7, y_position: 0, player_id: player_id, type: "Rook").last
       rook.update_attributes(x_position: 5)
     end
     if castling_queenside?(destination_x, destination_y)
-      rook = game.pieces.where(x_position: 0, y_position: 0, player_id: player_id, type: "Rook").first 
+      rook = game.pieces.where(x_position: 0, y_position: 0, player_id: player_id, type: "Rook").last 
       rook.update_attributes(x_position: 3)
     end
   end
 
   def castling_kingside?(destination_x, destination_y)
-    byebug
     if (destination_x == 6 && destination_y == 0) && 
-        (is_obstructed?(destination_x, destination_y) == false) && 
-        (is_rook_kingside?(destination_y) == true)
+        (is_rook_kingside? == true)
       return true
     else
       return false 
@@ -56,16 +52,15 @@ class King < Piece
 
   def castling_queenside?(destination_x, destination_y)
     if (destination_x == 2 && destination_y == 0) && 
-        (is_obstructed?(destination_x, destination_y) == false) && 
-        (is_rook_queenside?(destination_y) == true)
+        (is_rook_queenside? == true)
       return true
     else 
       return false
     end
   end
 
-  def is_rook_queenside?(destination_y)
-    rook = game.pieces.where(x_position: 0, y_position: y_position, player_id: player_id, type: "Rook").first 
+  def is_rook_queenside?
+    rook = game.pieces.where(x_position: 0, y_position: 0, player_id: player_id, type: "Rook").last
     if rook != nil
       if rook.moves == 0 
         return true
@@ -74,9 +69,8 @@ class King < Piece
     return false
   end
 
-  def is_rook_kingside?(destination_y)
-    rook = game.pieces.where(x_position: 7, y_position: y_position, player_id: player_id, type: "Rook").last 
-    byebug
+  def is_rook_kingside?
+    rook = game.pieces.where(x_position: 7, y_position: 0, player_id: player_id, type: "Rook").last 
     if rook != nil
       if rook.moves == 0 
         return true

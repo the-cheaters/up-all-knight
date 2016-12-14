@@ -8,7 +8,7 @@ RSpec.describe King, type: :model do
   describe "king#can_castle?(destination_x, destination_y)" do 
 
     it 'should return false if the king trying to castle has already moved' do 
-      king = King.create(x_position: 4, y_position: 4, game_id: game.id)
+      king = King.create(x_position: 4, y_position: 0, game_id: game.id)
       rook = Rook.create(x_position: 7, y_position: 0, game_id: game.id)
       king.move_to(3,0)
       king.move_to(4,0)
@@ -97,15 +97,13 @@ RSpec.describe King, type: :model do
       king = King.create(x_position: 4, y_position: 0, game_id: game.id, player_id: black_player.id)
       rook = Rook.create(x_position: 0, y_position: 0, game_id: game.id, player_id: black_player.id)
       rook_2 = Rook.create(x_position: 7, y_position: 0, game_id: game.id, player_id: black_player.id)
-      byebug
       king.move_to(6,0)
       rook_2.reload
-      byebug
       expect(rook_2.x_position).to eq(5)
     end
 
     it 'should move the correct rook to correct position when castling queenside' do
-      king = King.create(x_position: 4, y_position: 0, game_id: game.id)
+      king = King.create(x_position: 4, y_position: 0, game_id: game.id, player_id: black_player.id)
       rook = Rook.create(x_position: 0, y_position: 0, game_id: game.id, player_id: black_player.id)
       king.move_to(2,0)
       rook.reload
