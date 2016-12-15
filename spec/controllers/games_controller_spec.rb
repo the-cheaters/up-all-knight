@@ -53,7 +53,6 @@ RSpec.describe GamesController, type: :controller do
       expect(@game.timers.count).to eq(2)
       
     end
-    
   end
   
   describe "games#show action" do
