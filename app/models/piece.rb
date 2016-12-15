@@ -34,9 +34,10 @@ class Piece < ActiveRecord::Base
       else
         self.en_passant(destination_x, destination_y)
       end
-      self.game.update(:last_moved_piece_id => self.id)
+      current_turn = self.game.current_turn + 1
+      self.game.update(:last_moved_piece_id => self.id, :current_turn => current_turn)
     end
-    return valid
+    valid
   end
   
   def en_passant(destination_x, destination_y)
