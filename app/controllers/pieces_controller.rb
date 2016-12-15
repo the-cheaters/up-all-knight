@@ -1,7 +1,7 @@
 class PiecesController < ApplicationController
   
   def update
-    if selected_piece.valid_move?(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
+    if selected_piece.move_to(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
       selected_piece.update_attributes(piece_params)
       render json: {}, status: :ok
     else

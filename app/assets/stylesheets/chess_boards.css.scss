@@ -5,14 +5,10 @@
 .chessboard {
   width: 650px;
   height: 650px;
-<<<<<<< HEAD
-  margin: 0 auto;
-  border: 5px solid grey;
-=======
   border: 5px solid grey;
   display: inline-block;
   margin-left: 150px;
->>>>>>> refactored the game#show view
+  
 }
 
 #row {
@@ -30,7 +26,7 @@
 }
 
 .captured-pieces {
-    width: 160px;
+  width: 160px;
 }
 
 .game-wrapper {

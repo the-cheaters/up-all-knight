@@ -20,7 +20,8 @@ class Piece < ActiveRecord::Base
   end
   
   def move_to(destination_x, destination_y)
-    if self.valid_move?(destination_x, destination_y)
+    valid = self.valid_move?(destination_x, destination_y)
+    if valid
       if self.moves < 2
         moves_updated = self.moves + 1
         self.update_attributes(:x_position => destination_x, :y_position => destination_y, :moves => moves_updated)
@@ -33,8 +34,10 @@ class Piece < ActiveRecord::Base
       else
         self.en_passant(destination_x, destination_y)
       end
-      self.game.update(:last_moved_piece_id => self.id)
+      current_turn = self.game.current_turn + 1
+      self.game.update(:last_moved_piece_id => self.id, :current_turn => current_turn)
     end
+    valid
   end
   
   def en_passant(destination_x, destination_y)
