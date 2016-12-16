@@ -19,6 +19,18 @@
   
   <%= yield %>
   
+<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDcZeyaMD_zB8BKh8P1ciNhNwrPaFW9lqw",
+    authDomain: "up-all-knight.firebaseapp.com",
+    databaseURL: "https://up-all-knight.firebaseio.com",
+    storageBucket: "up-all-knight.appspot.com",
+    messagingSenderId: "158824032365"
+  };
+  firebase.initializeApp(config);
+</script>
 </body>
 </html>
  

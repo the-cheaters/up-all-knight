@@ -7,9 +7,6 @@ Rails.application.routes.draw do
   resources :games do
     resources :pieces, only: :update
     patch 'add_player', on: :member
-    match 'draw', to: "games#draw", via: :put
-    match 'reject_draw', to: "games#reject_draw", via: :put
-    match 'forfeit', to: "games#forfeit", via: :put
     match 'message', to: "games#message", via: :put
   end
   
