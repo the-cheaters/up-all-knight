@@ -5,10 +5,10 @@
 
 
 .chessboard {
-    width: 650px;
-    height: 650px;
-    margin: 0 auto;
-    border: 5px solid grey;
+  width: 650px;
+  height: 650px;
+  margin: 0 auto;
+  border: 5px solid grey;
 }
 
 #row {
@@ -18,9 +18,11 @@
 }
 
 .piece {
+  width: 80px;
+  height: 80px;
   font-size: 60px;
   font-family: Tahoma;
-  margin-left: 5px;
+  padding-left : 8px;
 }
 
 .captured-pieces {
