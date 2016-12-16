@@ -18,7 +18,7 @@ class Piece < ActiveRecord::Base
       fail "There is no piece of the opposite color to capture."
     end
   end
-
+  
   def move_to(destination_x, destination_y)
     valid = self.valid_move?(destination_x, destination_y)
     if valid
@@ -28,7 +28,7 @@ class Piece < ActiveRecord::Base
       else
         self.update_attributes(:x_position => destination_x, :y_position => destination_y)
       end
-      if self.game.is_piece_present?(destination_x, destination_y) && 
+      if self.game.is_piece_present?(destination_x, destination_y) &&
         self.game.get_piece(destination_x, destination_y).get_color != self.get_color
         self.capture_piece(destination_x, destination_y)
       else
@@ -38,18 +38,18 @@ class Piece < ActiveRecord::Base
     end
     return valid
   end
-
+  
   def en_passant(destination_x, destination_y)
     if destination_y == 2 || destination_y == 5
       destination_y == 2 ? incrementer = 1 : incrementer = -1
       incremented_y = destination_y + incrementer
       if self.game.is_piece_present?(destination_x, incremented_y)
         other_piece = game.get_piece(destination_x, incremented_y)
-        if other_piece.type == 'Pawn' && 
-          other_piece.moves == 1 && 
+        if other_piece.type == 'Pawn' &&
+          other_piece.moves == 1 &&
           other_piece.get_color != self.get_color &&
           other_piece.id == self.game.last_moved_piece_id
-            self.capture_piece(destination_x, incremented_y)
+          self.capture_piece(destination_x, incremented_y)
         end
       end
     end
@@ -134,7 +134,11 @@ class Piece < ActiveRecord::Base
       elsif incrementer < 0
         min = min - incrementer
       end
-      min == max ? range = min : range = min...max
+      if diagonal
+        min == max ? range = min : range = max...min
+      else
+        min == max ? range = min : range = min...max
+      end
     end
     return range
   end

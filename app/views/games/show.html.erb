@@ -2,21 +2,26 @@
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
+<h1>Captured Pieces:
+  <% @game.pieces.where(captured: true).each do |piece| %>
+  <%= piece.unicode_symbol.html_safe %>
+  <% end %>
+</h1>
 
-    <div class="chessboard">
-      <% (0..7).each do |row| %>
-        <div id="row">
-          <% (0..7).each do |column| %>
-            <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
-              <% @pieces.each do |piece| %>
-              <% if piece.x_position == column && piece.y_position == row %>
-                <div class="piece" data-piece-id="<%piece.id%>">
-                <%= piece.unicode_symbol.html_safe %>
-                </div>
-              <% end %>  
-              <% end %>  
-            </div>
-          <% end %>
-        </div>
+<div class="chessboard">
+  <% (0..7).each do |row| %>
+  <div id="row">
+    <% (0..7).each do |column| %>
+    <div data-column="<%= column %>" data-row="<%= row %>" class="<%= square_color(row, column) %> tile">
+      <% @pieces.each do |piece| %>
+      <% if piece.x_position == column && piece.y_position == row %>
+      <div class="piece" data-piece-id="<%=piece.id%>" data-update-url="<%=game_piece_path(piece.game, piece) %>">
+        <%= piece.unicode_symbol.html_safe %>
+      </div>
+      <% end %>
       <% end %>
     </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
