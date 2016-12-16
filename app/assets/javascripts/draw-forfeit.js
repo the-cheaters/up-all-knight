@@ -53,6 +53,7 @@ $(function() {
       }
   }
 
-  setInterval(sendMessage, 1000);
+  setInterval(sendMessage, 1000); // Timeout
+  // Polling request should have timestamp and ask server if anything has changed since that time
 
 });
