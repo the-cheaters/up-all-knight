@@ -23,12 +23,8 @@ class King < Piece
   end
 
   def can_castle?(destination_x, destination_y)
-    if self.moves == 0 && (castling_kingside?(destination_x, destination_y) || 
+    return self.moves == 0 && (castling_kingside?(destination_x, destination_y) || 
     castling_queenside?(destination_x, destination_y)) # &&(!self.check?)
-      return true
-    else
-      return false
-    end
   end
 
   def castle!(destination_x, destination_y)
@@ -43,21 +39,13 @@ class King < Piece
   end
 
   def castling_kingside?(destination_x, destination_y)
-    if (destination_x == 6 && destination_y == y_position) && 
+    return (destination_x == 6 && destination_y == y_position) && 
         (is_rook_kingside?(destination_y))
-      return true
-    else
-      return false 
-    end
   end
 
   def castling_queenside?(destination_x, destination_y)
-    if (destination_x == 2 && destination_y == y_position) && 
+    return (destination_x == 2 && destination_y == y_position) && 
         (is_rook_queenside?(destination_y))
-      return true
-    else 
-      return false
-    end
   end
 
   def is_rook_queenside?(destination_y)
