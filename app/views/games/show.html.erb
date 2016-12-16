@@ -28,6 +28,10 @@
   <% end %>
 </div>
 
+<p>White draw: <%= @game.white_draw %></p>
+
+<p>Black draw: <%= @game.black_draw %></p>
+
 <% if !@game.white_draw && !@game.black_draw %>
 
 <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Request Draw</button>

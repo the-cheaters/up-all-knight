@@ -2,6 +2,21 @@
 <html>
 <head>
   <title>Chess</title>
+  <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('69d78adae1cff6a25019', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(data.message);
+    });
+  </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -18,19 +33,7 @@
   <%= link_to 'Sign out', destroy_player_session_path, method: :delete %>
   
   <%= yield %>
-  
-<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDcZeyaMD_zB8BKh8P1ciNhNwrPaFW9lqw",
-    authDomain: "up-all-knight.firebaseapp.com",
-    databaseURL: "https://up-all-knight.firebaseio.com",
-    storageBucket: "up-all-knight.appspot.com",
-    messagingSenderId: "158824032365"
-  };
-  firebase.initializeApp(config);
-</script>
+
 </body>
 </html>
  

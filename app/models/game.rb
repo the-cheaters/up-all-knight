@@ -60,9 +60,6 @@ class Game < ActiveRecord::Base
       @game.update(:black_draw => true)
       # Both players have drawn; the game is over
     end
-    base_uri = 'https://up-all-knight.firebaseio.com'
-    firebase = Firebase::Client.new(base_uri)
-    response = firebase.set("#{@game.id}", :created => Firebase::ServerValue::TIMESTAMP)
   end
 
   def reject_draw(color)
