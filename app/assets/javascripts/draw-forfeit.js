@@ -1,58 +1,106 @@
 $(function() {
   $(".request-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
-    var updateVar = $(event.currentTarget).data("color") + "_draw";
-    $.ajax({
-      type: 'PUT',
-      url: updateURL,
-      dataType: 'json',
-      data: { game: { updateVar: true } },
-      success: function(data) {
-        alert("A draw has been requested!");
-      }
-    });
+    var color = $(event.currentTarget).data("color");
+    if (color == "black") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { black_draw: true } },
+        success: function(data) {
+          alert("A draw has been requested!");
+        }
+      });
+    } else if (color == "white") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { white_draw: true } },
+        success: function(data) {
+          alert("A draw has been requested!");
+        }
+      });
+    }
   });
 
   $(".accept-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
-    var updateVar = $(event.currentTarget).data("color") + "_draw";
-    $.ajax({
-      type: 'PUT',
-      url: updateURL,
-      dataType: 'json',
-      data: { game: { updateVar: true } },
-      success: function(data) {
-        alert("The draw has been accepted!");
-      }
-    });
+    var color = $(event.currentTarget).data("color");
+    if (color == "black") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { black_draw: true } },
+        success: function(data) {
+          alert("A draw has been requested!");
+        }
+      });
+    } else if (color == "white") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { white_draw: true } },
+        success: function(data) {
+          alert("The draw has been accepted!");
+        }
+      });
+    }
   });
 
   $(".reject-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
-    var updateVar = $(event.currentTarget).data("color") + "_draw";
-    $.ajax({
-      type: 'PUT',
-      url: updateURL,
-      dataType: 'json',
-      data: { game: { updateVar: false } },
-      success: function(data) {
-        alert("The draw has been rejected!");
-      }
-    });
+    var color = $(event.currentTarget).data("color");
+    if (color == "black") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { black_draw: false } },
+        success: function(data) {
+          alert("The draw has been rejected!");
+        }
+      });
+    } else if (color == "white") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { white_draw: false } },
+        success: function(data) {
+          alert("The draw has been rejected!");
+        }
+      });
+    }
   });
 
   $(".forfeit").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
-    var updateVar = $(event.currentTarget).data("color") + "_forfeit";
-    $.ajax({
-      type: 'PUT',
-      url: updateURL,
-      dataType: 'json',
-      data: { game: { updateVar: true } },
-      success: function(data) {
-        alert("The draw has been rejected!");
-      }
-    });
+    var color = $(event.currentTarget).data("color");
+    if (color == "black") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { black_forfeit: true } },
+        success: function(data) {
+          alert("The game has been forfeited!");
+        }
+      });
+    } else if (color == "white") {
+      $.ajax({
+        type: 'PUT',
+        url: updateURL,
+        dataType: 'json',
+        data: { game: { white_forfeit: true } },
+        success: function(data) {
+          alert("The game has been forfeited!");
+        }
+      });
+    }
   });
 
   function sendMessage() {

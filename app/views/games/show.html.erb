@@ -28,10 +28,6 @@
   <% end %>
 </div>
 
-<p>White draw: <%= @game.white_draw %></p>
-
-<p>Black draw: <%= @game.black_draw %></p>
-
 <% if !@game.white_draw && !@game.black_draw %>
 
 <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Request Draw</button>
@@ -41,8 +37,8 @@
 <button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Accept Draw</button><br/>
 <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Reject Draw</button>
 
-<% elsif (@color == :white && @game.white_draw && @game.black_draw == false) || 
-(@color == :black && @game.black_draw && @game.white_draw == false) %>
+<% elsif (@color == :white && @game.white_draw) || 
+(@color == :black && @game.black_draw) %>
 
 <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Forfeit</button>
 
