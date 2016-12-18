@@ -49,25 +49,4 @@ class Game < ActiveRecord::Base
     self.pieces.where(x_position: x, y_position: y).take
   end
 
-  def draw(color)
-    if !self.white_draw && !self.black_draw
-      @game.update("#{color}_draw" => true)
-      # A draw has been proposed; the other player must accept or reject
-    elsif !self.white.draw
-      @game.update(:white_draw => true)
-      # Both players have drawn; the game is over
-    elsif !self.black.draw
-      @game.update(:black_draw => true)
-      # Both players have drawn; the game is over
-    end
-  end
-
-  def reject_draw(color)
-    self.update("#{color}_draw" => false)
-  end
-
-  def forfeit(color)
-    self.update("#{color}_forfeit" => true)
-  end
-
 end

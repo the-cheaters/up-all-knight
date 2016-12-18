@@ -1,5 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<!-- Message From Pusher -->
+<p id="message"></p>
+
+<!-- Button Selection For Pusher -->
+<!-- Default is the button to Request Draw -->
+<div id="button-panel">
+<button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Request Draw</button>
+</div>
+
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 <h1>Captured Pieces:
@@ -27,19 +36,3 @@
   </div>
   <% end %>
 </div>
-
-<% if !@game.white_draw && !@game.black_draw %>
-
-<button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Request Draw</button>
-
-<% elsif (@color == :white && @game.black_draw) || (@color == :black && @game.white_draw) %>
-
-<button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Accept Draw</button><br/>
-<button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Reject Draw</button>
-
-<% elsif (@color == :white && @game.white_draw) || 
-(@color == :black && @game.black_draw) %>
-
-<button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Forfeit</button>
-
-<% end %>

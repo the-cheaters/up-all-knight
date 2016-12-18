@@ -10,6 +10,10 @@ $(function() {
         data: { game: { black_draw: true } },
         success: function(data) {
           alert("A draw has been requested!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_draw_path(game_id: @game)'
+          });
         }
       });
     } else if (color == "white") {
@@ -20,6 +24,10 @@ $(function() {
         data: { game: { white_draw: true } },
         success: function(data) {
           alert("A draw has been requested!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_draw_path(game_id: @game)'
+          });
         }
       });
     }
@@ -36,6 +44,10 @@ $(function() {
         data: { game: { black_draw: true } },
         success: function(data) {
           alert("A draw has been requested!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_draw_path(game_id: @game)'
+          });
         }
       });
     } else if (color == "white") {
@@ -46,6 +58,10 @@ $(function() {
         data: { game: { white_draw: true } },
         success: function(data) {
           alert("The draw has been accepted!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_draw_path(game_id: @game)'
+          });
         }
       });
     }
@@ -62,6 +78,10 @@ $(function() {
         data: { game: { black_draw: false } },
         success: function(data) {
           alert("The draw has been rejected!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_reject_draw_path(game_id: @game)'
+          });
         }
       });
     } else if (color == "white") {
@@ -72,6 +92,10 @@ $(function() {
         data: { game: { white_draw: false } },
         success: function(data) {
           alert("The draw has been rejected!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_reject_draw_path(game_id: @game)'
+          });
         }
       });
     }
@@ -88,6 +112,10 @@ $(function() {
         data: { game: { black_forfeit: true } },
         success: function(data) {
           alert("The game has been forfeited!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_forfeit_path(game_id: @game)'
+          });
         }
       });
     } else if (color == "white") {
@@ -98,20 +126,13 @@ $(function() {
         data: { game: { white_forfeit: true } },
         success: function(data) {
           alert("The game has been forfeited!");
+          $.ajax({
+            type: 'PUT',
+            url: 'game_forfeit_path(game_id: @game)'
+          });
         }
       });
     }
   });
-
-  function sendMessage() {
-    // if there is a message for the user, show it
-    $.ajax({
-      type: 'PUT',
-      // url: 'game_message_path(game_id)', // will have to get game id from somewhere
-      success: function(data) {
-        // something happens here
-        }
-    });
-  }
 
 });

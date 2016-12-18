@@ -74,7 +74,78 @@ class GamesController < ApplicationController
     redirect_to game_path
   end
 
-  def message
+  def draw
+    set_game
+    set_user_color
+    if @game.white_draw && @game.black_draw
+      # the game is a draw
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "The game has come to a draw."
+        })
+    elsif @game.white_draw && !@game.black_draw
+      # white has proposed a draw
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "White has requested a draw. Black, do you accept?"
+        })
+      if @color == "black"
+        # show draw response buttons
+        Pusher['broadcast'].trigger!('show_draw_response_buttons')
+      end
+    elsif @game.black_draw && !@game.white_draw
+      # black has proposed a draw
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "Black has requested a draw. White, do you accept?"
+        })
+      if @color == "white"
+        # show draw response buttons
+        Pusher['broadcast'].trigger!('show_draw_response_buttons')
+      end
+    end
+  end
+
+  def reject_draw
+    set_game
+    set_user_color
+    if @game.white_draw && !@game.black_draw
+      # black rejected the draw
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "Black has rejected the draw. White, you may forfeit or play on."
+        })
+      if @color == "white"
+        # show forfeit button
+        Pusher['broadcast'].trigger!('show_forfeit_button')
+      elsif @color == "black"
+        # show default button
+        Pusher['broadcast'].trigger!('show_default_button')
+      end
+    elsif @game.black_draw && !@game.white_draw
+      # white rejected the draw
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "White has rejected the draw. Black, you may forfeit or play on."
+        })
+      if color == "black"
+        # show forfeit button
+        Pusher['broadcast'].trigger!('show_forfeit_button')
+      elsif color == "white"
+        # show default button
+        Pusher['broadcast'].trigger!('show_default_button')
+      end
+    end
+  end
+
+  def forfeit
+    set_game
+    if @game.white_forfeit
+      # white forfeited
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "White has forfeited. Black is the victor. Congratulations!"
+        })
+    elsif @game.black_forfeit
+      # black forfeited
+      Pusher['broadcast'].trigger!('draw_forfeit', {
+        :message => "Black has forfeited. White is the victor. Congratulations!"
+        })
+    end
   end
   
   private
@@ -89,14 +160,6 @@ class GamesController < ApplicationController
     end
   end
 
-  def set_opponent_id
-    if current_player.id == @game.black_player_id
-      @opponent_id = @game.white_player_id
-    elsif current_player.id == @game.white_player_id
-      @opponent_id = @game.black_player_id
-    end
-  end
-  
   # Use callbacks to share common setup or constraints between actions.
   def set_game
     if params[:id].nil?

@@ -16,3 +16,6 @@
 //= require jquery-ui
 //= require turbolinks
 //= require_tree .
+
+window.pusher = new Pusher(window.pusher_key);
+window.broadcast_channel = pusher.subscribe('broadcast');
