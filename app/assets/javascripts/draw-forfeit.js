@@ -12,7 +12,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: 'game_draw_path(game_id: @game)'
+            url: Routes.game_draw_path(game_id)
           });
         }
       });
@@ -26,7 +26,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: 'game_draw_path(game_id: @game)'
+            url: Routes.game_draw_path(game_id)
           });
         }
       });
@@ -46,7 +46,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: 'game_draw_path(game_id: @game)'
+            url: Routes.game_draw_path(game_id)
           });
         }
       });
@@ -60,7 +60,7 @@ $(function() {
           alert("The draw has been accepted!");
           $.ajax({
             type: 'PUT',
-            url: 'game_draw_path(game_id: @game)'
+            url: Routes.game_draw_path(game_id)
           });
         }
       });
@@ -80,7 +80,7 @@ $(function() {
           alert("The draw has been rejected!");
           $.ajax({
             type: 'PUT',
-            url: 'game_reject_draw_path(game_id: @game)'
+            url: Routes.game_reject_draw_path(game_id)
           });
         }
       });
@@ -94,7 +94,7 @@ $(function() {
           alert("The draw has been rejected!");
           $.ajax({
             type: 'PUT',
-            url: 'game_reject_draw_path(game_id: @game)'
+            url: Routes.game_reject_draw_path(game_id)
           });
         }
       });
@@ -114,7 +114,7 @@ $(function() {
           alert("The game has been forfeited!");
           $.ajax({
             type: 'PUT',
-            url: 'game_forfeit_path(game_id: @game)'
+            url: Routes.game_forfeit_path(game_id)
           });
         }
       });
@@ -128,7 +128,7 @@ $(function() {
           alert("The game has been forfeited!");
           $.ajax({
             type: 'PUT',
-            url: 'game_forfeit_path(game_id: @game)'
+            url: Routes.game_forfeit_path(game_id)
           });
         }
       });

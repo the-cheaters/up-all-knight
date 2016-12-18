@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem "js-routes"
 
 gem 'jquery-ui-rails'
 gem 'devise'
