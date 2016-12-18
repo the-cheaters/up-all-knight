@@ -36,6 +36,19 @@ RSpec.describe Game, type: :model do
     end
     
   end
-  
-  
+
+  describe "player's turn" do 
+    let(:white_player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
+    let(:black_player) { FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT') }
+    let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
+
+    it "should change turns after player moves" do
+    expect(game.set_default_turn).to eq(true)
+    piece.move_to(5,5)
+    game.reload
+    expect(game.opponent).to eq(black_player.id) 
+    end
+  end 
 end
+
