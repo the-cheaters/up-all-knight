@@ -6,7 +6,7 @@ RSpec.describe Game, type: :model do
   let(:black_player) { FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT') }
   let(:game) { FactoryGirl.create(:game, :populated, white_player_id: white_player.id, black_player_id: black_player.id) }
   let(:king) { game.pieces.where(:player_id => black_player.id, :type => "King").last }
-  let(:rook) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id, type: rook) }
+  let(:rook) { FactoryGirl.create(:rook, player_id: white_player.id) }
 
   describe "is_available" do
     it "should return only games that are available" do
@@ -31,10 +31,10 @@ RSpec.describe Game, type: :model do
   describe "check?" do
     context "the king" do
       it "should be in check" do
-        game = FactoryGirl.create(:game)
-        king = FactoryGirl.create(:king, x_position: 4, y_position: 0, player_id: white_player.id)
-        rook = FactoryGirl.create(:rook, x_position: 4, y_position: 7, player_id: black_player.id)
-        expect(game.check?(white_player)).to eq (true)
+        game = FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id)
+        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player_id: black_player.id)
+        rook = FactoryGirl.create(:rook, x_position: 4, y_position: 7, player_id: white_player.id)
+        expect(game.check?(black_player)).to eq (true)
       end
 
       it "should not be in check" do

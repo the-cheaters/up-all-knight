@@ -27,6 +27,7 @@ class Player < ActiveRecord::Base
       game.update_attributes(:black_player_id => id)
     end
   end
+
 end
 
 

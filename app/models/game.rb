@@ -50,21 +50,15 @@ class Game < ActiveRecord::Base
   end
 
   def check?(player)
-    king = pieces.find_by(type: 'King', player_id: player.id)
-    opposite_player = if player == white_player_id
-      black_player_id
-    else
-      white_player_id
-    end
+    king = pieces.find_by(type: 'King', player_id: player)
+    opponents = pieces.find_by(player_id: self.white_player_id)
 
-    opponents_pieces = pieces.find_by(opposite_player.id)
-
-    opponents_pieces.each do |piece|
+    opponents.each do |piece|
       if piece.valid_move?(king.x_position, king.y_position)
-        @piece_causing_check = piece
-        return true
+        true
+      else
+        false
       end
-      false
     end
   end
 
