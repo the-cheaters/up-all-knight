@@ -1,5 +1,6 @@
 $ ->
   window.broadcast_channel.bind 'draw_forfeit', (event) ->
+    $('#message').css('display', 'block')
     $('#message').html(event.message)
 
 $ ->
