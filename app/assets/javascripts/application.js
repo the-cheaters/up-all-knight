@@ -18,5 +18,17 @@
 //= require_tree .
 //= require js-routes
 
-window.pusher = new Pusher(window.pusher_key);
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('69d78adae1cff6a25019', {
+  encrypted: true
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+  alert(data.message);
+});
+
+window.pusher = new Pusher('69d78adae1cff6a25019');
 window.broadcast_channel = pusher.subscribe('broadcast');

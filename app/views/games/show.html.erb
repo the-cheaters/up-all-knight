@@ -1,12 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<!-- Message From Pusher -->
-<p id="message"></p>
-
 <!-- Button Selection For Pusher -->
 <!-- Default is the button to Request Draw -->
 <div id="button-panel">
-<button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Request Draw</button>
+<button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
 </div>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |

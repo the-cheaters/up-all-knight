@@ -2,6 +2,7 @@ $(function() {
   $(".request-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
     var color = $(event.currentTarget).data("color");
+    var id = $(event.currentTarget).data("game-id");
     if (color == "black") {
       $.ajax({
         type: 'PUT',
@@ -12,7 +13,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_draw_path(game_id)
+            url: id+"/draw"
           });
         }
       });
@@ -26,7 +27,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_draw_path(game_id)
+            url: id+"/draw"
           });
         }
       });
@@ -36,6 +37,7 @@ $(function() {
   $(".accept-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
     var color = $(event.currentTarget).data("color");
+    var id = $(event.currentTarget).data("game-id");
     if (color == "black") {
       $.ajax({
         type: 'PUT',
@@ -46,7 +48,7 @@ $(function() {
           alert("A draw has been requested!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_draw_path(game_id)
+            url: id+"/draw"
           });
         }
       });
@@ -60,7 +62,7 @@ $(function() {
           alert("The draw has been accepted!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_draw_path(game_id)
+            url: id+"/draw"
           });
         }
       });
@@ -70,6 +72,7 @@ $(function() {
   $(".reject-draw").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
     var color = $(event.currentTarget).data("color");
+    var id = $(event.currentTarget).data("game-id");
     if (color == "black") {
       $.ajax({
         type: 'PUT',
@@ -80,7 +83,7 @@ $(function() {
           alert("The draw has been rejected!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_reject_draw_path(game_id)
+            url: id+"/reject_draw"
           });
         }
       });
@@ -94,7 +97,7 @@ $(function() {
           alert("The draw has been rejected!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_reject_draw_path(game_id)
+            url: id+"/reject_draw"
           });
         }
       });
@@ -104,6 +107,7 @@ $(function() {
   $(".forfeit").click(function() {
     var updateURL = $(event.currentTarget).data("update-url");
     var color = $(event.currentTarget).data("color");
+    var id = $(event.currentTarget).data("game-id");
     if (color == "black") {
       $.ajax({
         type: 'PUT',
@@ -114,7 +118,7 @@ $(function() {
           alert("The game has been forfeited!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_forfeit_path(game_id)
+            url: id+"/forfeit"
           });
         }
       });
@@ -128,7 +132,7 @@ $(function() {
           alert("The game has been forfeited!");
           $.ajax({
             type: 'PUT',
-            url: Routes.game_forfeit_path(game_id)
+            url: id+"/forfeit"
           });
         }
       });
