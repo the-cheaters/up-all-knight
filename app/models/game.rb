@@ -49,12 +49,22 @@ class Game < ActiveRecord::Base
     self.pieces.where(x_position: x, y_position: y).take
   end
 
-  def set_default_turn
+  def set_default_turn!
+    byebug
     update_attributes(current_turn: white_player_id)
   end
 
+  def current_player_turn
+    byebug
+    if current_turn == white_player_id
+      return white_player_id
+    else
+      return black_player_id
+    end
+  end
+
   def opponent
-    current_turn == white_player_id ? black_player_id : white_player_id
+    current_turn == (white_player_id || 0) ? black_player_id : white_player_id
   end
 
   def change_turns!
