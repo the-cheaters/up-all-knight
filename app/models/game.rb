@@ -40,6 +40,8 @@ class Game < ActiveRecord::Base
 
   has_many :pieces
   has_many :players
+  belongs_to :white_player, class_name: 'Player'
+  belongs_to :black_player, class_name: 'Player'
 
   def is_piece_present?(x, y)
     self.pieces.where(x_position: x, y_position: y).any?
@@ -50,16 +52,16 @@ class Game < ActiveRecord::Base
   end
 
   def check?(player)
-    king = pieces.find_by(type: 'King', player_id: player)
-    opponents = pieces.find_by(player_id: self.white_player_id)
+    king = pieces.where(type: 'King', player: player).first
+    opponents_pieces = pieces.where(player: opponent(player))
 
-    opponents.each do |piece|
-      if piece.valid_move?(king.x_position, king.y_position)
-        true
-      else
-        false
-      end
-    end
+    opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+  end
+
+  private
+
+  def opponent(player)
+    player == white_player ? black_player : white_player
   end
 
 end

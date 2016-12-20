@@ -29,15 +29,35 @@ RSpec.describe Game, type: :model do
   end
 
   describe "check?" do
-    context "the king" do
+    context "the black king" do
       it "should be in check" do
-        game = FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id)
-        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player_id: black_player.id)
-        rook = FactoryGirl.create(:rook, x_position: 4, y_position: 7, player_id: white_player.id)
+        game = FactoryGirl.create(:game, white_player: white_player, black_player: black_player)
+        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player: black_player, game: game)
+        rook = FactoryGirl.create(:rook, x_position: 4, y_position: 7, player: white_player, game: game)
         expect(game.check?(black_player)).to eq (true)
       end
 
       it "should not be in check" do
+        game = FactoryGirl.create(:game, white_player: white_player, black_player: black_player)
+        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player: black_player, game: game)
+        rook = FactoryGirl.create(:rook, x_position: 6, y_position: 7, player: white_player, game: game)
+        expect(game.check?(black_player)).to eq (false)
+      end
+    end
+
+    context "the white king" do
+      it "should be in check" do
+        game = FactoryGirl.create(:game, white_player: white_player, black_player: black_player)
+        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player: white_player, game: game)
+        rook = FactoryGirl.create(:rook, x_position: 4, y_position: 7, player: black_player, game: game)
+        expect(game.check?(white_player)).to eq (true)
+      end
+
+      it "should not be in check" do
+        game = FactoryGirl.create(:game, white_player: white_player, black_player: black_player)
+        king = FactoryGirl.create(:king, x_position: 4, y_position: 1, player: white_player, game: game)
+        rook = FactoryGirl.create(:rook, x_position: 6, y_position: 7, player: black_player, game: game)
+        expect(game.check?(white_player)).to eq (false)
       end
     end
   end
