@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit]
   before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit]
   before_action :authenticate_player!, only: [:show, :new, :create, :update, :destroy, :add_player, :draw, :reject_draw, :forfeit]

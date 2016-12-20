@@ -1,14 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-<<<<<<< HEAD
   
-=======
-
   let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
-
->>>>>>> 5b4401eed942abec942794e5bde2730396347b26
   describe "games#index action" do
     it "should show the index page" do
       get :index
@@ -90,7 +85,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
-
+    
     it "should update the white_draw or black_draw field in json format" do
       sign_in white_player
       game = FactoryGirl.create(:game)
@@ -98,7 +93,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.white_draw).to eq(true)
     end
-
+    
     it "should update the white_forfeit or black_forfeit field in json format" do
       sign_in white_player
       game = FactoryGirl.create(:game)
@@ -106,6 +101,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.black_forfeit).to eq(true)
     end
+    
   end
   
   describe "games#joingame action" do
