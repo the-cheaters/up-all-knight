@@ -1,8 +1,8 @@
 $(document).ready(function() {
   
-  var currentTurn = parseInt($('.game-wrapper').data('current-turn'))
+  var currentPlayer = $('.game-wrapper').data('player')
   
-  if (currentTurn % 2 === 0) {
+  if (currentPlayer  === "white") {
     $('.piece').draggable({
       containment: $('.chessboard'),
       grid: [80,80],
