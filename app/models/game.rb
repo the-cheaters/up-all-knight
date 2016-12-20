@@ -57,6 +57,6 @@ class Game < ActiveRecord::Base
     byebug
     timer.player_id = current_player.id
     byebug
-    save
+    timer.save
   end
 end
