@@ -16,7 +16,6 @@
 //= require jquery-ui
 //= require turbolinks
 //= require_tree .
-//= require js-routes
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;

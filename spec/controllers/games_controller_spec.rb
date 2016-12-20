@@ -77,6 +77,22 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
+
+    it "should update the white_draw or black_draw field in json format" do
+      sign_in white_player
+      game = FactoryGirl.create(:game)
+      patch :update, id: game.id, format: :json, game: { white_draw: true }
+      game.reload
+      expect(game.white_draw).to eq(true)
+    end
+
+    it "should update the white_forfeit or black_forfeit field in json format" do
+      sign_in white_player
+      game = FactoryGirl.create(:game)
+      patch :update, id: game.id, format: :json, game: { black_forfeit: true }
+      game.reload
+      expect(game.black_forfeit).to eq(true)
+    end
   end
 
   describe "games#joingame action" do
