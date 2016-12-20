@@ -24,5 +24,12 @@
 
 #message {
   display: none;
+}
+
+.button-panel {
   text-align: center;
+}
+
+.accept-draw, .reject-draw, .forfeit {
+  display: none;
 }

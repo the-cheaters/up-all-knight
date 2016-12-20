@@ -3,14 +3,28 @@ $ ->
     $('#message').css('display', 'block')
     $('#message').html(event.message)
 
-$ ->
-  window.broadcast_channel.bind 'show_default_button', (event) ->
-    $('#button-panel').html('<button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>')
+  window.broadcast_channel.bind 'hide_buttons', (event) ->
+    $('.request-draw').css('display', 'none')
+    $('.accept-draw').css('display', 'none')
+    $('.reject-draw').css('display', 'none')
+    $('.forfeit').css('display', 'none')
 
-$ ->
-  window.broadcast_channel.bind 'show_draw_response_buttons', (event) ->
-    $('#button-panel').html('<button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Accept Draw</button><br/><button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>">Reject Draw</button>')
+  window.private_channel.bind 'show_default_button', (event) ->
+    $('.request-draw').css('display', 'inline')
+    $('.accept-draw').css('display', 'none')
+    $('.reject-draw').css('display', 'none')
+    $('.forfeit').css('display', 'none')
 
-$ ->
-  window.broadcast_channel.bind 'show_forfeit_button', (event) ->
-    $('#button-panel').html('<button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>')
+  window.private_channel.bind 'hide_buttons', (event) ->
+    $('.request-draw').css('display', 'none')
+    $('.accept-draw').css('display', 'none')
+    $('.reject-draw').css('display', 'none')
+    $('.forfeit').css('display', 'none')
+
+  window.private_channel.bind 'show_draw_response_buttons', (event) ->
+    $('.request-draw').css('display', 'none')
+    $('.accept-draw').css('display', 'inline')
+    $('.reject-draw').css('display', 'inline')
+
+  window.private_channel.bind 'show_forfeit_button', (event) ->
+    $('.forfeit').css('display', 'inline')
