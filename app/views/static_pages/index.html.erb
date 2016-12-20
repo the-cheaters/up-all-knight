@@ -2,9 +2,9 @@
   <div class="hero--columns">
     <div class="hero--columns__right">
       <h1 class="hero--header">Play online chess and have fun</h1>
-      <p clas="hero--description">Up All Knight is a online chess carefully designed from the ground up to be enjoyable and fun for all players. Create a free account and play youur first game today!</p>
-      <%= link_to 'Play your first game', new_player_registration_path, class: "btn btn-default hero--button" %>
-      <p>Already have an account? <%= link_to 'Login', new_player_session_path, class: "hero--login" %></p>
+      <p class="hero--description">Up All Knight is a online chess carefully designed from the ground up to be enjoyable and fun for all players. Create a free account and play youur first game today!</p>
+      <%= link_to 'Play your first game', new_player_registration_path, class: "hero--button" %>
+      <p class="hero--login">Already have an account? <%= link_to 'Login', new_player_session_path, class: "hero--login__link" %>!</p>
     </div>
   </div>
   <br class="clear" />
@@ -12,7 +12,7 @@
 
 <div class="instructions">
   <div class="instructions--columns">
-    <h2>Play chess and have fun</h2>
+    <h2 class="instructions--header">Play chess and have fun</h2>
     <ol>
       <li>
         <h3>Create an account</h3>
