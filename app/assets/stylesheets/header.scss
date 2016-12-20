@@ -4,6 +4,7 @@
   background-color: $main-color;
   border: none;
   border-radius: 0px;
+  margin-bottom: 0px;
 }
 
 .navbar-default .navbar-brand {
@@ -35,6 +36,6 @@
 
 .navbar--highlight {
   font-weight: 700;
-  color: $main-color;
+  background-color: $main-color;
 }
 

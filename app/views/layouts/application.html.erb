@@ -3,6 +3,7 @@
 <head>
   <title>Chess</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
+  <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -49,9 +50,29 @@
   <p class="alert alert-danger"><%= alert %></p>
   <% end %>
   
-  
-  
   <%= yield %>
+
+  <footer class="footer">
+      <div class="container">
+      <ul class="nav navbar-nav navbar-right">
+      <li><a href="#" class="footer--link">About this app</a></li>
+      <li><a href="#" class="footer--link">Check out Github</a></li>
+      </ul>
+      </div>
+  </footer>
+
+  <!--
+
+  <div class="footer">
+    <p class="footer-text pull-left">
+    <ul class="nav navbar-nav navbar-right">
+      <li>About this app</li>
+      <a class="socicon-twitter" id="twitter" href="https://twitter.com/gonsanchezs">
+      <li><a href="#"><i class="socicon-twitter"></i>Check out Github</a></li>
+    </ul>
+  </div>
+
+  -->
   
 </body>
 </html>

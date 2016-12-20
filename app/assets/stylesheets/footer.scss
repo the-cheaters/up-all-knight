@@ -1,0 +1,39 @@
+@import 'variables';
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 50px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: $main-color;
+}
+
+.container {
+  width: auto;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.footer--link {
+  font-family: $primary-font;
+  color: white;
+
+    &:hover {
+      color: $contrast-color;
+      text-decoration: none;
+      background-color: none;
+    }
+}
