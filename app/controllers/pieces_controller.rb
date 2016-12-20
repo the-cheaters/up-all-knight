@@ -5,7 +5,7 @@ class PiecesController < ApplicationController
       if selected_piece.game.is_blitz
         @white_timer = selected_piece.game.timers.where(player_id: selected_piece.game.white_player_id).last
         @black_timer = selected_piece.game.timers.where(player_id: selected_piece.game.black_player_id).last
-        if selected_piece.game.current_turn % 2 == 0
+        if selected_piece.game.current_turn % 2 == 1
           @black_timer.start!
           @white_timer.stop!
         else
