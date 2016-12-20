@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+gem 'dotenv-rails', :groups => [:development, :test]
+gem 'pusher'
+
 gem 'jquery-ui-rails'
 gem 'devise'
 gem 'omniauth-twitter'

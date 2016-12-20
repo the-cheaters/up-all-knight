@@ -21,3 +21,15 @@
   background-color: yellow;
   z-index: 1000;
 }
+
+#message {
+  display: none;
+}
+
+.button-panel {
+  text-align: center;
+}
+
+.accept-draw, .reject-draw, .forfeit {
+  display: none;
+}
