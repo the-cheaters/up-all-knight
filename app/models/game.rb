@@ -36,8 +36,6 @@ class Game < ActiveRecord::Base
     King.create(player_id: self.white_player_id, game_id: self.id, x_position: 4, y_position: 7)
   end
   
-  
-  
   has_many :pieces
   has_many :players
   
@@ -52,5 +50,13 @@ class Game < ActiveRecord::Base
   def create_timers(time_left)
     self.timers.create(player_id: self.white_player_id,time_left: time_left)
     self.timers.create(player_id: self.black_player_id,time_left: time_left)
+  end
+  
+  def update_timer(current_player)
+    timer = self.timers.where(player_id: nil).last
+    byebug
+    timer.player_id = current_player.id
+    byebug
+    save
   end
 end

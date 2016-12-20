@@ -35,7 +35,6 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-    @game.current_turn = 0
     @game.black_player_id = current_player.id if @game.white_player_id == 0
     if @game.save && @game.is_blitz
       @game.create_timers(params[:time_left])
@@ -65,6 +64,7 @@ class GamesController < ApplicationController
   def add_player
     set_game
     current_player.join_game!(@game)
+    @game.update_timer(current_player)
     redirect_to game_path
   end
   
