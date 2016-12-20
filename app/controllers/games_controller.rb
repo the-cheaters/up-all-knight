@@ -20,7 +20,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
-    set_user_color
   end
 
   # GET /games/new
