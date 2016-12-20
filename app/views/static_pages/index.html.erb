@@ -7,4 +7,42 @@
       <p>Already have an account? <%= link_to 'Login', new_player_session_path, class: "hero--login" %></p>
     </div>
   </div>
+  <br />
+</div>
+
+<div class="instructions">
+  <div class="instructions--columns">
+    <h2>Play chess and have fun</h2>
+    <ol>
+      <li>
+        <h3>Create an account</h3>
+        <p>Creating an account is simple, free and can be done in 30 seconds using your email, or social media accounts. Join dozens of players. </p>
+        <img src="#"> 
+      </li>
+      <li>
+        <h3>Find the right game</h3>
+        <p>Our Compass makes it ridiculosuly easy to find the right game for you, at any time, or invite your friends for an afternoon of challenging fun! </p>
+      </li>      
+      <li>
+        <h3>Make the first move!</h3>
+        <p>This is when the fun starts! Grab a cup of coffee, put on a pair of headphones, and get ready to take over your opponent one move at a time.</p>
+      </li>
+    </ol>
+    <%= link_to 'Create an account', new_player_registration_path, class: "btn btn-default instructions--button" %>
+  </div>
+</div>
+
+
+<div class="team">
+  <div class="team--columns">
+    <h2>Proudly built by the Up All Knight crew...</h2>
+    <%= link_to 'Learn more about how we built this app', new_player_registration_path, class: "team--cta" %>
+  </div>
+</div>
+
+<div class="logos">
+  <div class="logos--columns">
+  <h2>... using these fantastic tools.</h2>
+  <%= image_tag "logo-row.png" %>
+  </div>
 </div>

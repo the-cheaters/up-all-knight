@@ -1,16 +1,24 @@
 @import 'variables';
 
+// Header
+
 .hero--header {
   font-family: $primary-font;
   font-size: 60px;
 }
 
 .hero {
-  background-color: white;
+  background-color: $main-color;
   width: 100%;
-  height: 600px;
-  margin-top: 0px;
+  height: 400px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin-bottom: 0px;
 }
+
+// 
+
+// Columns
 
 .hero--columns {
   @include make-xs-column(10);
@@ -20,3 +28,22 @@
 .hero--columns__right {
   @include make-xs-column(8);
 }
+
+.instructions--columns {
+  @include make-xs-column(6);
+  @include make-xs-column-offset(3);
+}
+
+.team--columns {
+  @include make-xs-column(8);
+  @include make-xs-column-offset(2);
+}
+
+.logos--columns {
+  @include make-xs-column(6);
+  @include make-xs-column-offset(3);
+}
+
+.hero { 
+  margin-bottom: 20px;
+} 
