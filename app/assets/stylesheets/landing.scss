@@ -172,6 +172,44 @@
   padding-bottom: 60px;
 }
 
+.team--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $lightest-color;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.team--cta {
+  font-family: $secondary-font;
+  font-size: 18px;
+  font-weight: 400;
+  color: $contrast-color;
+  text-align: center;
+  text-decoration: underline;
+
+  &:hover {
+    color: $lightest-color;
+  }
+}
+
+.team--members__photo {
+  margin-bottom: 10px;
+}
+
+.team--members__name {
+  font-family: $secondary-font;
+  font-size: 14px;
+  font-weight: 400;
+  color: $light-color;
+  text-align: center;
+
+  &:hover {
+    color: $lightest-color;
+  }
+}
+
 // Logos
 
 .logos {
@@ -179,8 +217,25 @@
   width: 100%;
   height: auto;
   padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 90px;
 }
+
+.logos--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $main-color;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logos--image {
+  margin: auto;
+  display: block;
+  margin-bottom: 50px;
+}
+
+
 
 // Columns
 
