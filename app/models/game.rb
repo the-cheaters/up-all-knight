@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
     self.pieces.where(x_position: x, y_position: y).take
   end
 
-  def set_default_turn
+  def set_default_turn!
     update_attributes(current_turn: white_player_id)
   end
 
