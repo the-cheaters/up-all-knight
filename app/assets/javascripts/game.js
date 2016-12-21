@@ -55,9 +55,6 @@ $(document).ready(function() {
       data: { piece: { x_position: $(this).data('column'), y_position: $(this).data('row') }},
       error: function() {
         alert("Invalid Move!")
-      },
-      success: function(data) {
-        timer(data)
       }
     });
   };

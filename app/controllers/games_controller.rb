@@ -153,17 +153,11 @@ class GamesController < ApplicationController
                   end
                 end
                 
-                def set_opponent_id
-                  if current_player.id == @game.black_player_id
-                    @opponent_id = @game.white_player_id
-                  elsif current_player.id == @game.white_player_id
-                    @opponent_id = @game.black_player_id
-                  else
-                    @opponent_id = nil
-                  end
+                # Never trust parameters from the scary internet, only allow the white list through.
+                def game_params
+                  params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
                 end
                 
-                # Use callbacks to share common setup or constraints between actions.
                 def set_game
                   if params[:id].nil?
                     @game ||= Game.find(params[:game_id])
@@ -172,10 +166,16 @@ class GamesController < ApplicationController
                   end
                 end
                 
-                # Never trust parameters from the scary internet, only allow the white list through.
-                def game_params
-                  params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
+                def set_opponent_id
+                  if @game.black_player_id != nil
+                    if current_player.id == @game.black_player_id
+                      @opponent_id = @game.white_player_id
+                    elsif current_player.id == @game.white_player_id
+                      @opponent_id = @game.black_player_id
+                    else
+                      @opponent_id = nil
+                    end
+                  end
                 end
-                
               end
               

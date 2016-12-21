@@ -29,7 +29,7 @@ channel.bind('my-event', function(data) {
   alert(data.message);
 });
 
-window.pusher = new Pusher('69d78adae1cff6a25019');
+window.pusher = new Pusher(ENV["pusher_key"]);
 window.broadcast_channel = pusher.subscribe('broadcast');
 
 if (window.player_id)

@@ -54,9 +54,9 @@ class Game < ActiveRecord::Base
   
   def update_timer(current_player)
     timer = self.timers.where(player_id: nil).last
-    byebug
-    timer.player_id = current_player.id
-    byebug
-    timer.save
+    if timer != nil
+      timer.player_id = current_player.id
+      timer.save
+    end
   end
 end
