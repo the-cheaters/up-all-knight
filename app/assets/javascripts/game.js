@@ -20,31 +20,6 @@ $(document).ready(function() {
   $('.tile').droppable({
     drop: movePiece
   });
-  var currentTimer = null
-  function timer(data) {
-    clearInterval(currentTimer);
-    
-    if (data.current_turn % 2 === 1) {
-      var blackTime = data.timer.black_time_left
-      
-      currentTimer = setInterval(function(){
-        if (blackTime === 0) {
-          clearInterval(currentTimer)
-        }
-        $('#black-player-timer').text(blackTime)
-        blackTime -= 1
-      },1000)
-    } else {
-      var  whiteTime = data.timer.white_time_left
-      currentTimer = setInterval(function(){
-        if (whiteTime === 0) {
-          clearInterval(currentTimer)
-        }
-        $('#white-player-timer').text(whiteTime)
-        whiteTime -= 1
-      },1000);
-    }
-  }
   
   function movePiece(event, ui) {
     
@@ -55,7 +30,9 @@ $(document).ready(function() {
       data: { piece: { x_position: $(this).data('column'), y_position: $(this).data('row') }},
       error: function() {
         alert("Invalid Move!")
-      }
+      },
+      success:
+      
     });
   };
   

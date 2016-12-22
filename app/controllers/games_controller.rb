@@ -39,6 +39,8 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.black_player_id = current_player.id if @game.white_player_id == 0
+    @game.save
+    @game.set_default_turn!
     if @game.save && @game.is_blitz
       @game.create_timers(params[:time_left])
     end

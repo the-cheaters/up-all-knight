@@ -30,12 +30,17 @@ $ ->
     $('.forfeit').css('display', 'inline')
 
   window.broadcast_channel.bind 'start_timer', (event) ->
-    currentTimer = null
+
     console.log event
-  timer = (event) ->
+    timer(event)
+
+
+  currentTimer = null
+
+  currentTurn = (whoseTurn) ->
     clearInterval currentTimer
-    if data.current_turn % 2 == 1
-      blackTime = data.timer.black_time_left
+    if whoseTurn == 'black'
+      blackTime = $('.game-wrapper').data('black-time-left')
       currentTimer = setInterval((->
         if blackTime == 0
           clearInterval currentTimer
@@ -44,7 +49,7 @@ $ ->
         return
       ), 1000)
     else
-      whiteTime = data.timer.white_time_left
+      whiteTime = $('.game-wrapper').data('white-time-left')
       currentTimer = setInterval((->
         if whiteTime == 0
           clearInterval currentTimer
@@ -53,3 +58,48 @@ $ ->
         return
       ), 1000)
     return
+
+
+  window.broadcast_channel.bind 'pusher:subscription_succeeded', (event) ->
+    whoseTurn = $('.game-wrapper').data('current-turn')
+    currentTimer = null
+    currentTurn whoseTurn
+
+currentTurn = (whoseTurn) ->
+  clearInterval currentTimer
+  if whoseTurn == 'black'
+    blackTime = $('.game-wrapper').data('black-time-left')
+    currentTimer = setInterval((->
+      if blackTime == 0
+        clearInterval currentTimer
+      $('#black-player-timer').text blackTime
+      blackTime -= 1
+      return
+    ), 1000)
+  else
+    whiteTime = $('.game-wrapper').data('white-time-left')
+    currentTimer = setInterval((->
+      if whiteTime == 0
+        clearInterval currentTimer
+      $('#white-player-timer').text whiteTime
+      whiteTime -= 1
+      return
+    ), 1000)
+  currentPlayer = $('.game-wrapper').data('player')
+  if currentPlayer == 'white'
+    $('.piece').draggable
+      containment: $('.chessboard')
+      grid: [
+        80
+        80
+      ]
+      cancel: '.black-piece'
+  else
+    $('.piece').draggable
+      containment: $('.chessboard')
+      grid: [
+        80
+        80
+      ]
+      cancel: '.white-piece'
+  return

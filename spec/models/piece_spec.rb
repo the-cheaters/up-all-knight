@@ -31,6 +31,19 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+  describe "Piece#game.change_turns" do
+
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
+
+    it "should change turns after a player moves piece" do
+      game.set_default_turn!
+      expect(game.current_turn).to eq(white_player.id)
+      piece.move_to(5,5)
+      game.reload
+      expect(game.current_turn).to eq(black_player.id)
+    end
+  end
+
   describe "Piece.en_passant" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id, x_position: 7, y_position: 2) }
     let(:pawn) { FactoryGirl.create(:pawn, game_id: game.id, player_id: black_player.id, x_position: 1, y_position: 1) }

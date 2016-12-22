@@ -33,13 +33,13 @@
 </h1>
 
 <div class="current_turn">
-  <%if @game.current_turn % 2 == 0 %>
+  <%if @game.current_turn == @game.white_player_id %>
   <h2>White Player's Turn</h2>
   <% else %>
   <h2>Black Player's Turn</h2>
   <% end %>
 </div>
-<div class="game-wrapper" data-current-turn="<%= @game.current_turn %>" data-player="<%= get_player %>">
+<div class="game-wrapper" data-current-turn="<%= @game.current_player_turn %>" data-player="<%= get_player %>" data-black-time-left="<%= @black_player_timer.time_left %>" data-white-time-left="<%= @white_player_timer.time_left %>">
   <div class="white-player">White Player's Time Left:<div id="white-player-timer"><%= render partial: 'layouts/whitetimer',locals: {:white_player_timer => @white_player_timer} %></div></div>
   <div class="chessboard">
     <% (0..7).each do |row| %>

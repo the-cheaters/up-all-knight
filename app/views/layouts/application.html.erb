@@ -4,7 +4,7 @@
   <title>Chess</title>
   <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
   <script>
-  window.pusher_key = ENV["pusher_key"];
+  window.pusher_key = '<%= ENV['PUSHER_KEY'] %>';
   <%= "window.player_id = #{current_player.id};" if current_player %>
   </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
