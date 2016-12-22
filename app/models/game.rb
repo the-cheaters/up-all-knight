@@ -61,6 +61,7 @@ class Game < ActiveRecord::Base
   def stalemate?(player)
     stalemate = false
     if !check?(player)
+      stalemate = true
       self.pieces.where(player_id: player.id, captured: false).each do |piece|
         (0..7).each do |x|
           (0..7).each do |y|
