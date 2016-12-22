@@ -58,6 +58,24 @@ class Game < ActiveRecord::Base
     opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
   end
 
+  def stalemate?(player)
+    stalemate = false
+    if !check?(player)
+      self.pieces.where(player_id: player.id, captured: false).each do |piece|
+        (0..7).each do |x|
+          (0..7).each do |y|
+            if piece.valid_move?(x, y)
+              piece.move_to(x, y)
+              stalemate = false if !check?(player)
+              ActiveRecord::Rollback
+            end
+          end
+        end
+      end
+    end
+    stalemate
+  end
+
   def set_default_turn!
     update_attributes(current_turn: white_player_id)
   end
