@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
   :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook,:twitter, :google]
 
   has_many :timers
+  has_many :pieces
+  has_many :games
 
   def self.from_omniauth(auth)
 
@@ -27,6 +29,7 @@ class Player < ActiveRecord::Base
       game.update_attributes(:black_player_id => id)
     end
   end
+
 end
 
 

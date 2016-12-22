@@ -40,6 +40,8 @@ class Game < ActiveRecord::Base
 
   has_many :pieces
   has_many :players
+  belongs_to :white_player, class_name: 'Player'
+  belongs_to :black_player, class_name: 'Player'
 
   def is_piece_present?(x, y)
     self.pieces.where(x_position: x, y_position: y).any?
@@ -47,6 +49,13 @@ class Game < ActiveRecord::Base
 
   def get_piece(x, y)
     self.pieces.where(x_position: x, y_position: y).take
+  end
+
+  def check?(player)
+    king = pieces.where(type: 'King', player: player).first
+    opponents_pieces = pieces.where(player: opponent_player(player))
+
+    opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
   end
 
   def set_default_turn!
@@ -67,6 +76,12 @@ class Game < ActiveRecord::Base
 
   def change_turns!
     update_attributes(current_turn: opponent)
+  end
+
+  private
+
+  def opponent_player(player)
+    player == white_player ? black_player : white_player
   end
 
 end
