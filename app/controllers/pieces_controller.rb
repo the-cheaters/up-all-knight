@@ -12,7 +12,7 @@ class PiecesController < ApplicationController
           @white_timer.start!
           @black_timer.stop!
         end
-        Pusher["broadcast"].trigger!('start_timer',{timer: {white_start_time: @white_timer.start_time, black_start_time: @black_timer.start_time, black_time_left: @black_timer.time_left,white_time_left: @white_timer.time_left}, current_turn: selected_piece.game.current_player_turn })
+        Pusher["broadcast"].trigger!('change_turns',{timer: {white_start_time: @white_timer.start_time, black_start_time: @black_timer.start_time, black_time_left: @black_timer.time_left,white_time_left: @white_timer.time_left}, current_turn: selected_piece.game.current_player_turn })
         render json: {}, status: :ok
       else
         render json: {}, status: :ok
