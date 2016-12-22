@@ -60,6 +60,26 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  describe "game.stalemate?" do
+
+    context "not stalemate" do
+      it "should not be stalemate" do
+        expect(game.check?(black_player)).to eq(false)
+      end
+    end
+
+    context "stalemate" do
+      let(:g) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
+
+      it "should say that black is in stalemate" do
+        black_king = FactoryGirl.create(:king, game_id: g.id, x_position: 0, y_position: 0, moves: 2, player_id: black_player.id)
+        white_rook = FactoryGirl.create(:rook, game_id: g.id, x_position: 1, y_position: 1, player_id: white_player.id)
+        white_king = FactoryGirl.create(:king, game_id: g.id, x_position: 2, y_position: 2, moves: 2, player_id: white_player.id)
+        expect(g.stalemate?(black_player)).to eq(true)
+      end
+    end
+  end
+
   describe "player's turn" do
     let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
     let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
