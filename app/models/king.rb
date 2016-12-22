@@ -24,7 +24,7 @@ class King < Piece
 
   def can_castle?(destination_x, destination_y)
     return self.moves == 0 && (castling_kingside?(destination_x, destination_y) || 
-    castling_queenside?(destination_x, destination_y)) # &&(!self.check?)
+    castling_queenside?(destination_x, destination_y)) && (game.check?(player)) == false
   end
 
   def castle!(destination_x, destination_y)
