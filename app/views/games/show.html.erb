@@ -3,32 +3,51 @@
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
 
+<% if @game.white_draw && @game.black_draw %>
+<p class="alert alert-danger text-center">This game ended in a draw.</p>
+<% elsif @game.white_forfeit || @game.black_forfeit %>
+<p class="alert alert-danger text-center">This game ended in a forfeit.</p>
+<% end %>
 
-    <h1>Captured Pieces:
-      <% @game.pieces.where(captured: true).each do |piece| %>
-          <%= piece.unicode_symbol.html_safe %>
+<p class="text-center">You are the <%= @color %> player.</p>
+
+  <!-- Message from Pusher -->
+  <p id="message" class="alert alert-warning text-center"></p>
+
+  <!-- Button Selection For Pusher -->
+  <!-- Default is the button to Request Draw -->
+  <div class="button-panel">
+  <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
+  &nbsp;
+  <button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Accept Draw</button>
+  &nbsp;
+  <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
+  &nbsp;
+  <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
+  </div>
+
+<h1>Captured Pieces:
+  <% @game.pieces.where(captured: true).each do |piece| %>
+  <%= piece.unicode_symbol.html_safe %>
+  <% end %>
+</h1>
+
+<div class="chessboard">
+  <% (0..7).each do |row| %>
+  <div id="row">
+    <% (0..7).each do |column| %>
+    <div data-column="<%= column %>" data-row="<%= row %>" class="<%= square_color(row, column) %> tile">
+      <% @pieces.each do |piece| %>
+      <% if piece.x_position == column && piece.y_position == row %>
+      <div class="piece" data-piece-id="<%=piece.id%>" data-update-url="<%=game_piece_path(piece.game, piece) %>">
+        <%= piece.unicode_symbol.html_safe %>
+      </div>
       <% end %>
-    </h1>
-
-
-
-
-
-
-    <div class="chessboard">
-      <% (0..7).each do |row| %>
-        <div id="row">
-          <% (0..7).each do |column| %>
-            <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %>">
-              <% @pieces.each do |piece| %>
-              <% if piece.x_position == column && piece.y_position == row %>
-                <div class="piece" data-piece-id="<%piece.id%>">
-                <%= piece.unicode_symbol.html_safe %>
-                </div>
-              <% end %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
       <% end %>
     </div>
+
+
+    <% end %>
+  </div>
+  <% end %>
+</div>

@@ -31,6 +31,19 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+  describe "Piece#game.change_turns" do
+
+    let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
+
+    it "should change turns after a player moves piece" do
+      game.set_default_turn!
+      expect(game.current_turn).to eq(white_player.id)
+      piece.move_to(5,5)
+      game.reload
+      expect(game.current_turn).to eq(black_player.id)
+    end
+  end
+
   describe "Piece.en_passant" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id, x_position: 7, y_position: 2) }
     let(:pawn) { FactoryGirl.create(:pawn, game_id: game.id, player_id: black_player.id, x_position: 1, y_position: 1) }
@@ -62,7 +75,6 @@ RSpec.describe Piece, type: :model do
 
   describe "Piece#capture!" do
     let(:piece) { FactoryGirl.create(:piece, game_id: game.id, player_id: white_player.id) }
-    
     it "should fail if there is no piece to capture" do
       expect { piece.capture_piece(5,4) }.to raise_error(RuntimeError)
     end
@@ -332,16 +344,16 @@ RSpec.describe Piece, type: :model do
     end
     
   end
-
-  describe 'unicode_symbol to change pieces color' do 
-
-    it "should return true for WHITE piece" do 
+  
+  describe 'unicode_symbol to change pieces color' do
+    
+    it "should return true for WHITE piece" do
       game = Game.create(white_player_id: 0, black_player_id: 1)
       pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 0)
       expect(pawn.unicode_symbol).to eq "&#9817;"
     end
-
-    it "should return true for BLACK piece" do 
+    
+    it "should return true for BLACK piece" do
       game = Game.create(white_player_id: 0, black_player_id: 1)
       pawn = Pawn.create(x_position: 0, y_position: 1, game_id: game.id, player_id: 1)
       expect(pawn.unicode_symbol).to eq "&#9823;"
