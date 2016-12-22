@@ -14,14 +14,15 @@ RSpec.describe King, type: :model do
       king.move_to(4,0)
       expect(king.valid_move?(6,0)).to eq(false)
     end
-    #  HAVE TO WAIT FOR CHECK? METHOD
-
-    # it 'should return false if king tries to castle when in check? or moving toward check?' do 
-    #   king = King.create(x_position: 4, y_position: 0, game_id: game.id, black_player_id: black_player.id)
-    #   piece = Piece.create(destination_x: 6, destination_y: 0, game_id: game.id, white_player_id: white_player.id)
-    #   king.move_to(6, 0)
-    #   expect(king.move_to).to eq(false)
-    # end
+    
+    it 'should return true if king tries to castle when in check? or false to move toward check?' do 
+      king = King.create(x_position: 4, y_position: 0, game_id: game.id, player_id: black_player.id)
+      piece = Piece.create(x_position: 6, y_position: 0, game_id: game.id, player_id: white_player.id)
+      king.move_to(6, 0)
+      expect(king.move_to(6,0)).to eq(false)
+      game.reload
+      expect(game.check?(black_player.id)).to eq(true)
+    end
 
     it 'should move king 2 spaces if king can castle queenside' do 
       king = King.create(x_position: 4, y_position: 0, game_id: game.id, player_id: black_player.id)
