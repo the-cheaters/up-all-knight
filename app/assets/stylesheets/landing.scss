@@ -1,0 +1,269 @@
+@import 'variables';
+
+// Header
+
+.hero {
+  background-color: $main-color;
+  width: 100%;
+  height: auto;
+  padding-top: 60px;
+  padding-bottom: 80px;
+}
+
+.hero--header {
+  font-family: $primary-font;
+  font-size: 60px;
+  font-weight: 700;
+  color: $lightest-color;
+}
+
+.hero--description {
+  font-family: $secondary-font;
+  font-size: 16px;
+  font-weight: 400;
+  color: $lightest-color;
+  line-height: 1.8;
+}
+
+.hero--button {
+  color: white;
+  background-color: $contrast-color;
+  font-family: $primary-font;
+  font-weight: 700;
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 25px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: $light-color;
+    color: $contrast-color;
+    text-decoration: none;
+  }
+}
+
+.hero--login, .hero--login__link {
+  font-family: $secondary-font;
+  color: $lightest-color;
+  font-size: 12px;
+  font-weight: 400;
+  padding-left: 5px;
+}
+
+.hero--login__link {
+  border-bottom: 1px dotted $light-color;
+  &:hover {
+    text-decoration: none;
+    border-bottom: 1px solid $light-color;
+    color: $light-color;
+  }
+}
+
+
+// Instructions
+
+.instructions {
+  background-color: white;
+  width: 100%;
+  height: auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.instructions--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $main-color;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.instructions--item__title {
+  font-family: $primary-font;
+  font-size: 24px;
+  font-weight: 700;
+  color: $main-color;
+  margin-top: 0px;
+}
+
+.instructions--item__p {
+  font-family: $secondary-font;
+  color: $main-color;
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.instructions--list {
+  margin-left: 0;
+  padding-right: 0;
+  list-style-type: none;
+}
+
+.instructions--list li {
+    counter-increment: step-counter;
+}
+
+.instructions--list li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-family: $primary-font;
+    font-size: 24px;
+    color: $contrast-color;
+    font-weight: 700;
+    margin-bottom: -20px;
+}
+
+.instructions--button {
+  color: white;
+  background-color: $contrast-color;
+  font-family: $primary-font;
+  font-weight: 700;
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 25px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: $light-color;
+    color: $contrast-color;
+    text-decoration: none;
+  }
+}
+
+.instructions--button__row {
+  text-align: center;
+}
+
+
+// Team
+
+.team {
+  background-color: $main-color;
+  width: 100%;
+  height: auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.team--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $lightest-color;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.team--cta {
+  font-family: $secondary-font;
+  font-size: 18px;
+  font-weight: 400;
+  color: $contrast-color;
+  text-align: center;
+  text-decoration: underline;
+
+  &:hover {
+    color: $lightest-color;
+  }
+}
+
+.team--members__photo {
+  margin-bottom: 10px;
+}
+
+.team--members__name {
+  font-family: $secondary-font;
+  font-size: 14px;
+  font-weight: 400;
+  color: $light-color;
+  text-align: center;
+
+  &:hover {
+    color: $lightest-color;
+  }
+}
+
+// Logos
+
+.logos {
+  background-color: white;
+  width: 100%;
+  height: auto;
+  padding-top: 60px;
+  padding-bottom: 90px;
+}
+
+.logos--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $main-color;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logos--image {
+  margin: auto;
+  display: block;
+  margin-bottom: 50px;
+}
+
+
+
+// Columns
+
+.hero--columns {
+  @include make-xs-column(10);
+  @include make-xs-column-offset(1);
+}
+
+.hero--columns__right {
+  @include make-xs-column(8);
+}
+
+.instructions--columns {
+  @include make-xs-column(6);
+  @include make-xs-column-offset(3);
+}
+
+.team--columns {
+  @include make-xs-column(8);
+  @include make-xs-column-offset(2);
+}
+
+.logos--columns {
+  @include make-xs-column(6);
+  @include make-xs-column-offset(3);
+}
+
+// Global 
+
+.clear { clear: both; }
+
