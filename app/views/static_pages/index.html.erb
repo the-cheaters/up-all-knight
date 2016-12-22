@@ -1,0 +1,89 @@
+<div class="hero">
+  <div class="hero--columns">
+    <div class="hero--columns__right">
+      <h1 class="hero--header">Play online chess and have fun</h1>
+      <p class="hero--description">Up All Knight is a online chess carefully designed from the ground up to be enjoyable and fun for all players. Create a free account and play youur first game today!</p>
+      <%= link_to 'Play your first game', new_player_registration_path, class: "hero--button" %>
+      <p class="hero--login">Already have an account? <%= link_to 'Login', new_player_session_path, class: "hero--login__link" %>!</p>
+    </div>
+  </div>
+    <br class="clear" />
+</div>
+
+<div class="instructions">
+  <div class="instructions--columns">
+    <h2 class="instructions--header">Play chess and have fun</h2>
+    <ol class="instructions--list">
+      <li class="intructions--item">
+        <h3 class="instructions--item__title">Create an account</h3>
+        <p class="instructions--item__p">Creating an account is simple, free and can be done in 30 seconds using your email, or social media accounts. Join dozens of players. </p>
+      </li>
+      <li>
+        <h3 class="instructions--item__title">Find the right game</h3>
+        <p class="instructions--item__p">Our Compass makes it ridiculosuly easy to find the right game for you, at any time, or invite your friends for an afternoon of challenging fun! </p>
+      </li>      
+      <li>
+        <h3 class="instructions--item__title">Make the first move!</h3>
+        <p class="instructions--item__p">This is when the fun starts! Grab a cup of coffee, put on a pair of headphones, and get ready to take over your opponent one move at a time.</p>
+      </li>
+    </ol>
+  <div class="instructions--button__row">
+    <%= link_to 'Create an account', new_player_registration_path, class: "instructions--button" %>
+    </div>
+  </div>
+  <br class="clear" />
+</div>
+
+
+<div class="team">
+  <div class="team--columns text-center">
+    <h2 class="team--header">Proudly built by the Up All Knight crew...</h2>
+
+    <div class="col-md-1">
+    </div>
+
+    <div class="team--members">
+
+    <div class="col-md-2">
+      <%= image_tag "profile-fsdevninja.png", class: "team--members__photo", size: "110x110" %>
+      <a href="http://github.com/fsdevninja" class="team--members__name text-center" >@fsdevninja</a>
+    </div>        
+    <div class="col-md-2">
+      <%= image_tag "profile-joewhale.png", class: "team--members__photo", size: "110x110" %>
+      <a href="http://github.com/joewhale" class="team--members__name text-center" >@joewhale</a>
+    </div>        
+    <div class="col-md-2">
+      <%= image_tag "profile-kellylougheed.png", class: "team--members__photo", size: "110x110" %>
+      <a href="http://github.com/kellylougheed" class="team--members__name text-center" >@kellylougheed</a>
+    </div>        
+    <div class="col-md-2">
+      <%= image_tag "profile-pambwillenz.png", class: "team--members__photo", size: "110x110" %>
+      <a href="http://github.com/pambwillenz" class="team--members__name text-center" >@pambwillenz</a>
+    </div>        
+    <div class="col-md-2">
+      <%= image_tag "profile-gonzalo.png", class: "team--members__photo", size: "110x110" %>
+      <a href="http://github.com/fsdevninja" class="team--members__name text-center" >@gonsanchezs</a>
+    </div>    
+
+
+    <div class="col-md-1">
+    </div>
+
+    </div>
+
+  <br class="clear" />
+  <br />
+  <br />
+
+    <%= link_to 'Learn more about how we built this app', new_player_registration_path, class: "team--cta" %>
+  </div>
+  <br class="clear" />
+</div>
+
+<div class="logos">
+  <div class="logos--columns">
+  <h2 class="logos--header">... using these fantastic tools.</h2>
+  <%= image_tag "logo-row.png", class: "logos--image", size: "519x64" %>
+  </div>
+  <br class="clear" />
+</div>

@@ -1,0 +1,41 @@
+@import 'variables';
+
+.navbar-default {
+  background-color: $main-color;
+  border: none;
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+
+.navbar-default .navbar-brand {
+    font-family: $primary-font;
+    font-weight: 700;
+    color: white;
+
+    &:hover {
+      color: $contrast-color;
+    }
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+
+  &:hover {
+    color: $contrast-color;
+  }
+}
+
+.navbar--link {
+  font-family: $primary-font;
+
+    &:hover {
+      color: $contrast-color;
+      text-decoration: none;
+    }
+}
+
+.navbar--highlight {
+  font-weight: 700;
+  background-color: $main-color;
+}
+

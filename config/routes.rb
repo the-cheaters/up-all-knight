@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-  
-  root 'games#index'
-  
+
+  root 'static_pages#index'
   resources :games do
     resources :pieces, only: :update
     patch 'add_player', on: :member
