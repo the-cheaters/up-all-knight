@@ -13,5 +13,24 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require_tree .
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher(window.pusher_key, {
+    encrypted: true
+  });
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+  alert(data.message);
+});
+
+window.pusher = new Pusher('69d78adae1cff6a25019');
+window.broadcast_channel = pusher.subscribe('broadcast');
+
+if (window.player_id)
+  window.private_channel = pusher.subscribe('private-user_' + window.player_id);

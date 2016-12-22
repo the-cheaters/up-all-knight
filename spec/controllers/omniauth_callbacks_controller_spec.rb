@@ -49,6 +49,9 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
   end
   
   describe 'Failure' do
+    after do
+      Rails.application.reload_routes!
+    end
     
     it 'should redirectto root path' do
       Rails.application.routes.draw do
