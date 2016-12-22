@@ -66,9 +66,11 @@ class Game < ActiveRecord::Base
         (0..7).each do |x|
           (0..7).each do |y|
             if piece.valid_move?(x, y)
+              original_x = piece.x_position
+              original_y = piece.y_position
               piece.move_to(x, y)
               stalemate = false if !check?(player)
-              ActiveRecord::Rollback
+              piece.move_to(original_x, original_y)
             end
           end
         end

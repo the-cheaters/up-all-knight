@@ -72,9 +72,9 @@ RSpec.describe Game, type: :model do
       let(:g) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
 
       it "should say that black is in stalemate" do
-        black_king = FactoryGirl.create(:king, game_id: g.id, x_position: 0, y_position: 0, player_id: black_player.id)
+        black_king = FactoryGirl.create(:king, game_id: g.id, x_position: 0, y_position: 0, moves: 2, player_id: black_player.id)
         white_rook = FactoryGirl.create(:rook, game_id: g.id, x_position: 1, y_position: 1, player_id: white_player.id)
-        white_king = FactoryGirl.create(:king, game_id: g.id, x_position: 2, y_position: 2, player_id: white_player.id)
+        white_king = FactoryGirl.create(:king, game_id: g.id, x_position: 2, y_position: 2, moves: 2, player_id: white_player.id)
         expect(g.stalemate?(black_player)).to eq(true)
       end
     end
