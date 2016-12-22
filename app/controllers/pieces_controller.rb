@@ -1,5 +1,5 @@
 class PiecesController < ApplicationController
-  before_action :set_game, :set_opponent_id
+  before_action :set_game
   def update
     if selected_piece.move_to(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
       if selected_piece.game.is_blitz
@@ -36,15 +36,4 @@ class PiecesController < ApplicationController
     @game ||= Game.find(params[:game_id])
   end
   
-  def set_opponent_id
-    if @game.black_player_id != nil
-      if current_player.id == @game.black_player_id
-        @opponent_id = @game.white_player_id
-      elsif current_player.id == @game.white_player_id
-        @opponent_id = @game.black_player_id
-      else
-        @opponent_id = nil
-      end
-    end
-  end
 end
