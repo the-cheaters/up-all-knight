@@ -2,6 +2,12 @@ class PiecesController < ApplicationController
   before_action :set_game
   def update
     if selected_piece.move_to(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
+      if selected_piece.game.has_started == false
+        selected_piece.game.has_started = true
+        selected_piece.game.save
+        Pusher["broadcast"].trigger!('game_has_started',{game_has_started: true})
+      end
+      
       if selected_piece.game.is_blitz
         @white_timer = selected_piece.game.timers.where(player_id: selected_piece.game.white_player_id).last
         @black_timer = selected_piece.game.timers.where(player_id: selected_piece.game.black_player_id).last

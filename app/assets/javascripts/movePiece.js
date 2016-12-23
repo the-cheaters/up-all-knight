@@ -11,45 +11,50 @@ $(document).ready(function() {
   function currentTurn(data, pageload) {
     var blackTime = (data.timer.black_time_left)
     var whiteTime = (data.timer.white_time_left)
-    if (pageload === true) {
+    
       if (data.current_turn === "black") {
+        if (pageload === true) {
         var blackElapsed = (timeNow - black_start_time)
         blackTime = (data.timer.black_time_left - blackElapsed)
         $('#black-player-timer').text(blackTime)
-        
         $('#white-player-timer').text($('.game-wrapper').data('white-time-left'))
+        }
+          clearInterval(currentTimer);
+          currentTimer = setInterval(function(){
+            if (blackTime === 0) {
+              clearInterval(currentTimer)
+            }
+            $('#black-player-timer').text(blackTime)
+            blackTime -= 1
+          },1000)
+         
       } else if (data.current_turn === "white") {
+        if (pageload === true) {
         var whiteElapsed = (timeNow - white_start_time)
         whiteTime = (data.timer.white_time_left - whiteElapsed)
+        $('#black-player-timer').text($('.game-wrapper').data('black-time-left'))
+        }
         if (gameStarted === true) {
           $('#white-player-timer').text(whiteTime)
-          $('#black-player-timer').text($('.game-wrapper').data('black-time-left'))
           clearInterval(currentTimer);
-          if (data.current_turn === "black") {
-            currentTimer = setInterval(function(){
-              if (blackTime === 0) {
-                clearInterval(currentTimer)
-              }
-              $('#black-player-timer').text(blackTime)
-              blackTime -= 1
-            },1000)
-          } else {
-            currentTimer = setInterval(function(){
+          currentTimer = setInterval(function(){
               if (whiteTime === 0) {
                 clearInterval(currentTimer)
               }
               $('#white-player-timer').text(whiteTime)
               whiteTime -= 1
             },1000);
-          }
+           
         } else {
           $('#white-player-timer').text($('.game-wrapper').data('white-time-left'))
           $('#black-player-timer').text($('.game-wrapper').data('black-time-left'))
-        }
-      }
-    }
+        } // end of gameStarted === true
+        } // end of white turn
+
+  } // end of currentTurn
     
-  };
+    
+  
   
   function disablePieces(currentPlayer, currentPlayersTurn) {
     if (currentPlayer === "black") {
@@ -101,5 +106,8 @@ $(document).ready(function() {
     $('.current-turn h3').text(currentPlayersTurn + " players turn")
     disablePieces(currentPlayer, currentPlayersTurn)
   });
-  
+
+   window.broadcast_channel.bind('game_has_started', function(data) {
+    gameStarted = data.game_has_started
+  });
 });
