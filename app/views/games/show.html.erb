@@ -11,12 +11,12 @@
 
 <p class="text-center">You are the <%= @color %> player.</p>
 
-  <!-- Message from Pusher -->
-  <p id="message" class="alert alert-warning text-center"></p>
+<!-- Message from Pusher -->
+<p id="message" class="alert alert-warning text-center"></p>
 
-  <!-- Button Selection For Pusher -->
-  <!-- Default is the button to Request Draw -->
-  <div class="button-panel">
+<!-- Button Selection For Pusher -->
+<!-- Default is the button to Request Draw -->
+<div class="button-panel">
   <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
   &nbsp;
   <button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Accept Draw</button>
@@ -24,7 +24,7 @@
   <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
   &nbsp;
   <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
-  </div>
+</div>
 
 <h1>Captured Pieces:
   <% @game.pieces.where(captured: true).each do |piece| %>
@@ -36,7 +36,7 @@
   <% (0..7).each do |row| %>
   <div id="row">
     <% (0..7).each do |column| %>
-    <div data-column="<%= column %>" data-row="<%= row %>" class="<%= square_color(row, column) %> tile">
+    <div id="C<%= column %>R<%= row %>" class="<%= square_color(row, column) %> tile">
       <% @pieces.each do |piece| %>
       <% if piece.x_position == column && piece.y_position == row %>
       <div class="piece" data-piece-id="<%=piece.id%>" data-update-url="<%=game_piece_path(piece.game, piece) %>">
@@ -45,8 +45,8 @@
       <% end %>
       <% end %>
     </div>
-
-
+    
+    
     <% end %>
   </div>
   <% end %>

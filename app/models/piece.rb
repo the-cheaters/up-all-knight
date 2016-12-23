@@ -56,105 +56,124 @@ class Piece < ActiveRecord::Base
     end
   end
   
-  def valid_move?(destination_x, destination_y)
-    valid = true
-    if destination_x == nil || destination_y == nil
-      valid = false
-    end
-    # Check if piece is obstructed
-    if self.is_obstructed?(destination_x, destination_y)
-      valid = false
-      # Check if destination is occupied by a piece of the same color
-    elsif game.is_piece_present?(destination_x, destination_y)
-      other_piece = game.get_piece(destination_x, destination_y)
-      if self.get_color == other_piece.get_color
-        valid = false
-      end
-    end
-    return valid
-  end
-  
-  def get_color
-    if self.player_id == game.white_player_id
-      return WHITE
-    elsif self.player_id == game.black_player_id
-      return BLACK
-    end
-  end
-  
-  
-  def is_obstructed?(destination_x, destination_y)
-    location_x = self.x_position
-    location_y = self.y_position
-    if vertical(destination_x)
-      # check for vertical obstruction
-      location_y > destination_y ? incrementer = -1 : incrementer = 1
-      position_y = location_y + incrementer
-      min, max = [position_y, destination_y].minmax
-      range = range(min, max, incrementer)
-      if game.pieces.where(x_position: location_x, y_position: range).any?
+  def can_pawn_promote?(destination_y)
+    if self.get_color == "white"
+      if destination_y == 0
         return true
-      end
-      return false
-    elsif horizontal(destination_y)
-      # check for horizontal obstruction
-      location_x > destination_x ? incrementer = -1 : incrementer = 1
-      position_x = location_x + incrementer
-      min, max = [position_x, destination_x].minmax
-      range = range(min, max, incrementer)
-      if game.pieces.where(x_position: range, y_position: location_y).any?
-        return true
-      end
-      return false
-    elsif diagonal(destination_x, destination_y)
-      # check for diagonal obstruction
-      location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
-      location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
-      position_x = location_x + x_incrementer
-      position_y = location_y + y_incrementer
-      min_x, max_x = [position_x, destination_x].minmax
-      range_x = range(min_x, max_x, x_incrementer, true)
-      min_y, max_y = [position_y, destination_y].minmax
-      range_y = range(min_y, max_y, y_incrementer, true)
-      if range_x && range_y != nil
-        if game.pieces.where(x_position: range_x, y_position: range_y).any?
-          return true
+      elsif self.get_color == "black"
+        if destination_y == 7
+          return false
         end
       end
-      return false
     end
   end
   
-  private
-  
-  def range(min, max, incrementer, diagonal=false)
-    range = nil
-    if min != max
-      if incrementer > 0 && diagonal
-        max = max - incrementer
-      elsif incrementer < 0
-        min = min - incrementer
+  def pawn_promotion(new_piece, destination_x, destination_y)
+    if self.type == "Pawn"
+      self.destroy
+      piece.create(type: new_piece, x_position: destination_x, y_position: destination_y)
+    end
+    
+    def valid_move?(destination_x, destination_y)
+      valid = true
+      if destination_x == nil || destination_y == nil
+        valid = false
       end
-      if diagonal
-        min == max ? range = min : range = max...min
-      else
-        min == max ? range = min : range = min...max
+      # Check if piece is obstructed
+      if self.is_obstructed?(destination_x, destination_y)
+        valid = false
+        # Check if destination is occupied by a piece of the same color
+      elsif game.is_piece_present?(destination_x, destination_y)
+        other_piece = game.get_piece(destination_x, destination_y)
+        if self.get_color == other_piece.get_color
+          valid = false
+        end
+      end
+      return valid
+    end
+    
+    def get_color
+      if self.player_id == game.white_player_id
+        return WHITE
+      elsif self.player_id == game.black_player_id
+        return BLACK
       end
     end
-    return range
+    
+    
+    def is_obstructed?(destination_x, destination_y)
+      location_x = self.x_position
+      location_y = self.y_position
+      if vertical(destination_x)
+        # check for vertical obstruction
+        location_y > destination_y ? incrementer = -1 : incrementer = 1
+        position_y = location_y + incrementer
+        min, max = [position_y, destination_y].minmax
+        range = range(min, max, incrementer)
+        if game.pieces.where(x_position: location_x, y_position: range).any?
+          return true
+        end
+        return false
+      elsif horizontal(destination_y)
+        # check for horizontal obstruction
+        location_x > destination_x ? incrementer = -1 : incrementer = 1
+        position_x = location_x + incrementer
+        min, max = [position_x, destination_x].minmax
+        range = range(min, max, incrementer)
+        if game.pieces.where(x_position: range, y_position: location_y).any?
+          return true
+        end
+        return false
+      elsif diagonal(destination_x, destination_y)
+        # check for diagonal obstruction
+        location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
+        location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
+        position_x = location_x + x_incrementer
+        position_y = location_y + y_incrementer
+        min_x, max_x = [position_x, destination_x].minmax
+        range_x = range(min_x, max_x, x_incrementer, true)
+        min_y, max_y = [position_y, destination_y].minmax
+        range_y = range(min_y, max_y, y_incrementer, true)
+        if range_x && range_y != nil
+          if game.pieces.where(x_position: range_x, y_position: range_y).any?
+            return true
+          end
+        end
+        return false
+      end
+    end
+    
+    private
+    
+    def range(min, max, incrementer, diagonal=false)
+      range = nil
+      if min != max
+        if incrementer > 0 && diagonal
+          max = max - incrementer
+        elsif incrementer < 0
+          min = min - incrementer
+        end
+        if diagonal
+          min == max ? range = min : range = max...min
+        else
+          min == max ? range = min : range = min...max
+        end
+      end
+      return range
+    end
+    
+    def horizontal(destination_y)
+      destination_y == self.y_position
+    end
+    
+    def vertical(destination_x)
+      destination_x == self.x_position
+    end
+    
+    def diagonal(destination_x, destination_y)
+      (destination_x - self.x_position).abs ==
+      (destination_y - self.y_position).abs
+    end
+    
   end
-  
-  def horizontal(destination_y)
-    destination_y == self.y_position
-  end
-  
-  def vertical(destination_x)
-    destination_x == self.x_position
-  end
-  
-  def diagonal(destination_x, destination_y)
-    (destination_x - self.x_position).abs ==
-    (destination_y - self.y_position).abs
-  end
-  
 end
