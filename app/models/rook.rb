@@ -9,7 +9,6 @@ class Rook < Piece
   end
   
   def unicode_symbol
-    byebug
     if self.get_color == WHITE
       return "&#9814;"
     else
