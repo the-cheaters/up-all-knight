@@ -5,6 +5,7 @@ $(document).ready(function() {
   var black_start_time = $('.game-wrapper').data('black-start-time')
   var white_start_time = $('.game-wrapper').data('white-start-time')
   var timeNow = $('.game-wrapper').data('time-now')
+  var isBlitz = $('.game-wrapper').data('game-type')
   
   function currentTurn(data, pageload) {
     var blackTime = (data.timer.black_time_left)
@@ -14,7 +15,7 @@ $(document).ready(function() {
         var blackElapsed = (timeNow - black_start_time)
         blackTime = (data.timer.black_time_left - blackElapsed)
         $('#black-player-timer').text(blackTime)
-        console.log($('.game-wrapper').data('white-time-left'))
+        
         $('#white-player-timer').text($('.game-wrapper').data('white-time-left'))
       } else if (data.current_turn === "white") {
         var whiteElapsed = (timeNow - white_start_time)
@@ -78,17 +79,20 @@ $(document).ready(function() {
   }
   
   window.broadcast_channel.bind('change_turns', function(data) {
-    currentTurn(data,false)
+    if (isBlitz === true){
+      currentTurn(data,false)
+    }
     $('.current-turn h3').text(data.current_turn + " players turn")
     disablePieces(currentPlayer, data.current_turn)
   });
   
   window.broadcast_channel.bind('pusher:subscription_succeeded', function() {
-    var data = {timer: {black_time_left: $('.game-wrapper').data('black-time-left'),white_time_left: $('.game-wrapper').data('white-time-left')}, current_turn: currentPlayersTurn };
-    
-    currentTurn(data, true)
-    $('.current-turn h3').text(data.current_turn + " players turn")
-    disablePieces(currentPlayer, data.current_turn)
+    if (isBlitz === true){
+      var data = {timer: {black_time_left: $('.game-wrapper').data('black-time-left'),white_time_left: $('.game-wrapper').data('white-time-left')}, current_turn: currentPlayersTurn };
+      currentTurn(data, true)
+    }
+    $('.current-turn h3').text(currentPlayersTurn + " players turn")
+    disablePieces(currentPlayer, currentPlayersTurn)
   });
   
 });

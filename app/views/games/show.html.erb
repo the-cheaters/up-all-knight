@@ -35,30 +35,36 @@
 <div class="current-turn">
   <h3></h3>
 </div>
-<div class="game-wrapper" data-current-turn="<%= @game.current_player_turn %>" data-player="<%= get_player %>" data-black-time-left="<%= @black_player_timer.time_left %>" data-white-time-left="<%= @white_player_timer.time_left %>" data-game-id="<%= @game.id %>" data-time-now="<%= Time.now.to_i %>" data-white-start-time="<%= @white_player_timer.start_time.to_i %>"data-black-start-time="<%= @black_player_timer.start_time.to_i %>">
+<% if @game.is_blitz %>
+<div class="game-wrapper" data-current-turn="<%= @game.current_player_turn %>" data-player="<%= get_player %>" data-black-time-left="<%= @black_player_timer.time_left %>" data-white-time-left="<%= @white_player_timer.time_left %>" data-game-id="<%= @game.id %>" data-time-now="<%= Time.now.to_i %>" data-white-start-time="<%= @white_player_timer.start_time.to_i %>" data-black-start-time="<%= @black_player_timer.start_time.to_i %>" data-game-type="<%= @game.is_blitz %>">
   <div class="white-player">White Player's Time Left:<div id="white-player-timer"></div></div>
-  <div class="chessboard">
-    <% (0..7).each do |row| %>
-    <div id="row">
-      <% (0..7).each do |column| %>
-      <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %> tile">
-        <% @pieces.each do |piece| %>
-        <% if piece.x_position == column && piece.y_position == row %>
-        <% if piece.player_id == @game.white_player_id %>
-        <div class="piece white-piece" data-update-url="<%=game_piece_path(piece.game, piece) %>">
-          <% else %>
-          <div class="piece black-piece" data-update-url="<%=game_piece_path(piece.game, piece) %>">
+  <% else %>
+  <div class="game-wrapper">
+    <% end %>
+    <div class="chessboard">
+      <% (0..7).each do |row| %>
+      <div id="row">
+        <% (0..7).each do |column| %>
+        <div data-column="<%= column %>" data-row="<%= row %>"class="<%= square_color(row, column) %> tile">
+          <% @pieces.each do |piece| %>
+          <% if piece.x_position == column && piece.y_position == row %>
+          <% if piece.player_id == @game.white_player_id %>
+          <div class="piece white-piece" data-update-url="<%=game_piece_path(piece.game, piece) %>">
+            <% else %>
+            <div class="piece black-piece" data-update-url="<%=game_piece_path(piece.game, piece) %>">
+              <% end %>
+              <%= piece.unicode_symbol.html_safe %>
+            </div>
             <% end %>
-            <%= piece.unicode_symbol.html_safe %>
+            <% end %>
           </div>
-          <% end %>
           <% end %>
         </div>
         <% end %>
       </div>
+      <% if @game.is_blitz %>
+      <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
       <% end %>
     </div>
-    
-    <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
   </div>
-</div>
+  
