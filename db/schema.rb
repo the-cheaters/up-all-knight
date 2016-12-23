@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215154756) do
+ActiveRecord::Schema.define(version: 20161223011421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161215154756) do
     t.boolean  "black_draw"
     t.boolean  "white_forfeit"
     t.boolean  "black_forfeit"
+    t.boolean  "has_started",         default: false
   end
 
   create_table "pieces", force: true do |t|
@@ -42,8 +43,8 @@ ActiveRecord::Schema.define(version: 20161215154756) do
     t.boolean  "captured",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "captured_at"
     t.integer  "moves",       default: 0
+    t.datetime "captured_at"
   end
 
   create_table "players", force: true do |t|
