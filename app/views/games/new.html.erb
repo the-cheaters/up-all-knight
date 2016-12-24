@@ -1,13 +1,19 @@
-<h1>New game</h1>
+<div class="games--columns__new">
+<h1 class="games--header text-center">Start a new game</h1>
+
+<br />
 
 <%= simple_form_for @game do |f| %>
-<p>I want to be the...</p>
+<p class="games--paragraph">I want to be the...</p>
 <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
 <br/>
-<p>I want game type to be...</p>
-<%= f.collection_radio_buttons :is_blitz, [[false, 'Standard'] ,[true, 'Blitz']], :first, :last %>
+<br />
+<p class="games--paragraph">I want the game type to be...</p>
+<%= f.collection_radio_buttons :is_blitz, [[false, 'Standard'] ,[true, 'Blitz']], :first, :last, class: "games--label" %>
 <br/>
-<%= f.button :submit %>
+<%= f.button :submit, class: "games--button", id: "games--button__new" %>
 <% end %>
 
-<%= link_to 'Back', games_path %>
+<%= link_to 'Not sure? Go back', games_path, class: "games--button__secondary" %>
+
+</div>

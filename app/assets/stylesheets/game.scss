@@ -1,0 +1,113 @@
+@import 'variables';
+
+.games--header {
+  font-family: $primary-font;
+  font-size: 36px;
+  font-weight: 700;
+  color: $main-color;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.games--paragraph {
+  font-family: $secondary-font;
+  color: $main-color;
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.games--start__cta {
+  font-family: $primary-font;
+  font-size: 24px;
+  font-weight: 700;
+  color: $main-color;
+  margin-top: 0px;
+  line-height:50px;
+}
+
+.games--start__column-left { 
+  @include make-xs-column(8);
+  height:50px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  vertical-align: middle;
+}
+
+.games--start__column-right { 
+  @include make-xs-column(4);
+  height:50px;
+}
+
+.games--button {
+  color: white;
+  background-color: $contrast-color;
+  font-family: $primary-font;
+  font-weight: 700;
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 25px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: $light-color;
+    color: $contrast-color;
+    text-decoration: none;
+  }
+}
+
+#games--button__new {
+  padding: 15px 25px;
+  border-radius: 2px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.games--button__secondary {
+  font-family: $secondary-font;
+  color: $light-color;
+  text-decoration: underline;
+
+  &:hover {
+    color: $main-color;
+  }
+}
+
+label {
+  font-size: 18px;
+  font-family: $secondary-font;
+  color: $main-color;
+  margin-top: -40px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+.games--game {
+  background-color: $light-color;
+}
+
+// Columns
+
+.games--columns {
+  @include make-xs-column(6);
+  @include make-xs-column-offset(3);
+}
+
+.games--columns__new {
+  @include make-xs-column(4);
+  @include make-xs-column-offset(4);
+}
