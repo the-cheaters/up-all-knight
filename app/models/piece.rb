@@ -21,6 +21,7 @@ class Piece < ActiveRecord::Base
   
   def move_to(destination_x, destination_y)
     valid = self.valid_move?(destination_x, destination_y)
+    
     if valid
       if self.moves < 2
         moves_updated = self.moves + 1
@@ -37,7 +38,8 @@ class Piece < ActiveRecord::Base
       self.game.change_turns!
       self.game.update(:last_moved_piece_id => self.id)
     end
-    return valid
+    
+    valid
   end
   
   def en_passant(destination_x, destination_y)
@@ -58,15 +60,19 @@ class Piece < ActiveRecord::Base
   
   def valid_move?(destination_x, destination_y)
     valid = true
+    
     if destination_x == nil || destination_y == nil
+      
       valid = false
     end
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
+      
       valid = false
       # Check if destination is occupied by a piece of the same color
     elsif game.is_piece_present?(destination_x, destination_y)
       other_piece = game.get_piece(destination_x, destination_y)
+      
       if self.get_color == other_piece.get_color
         valid = false
       end

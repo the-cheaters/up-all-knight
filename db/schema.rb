@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20161225034110) do
     t.string   "move_result"
     t.integer  "black_player_id"
     t.integer  "white_player_id"
-    t.integer  "current_turn"
+    t.integer  "current_turn",        default: 0
     t.integer  "winning_player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -32,14 +32,6 @@ ActiveRecord::Schema.define(version: 20161225034110) do
     t.boolean  "white_forfeit"
     t.boolean  "black_forfeit"
     t.boolean  "has_started",         default: false
-  end
-
-  create_table "messages", force: true do |t|
-    t.integer  "to_player_id"
-    t.text     "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "read",         default: false
   end
 
   create_table "pieces", force: true do |t|

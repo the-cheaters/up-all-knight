@@ -1,56 +1,52 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit, :add_player]
   before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit]
   before_action :authenticate_player!, only: [:show, :new, :create, :update, :destroy, :add_player, :draw, :reject_draw, :forfeit]
   
+  
   attr_accessor :name
-
+  
   def name
     "Game #{self.id}"
   end
-
+  
   # GET /games
   # GET /games.json
   def index
     @games = Game.is_available
   end
-
+  
   # GET /games/1
   # GET /games/1.json
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
+    @white_player_timer = @game.timers.where(:player_id => @game.white_player_id).last
+    @black_player_timer = @game.timers.where(:player_id => @game.black_player_id).last
   end
-
+  
   # GET /games/new
   def new
     @game = Game.new
   end
-
+  
   # GET /games/1/edit
   def edit
   end
-
+  
   # POST /games
   # POST /games.json
   def create
     @game = Game.new(game_params)
     @game.black_player_id = current_player.id if @game.white_player_id == 0
-
     @game.save
     @game.set_default_turn!
-
-    respond_to do |format|
-      if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
-      else
-        format.html { render :new }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
+    if @game.save && @game.is_blitz
+      @game.create_timers(params[:time_left])
     end
+    redirect_to game_path(@game)
   end
-
+  
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
@@ -64,18 +60,18 @@ class GamesController < ApplicationController
       end
     end
   end
-
+  
   def destroy
     @game.destroy
     redirect_to root_path
   end
-
+  
   def add_player
-    set_game
     current_player.join_game!(@game)
+    @game.update_timer(current_player)
     redirect_to game_path
   end
-
+  
   def draw
     if @game.white_draw && @game.black_draw
       Pusher['broadcast'].trigger!('draw_forfeit', {
