@@ -78,9 +78,8 @@ class GamesController < ApplicationController
         :message => "The game has come to a draw."
         })
       Pusher['broadcast'].trigger!('hide_buttons', {})
-      @game.players.each do |player|
-        player.add_draw!
-      end
+      Player.where(id: @game.white_player_id).take.add_draw!
+      Player.where(id: @game.black_player_id).take.add_draw!
     elsif @game.white_draw && !@game.black_draw
       Pusher['broadcast'].trigger!('draw_forfeit', {
         :message => "White has requested a draw. Black may accept or reject the draw."
@@ -137,14 +136,14 @@ class GamesController < ApplicationController
       Pusher['broadcast'].trigger!('draw_forfeit', {
         :message => "White has forfeited. Black is the victor. Congratulations!"
         })
-      @game.players.where(id: @game.white_player_id).add_loss!
-      @game.players.where(id: @game.black_player_id).add_win!
+      Player.where(id: @game.white_player_id).take.add_loss!
+      Player.where(id: @game.black_player_id).take.add_win!
     elsif @game.black_forfeit
       Pusher['broadcast'].trigger!('draw_forfeit', {
         :message => "Black has forfeited. White is the victor. Congratulations!"
         })
-      @game.players.where(id: @game.white_player_id).add_win!
-      @game.players.where(id: @game.black_player_id).add_loss!
+      Player.where(id: @game.white_player_id).take.add_win!
+      Player.where(id: @game.black_player_id).take.add_loss!
     end
     Pusher['broadcast'].trigger!('hide_buttons', {})
   end

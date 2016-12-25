@@ -142,8 +142,10 @@ RSpec.describe GamesController, type: :controller do
 
   describe "games#draw action" do
     it "should increase both players' draw counts by one" do
+      sign_in white_player
+      sign_in black_player
       draw_game = FactoryGirl.create(:game, white_draw: true, black_draw: true, white_player_id: white_player.id, black_player_id: black_player.id)
-      put :draw, id: draw_game.id
+      put :draw, game_id: draw_game.id
       white_player.reload
       black_player.reload
       expect(white_player.draws).to eq(1)
@@ -152,10 +154,15 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe "games#forfeit action" do
-    it "should increase the forfeiting player's losses by one" do
+    it "should increase the forfeiting player's losses by one and the winner's wins by one" do
+      sign_in white_player
+      sign_in black_player
       forfeit_game = FactoryGirl.create(:game, white_forfeit: true, white_player_id: white_player.id, black_player_id: black_player.id)
-      put :forfeit, id: forfeit_game.id
+      put :forfeit, game_id: forfeit_game.id
+      white_player.reload
+      black_player.reload
       expect(white_player.losses).to eq(1)
+      expect(black_player.wins).to eq(1)
     end
   end
 
