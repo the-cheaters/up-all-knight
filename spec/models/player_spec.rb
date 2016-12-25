@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
+
   describe 'from_omniauth' do
 
     context 'Find' do
@@ -32,7 +33,7 @@ RSpec.describe Player, type: :model do
     end
   end
 
-  describe "player.add_win!" do
+  describe "player.add_win!, player.add_draw!, player.add_loss!" do
 
     context "end game" do
 
@@ -57,6 +58,6 @@ RSpec.describe Player, type: :model do
       end
 
     end
-
   end
+
 end

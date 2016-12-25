@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     match 'reject_draw', to: "games#reject_draw", via: :put
     match 'forfeit', to: "games#forfeit", via: :put
   end
-
+  
   resources :pusher do
     post 'auth', on: :collection
   end
