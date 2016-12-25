@@ -1,17 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-
+  
   let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
   let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
-
   describe "games#index action" do
     it "should show the index page" do
       get :index
       expect(response).to have_http_status(:success)
     end
   end
-
+  
   describe "games#new action" do
     it "should show the new form" do
       sign_in white_player
@@ -19,7 +18,7 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
-
+  
   describe "games#create action" do
     it "should create a new game in the database" do
       sign_in white_player
@@ -27,31 +26,40 @@ RSpec.describe GamesController, type: :controller do
       post :create, game: { current_turn: 0 }
       expect(Game.count).to eq(count + 1)
     end
-
+    
     it "should create a new game in the database if in json format" do
       sign_in white_player
       count = Game.count
       post :create, format: :json, game: { current_turn: 0 }
       expect(Game.count).to eq(count + 1)
     end
-
+    
     let(:player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
-
+    
     it "should make the current player white if 'white player' is selected" do
       sign_in player
       post :create, game: { white_player_id: player.id }
       game = Game.last
       expect(game.white_player_id).to eq(player.id)
     end
-
+    
     it "should make the current player black if 'black player' is selected" do
       sign_in player
       post :create, game: { white_player_id: 0 }
       game = Game.last
       expect(game.black_player_id).to eq(player.id)
     end
+    
+    it "should create timers for each player" do
+      player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
+      sign_in player
+      post :create, game: { white_player_id: 0, is_blitz: true }
+      @game = Game.last
+      expect(@game.timers.count).to eq(2)
+      
+    end
   end
-
+  
   describe "games#show action" do
     it "should show a game" do
       sign_in white_player
@@ -60,7 +68,7 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
-
+  
   describe "games#update action" do
     it "should update a game in the database" do
       sign_in white_player
@@ -69,7 +77,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
-
+    
     it "should update a game in the database if in json format" do
       sign_in white_player
       game = FactoryGirl.create(:game)
@@ -77,7 +85,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.current_turn).to eq(1)
     end
-
+    
     it "should update the white_draw or black_draw field in json format" do
       sign_in white_player
       game = FactoryGirl.create(:game)
@@ -85,7 +93,7 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.white_draw).to eq(true)
     end
-
+    
     it "should update the white_forfeit or black_forfeit field in json format" do
       sign_in white_player
       game = FactoryGirl.create(:game)
@@ -93,12 +101,13 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.black_forfeit).to eq(true)
     end
+    
   end
-
+  
   describe "games#joingame action" do
-
+    
     context "white player is free" do
-    it "should update the white player with the current player" do
+      it "should update the white player with the current player" do
         game = FactoryGirl.create(:game, white_player_id: 0)
         player = FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT')
         sign_in player
@@ -107,7 +116,7 @@ RSpec.describe GamesController, type: :controller do
         expect(game.white_player_id).to eq(player.id)
       end
     end
-
+    
     context "black player is free" do
       it "should update the black player with the current player" do
         game = FactoryGirl.create(:game, black_player_id: 0)
@@ -119,7 +128,7 @@ RSpec.describe GamesController, type: :controller do
       end
     end
   end
-
+  
   describe "games#destroy action" do
     it "should destroy a game in the database" do
       sign_in white_player
@@ -129,5 +138,5 @@ RSpec.describe GamesController, type: :controller do
       expect(game).to eq nil
     end
   end
-
+  
 end
