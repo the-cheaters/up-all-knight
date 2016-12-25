@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   root 'static_pages#index'
+  match 'ranking', to: "static_pages#ranking", via: :get
   resources :games do
     resources :pieces, only: :update
     patch 'add_player', on: :member

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
 
-  let(:white_player) { FactoryGirl.create(:player, id: 100, email: 'blah@blah.com', password: 'SPACECAT') }
-  let(:black_player) { FactoryGirl.create(:player, id: 101, email: 'meow@meow.com', password: 'MONORAILCAT') }
+  let(:white_player) { FactoryGirl.create(:player, email: 'blah@blah.com', password: 'SPACECAT') }
+  let(:black_player) { FactoryGirl.create(:player, email: 'meow@meow.com', password: 'MONORAILCAT') }
 
   describe "games#index action" do
     it "should show the index page" do
@@ -127,6 +127,25 @@ RSpec.describe GamesController, type: :controller do
       delete :destroy, id: game.id
       game = Game.find_by_id(game.id)
       expect(game).to eq nil
+    end
+  end
+
+  describe "games#draw action" do
+    it "should increase both players' draw counts by one" do
+      draw_game = FactoryGirl.create(:game, white_draw: true, black_draw: true, white_player_id: white_player.id, black_player_id: black_player.id)
+      put :draw, id: draw_game.id
+      white_player.reload
+      black_player.reload
+      expect(white_player.draws).to eq(1)
+      expect(black_player.draws).to eq(1)
+    end
+  end
+
+  describe "games#forfeit action" do
+    it "should increase the forfeiting player's losses by one" do
+      forfeit_game = FactoryGirl.create(:game, white_forfeit: true, white_player_id: white_player.id, black_player_id: black_player.id)
+      put :forfeit, id: forfeit_game.id
+      expect(white_player.losses).to eq(1)
     end
   end
 
