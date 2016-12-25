@@ -63,6 +63,15 @@ class GamesController < ApplicationController
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
+    if @game.check?(@game.players.where(id: @opponent.id))
+      Pusher["private-user_#{@opponent_id}"].trigger!('check_message', {
+        :message => "You are in check."
+      })
+    elsif @game.check?(@game.players.where(id: current_player.id))
+      Pusher["private-user_#{current_player.id}"].trigger!('check_message', {
+        :message => "You are in check."
+      })
+    end
   end
 
   def destroy

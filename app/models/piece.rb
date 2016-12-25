@@ -37,7 +37,6 @@ class Piece < ActiveRecord::Base
       self.game.change_turns!
       self.game.update(:last_moved_piece_id => self.id)
     end
-    return valid
   end
   
   def en_passant(destination_x, destination_y)
