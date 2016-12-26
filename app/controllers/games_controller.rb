@@ -74,13 +74,13 @@ class GamesController < ApplicationController
   
   def draw
     if @game.white_draw && @game.black_draw
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "The game has come to a draw."
       })
 
-      Pusher['broadcast_#{@game.id}'].trigger!('hide_buttons', {})
+      Pusher["broadcast_#{@game.id}"].trigger!('hide_buttons', {})
     elsif @game.white_draw && !@game.black_draw
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "White has requested a draw. Black may accept or reject the draw."
       })
       if @color == :white
@@ -106,7 +106,7 @@ class GamesController < ApplicationController
 
   def reject_draw
     if @game.white_draw && !@game.black_draw
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "Black has rejected the draw. White, you may forfeit or play on."
       })
       if @color == :white
@@ -117,7 +117,7 @@ class GamesController < ApplicationController
         Pusher["private-user_#{@opponent_id}"].trigger!('show_forfeit_button', {})
       end
     elsif @game.black_draw && !@game.white_draw
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "White has rejected the draw. Black, you may forfeit or play on."
       })
       if @color == :black
@@ -132,15 +132,15 @@ class GamesController < ApplicationController
             
   def forfeit
     if @game.white_forfeit
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "White has forfeited. Black is the victor. Congratulations!"
       })
     elsif @game.black_forfeit
-      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
       :message => "Black has forfeited. White is the victor. Congratulations!"
       })
     end
-    Pusher['broadcast_#{@game.id}'].trigger!('hide_buttons', {})
+    Pusher["broadcast_#{@game.id}"].trigger!('hide_buttons', {})
   end
                 
   private
