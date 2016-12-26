@@ -21,8 +21,8 @@
 Pusher.logToConsole = true;
 
 var pusher = new Pusher(window.pusher_key, {
-    encrypted: true
-  });
+  encrypted: true
+});
 
 var channel = pusher.subscribe('my-channel');
 channel.bind('my-event', function(data) {
@@ -33,4 +33,4 @@ window.pusher = new Pusher('69d78adae1cff6a25019');
 window.broadcast_channel = pusher.subscribe('broadcast');
 
 if (window.player_id)
-  window.private_channel = pusher.subscribe('private-user_' + window.player_id);
+window.private_channel = pusher.subscribe('private-user_' + window.player_id);

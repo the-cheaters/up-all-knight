@@ -22,6 +22,7 @@
   z-index: 1000;
 }
 
+
 #message {
   display: none;
 }
@@ -30,6 +31,6 @@
   text-align: center;
 }
 
-.accept-draw, .reject-draw, .forfeit {
+.accept-draw, .reject-draw, .forfeit, #Queen-promotion, #Rook-promotion, #Knight-promotion, #Bishop-promotion {
   display: none;
 }

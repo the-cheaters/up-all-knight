@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
+
   describe 'from_omniauth' do
 
     context 'Find' do
@@ -31,4 +32,5 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
 end

@@ -21,6 +21,7 @@ class Piece < ActiveRecord::Base
   
   def move_to(destination_x, destination_y)
     valid = self.valid_move?(destination_x, destination_y)
+    
     if valid
       if self.moves < 2
         moves_updated = self.moves + 1
@@ -37,7 +38,8 @@ class Piece < ActiveRecord::Base
       self.game.change_turns!
       self.game.update(:last_moved_piece_id => self.id)
     end
-    return valid
+    
+    valid
   end
   
   def en_passant(destination_x, destination_y)
@@ -57,35 +59,42 @@ class Piece < ActiveRecord::Base
   end
   
   def can_pawn_promote?(destination_y)
-    if self.get_color == "white"
-      if destination_y == 0
-        return true
+    if self.type == "Pawn"
+      if self.get_color == "white"
+        if destination_y == 0
+          return true
+        end
       elsif self.get_color == "black"
         if destination_y == 7
-          return false
+          return true
         end
       end
+      return false
     end
   end
   
-  def pawn_promotion(new_piece, destination_x, destination_y)
+  def promote_pawn(new_piece)
     if self.type == "Pawn"
-      self.destroy
-      piece.create(type: new_piece, x_position: destination_x, y_position: destination_y)
+      self.type = new_piece
+      save
     end
   end
   
   def valid_move?(destination_x, destination_y)
     valid = true
+    
     if destination_x == nil || destination_y == nil
+      
       valid = false
     end
     # Check if piece is obstructed
     if self.is_obstructed?(destination_x, destination_y)
+      
       valid = false
       # Check if destination is occupied by a piece of the same color
     elsif game.is_piece_present?(destination_x, destination_y)
       other_piece = game.get_piece(destination_x, destination_y)
+      
       if self.get_color == other_piece.get_color
         valid = false
       end
@@ -94,6 +103,7 @@ class Piece < ActiveRecord::Base
   end
   
   def get_color
+    
     if self.player_id == game.white_player_id
       return WHITE
     elsif self.player_id == game.black_player_id
