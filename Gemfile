@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'pusher'
-gem 'react-rails'
+gem "react_on_rails", "~> 6"
 gem 'jquery-ui-rails'
 gem 'devise'
 gem 'omniauth-twitter'
