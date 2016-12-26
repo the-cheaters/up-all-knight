@@ -15,6 +15,9 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require turbolinks
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 // Enable pusher logging - don't include this in production
