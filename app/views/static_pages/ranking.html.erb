@@ -1,0 +1,23 @@
+<div class="hero">
+  <div class="hero--columns">
+    <div class="hero--columns__right">
+      <h1 class="hero--header">Top 10 Players</h1>
+
+      <p class="instructions--item__p">Players are ranked by their number of wins and losses.</p>
+
+      <% if @players.any? %>
+        <ol class="instructions--list">
+          <% @players.each do |player| %>
+          <li class="intructions--item">
+            <h3 class="instructions--item__title"><%= player.email %></h3>
+            <p class="instructions--item__p"><b>Wins</b>: <%= player.wins %> | <b>Draws</b>: <%= player.draws %> | <b>Losses</b>: <%= player.losses %>
+          </li>
+          <% end %>
+        </ol>
+      <% else %>
+      <p class="instructions--item__p">No players have won any games yet.</p>
+      <%= link_to 'Be the first!', games_path, class: "hero--button" %>
+      <% end %>
+    </div>
+  </div>
+</div>
