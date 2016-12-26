@@ -4,14 +4,14 @@
   <h1 class="games--header text-center" id="gi_title">Find a game</h1>
   <p class="games--paragraph text-center" id="gi_subtitle">See your active games or start a new one.</p>
   
-  <ul class="game_list">
+  <ul class="game_list" style="list-style-type: none">
     <% @games.each do |game| %>
     <li class="games--game game_li col-xs-12">
       <div class="game_info col-xs-10">
-        <p class="game_num">Game #<%= game.id %></p>
-        <p class="game_name">Hosted by <%= current_player.email %>.</p>
+        <p class="games--game__id game_num">GAME #<%= game.id %></p>
+        <p class="games--game__host game_name">Hosted by <%= current_player.email %>.</p>
       </div>
-      <%= link_to 'Join', add_player_game_path(game.id), class: "join_game col-xs-2 btn btn-primary", method: :patch %>
+      <%= link_to 'Join', add_player_game_path(game.id), class: "join_game col-xs-2 games--game__button", method: :patch %>
     </li>
     <% end %>
   </ul>
