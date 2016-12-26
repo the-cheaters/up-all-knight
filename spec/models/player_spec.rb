@@ -33,4 +33,31 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  describe "player.add_win!, player.add_draw!, player.add_loss!" do
+
+    context "end game" do
+
+      let(:player) { FactoryGirl.create(:player) }
+
+      it "should increment the player's win count by one" do
+        player.add_win!
+        player.reload
+        expect(player.wins).to eq(1)
+      end
+
+      it "should increment the player's draw count by one" do
+        player.add_draw!
+        player.reload
+        expect(player.draws).to eq(1)
+      end
+
+      it "should increment the player's loss count by one" do
+        player.add_loss!
+        player.reload
+        expect(player.losses).to eq(1)
+      end
+
+    end
+  end
+
 end
