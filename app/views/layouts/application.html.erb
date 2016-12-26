@@ -10,6 +10,7 @@
   <script>
   window.pusher_key = '<%= ENV['PUSHER_KEY'] %>';
   <%= "window.player_id = #{current_player.id};" if current_player %>
+  <%= "window.game_id = #{@game.id};" if @game != nil %>
   </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
   
