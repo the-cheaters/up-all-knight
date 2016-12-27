@@ -147,6 +147,38 @@ class GamesController < ApplicationController
     end
     Pusher['broadcast'].trigger!('hide_buttons', {})
   end
+
+  def player_ready
+    if @game.is_blitz
+      if @game.white_ready
+        Pusher['broadcast'].trigger!('white_ready', {
+          :message => "White Player is ready for blitz chess game."
+          })
+         Player.where(id: @game.white_player_id).current_turn
+      elsif @game.black_ready
+        Pusher['broadcast'].trigger!('black_ready', {
+          :message => "Black Player is ready for blitz chess game."
+          })
+         Player.where(id: @game.white_player_id).current_turn
+      end
+    end
+  end
+
+  def player_not_ready
+    if @game.is_blitz
+      if @game.white_ready == false
+        Pusher['broadcast'].trigger!('white_not_ready', {
+          :message => "White Player is not ready for blitz chess game."
+          })
+         Player.where(id: @game.white_player_id).current_turn
+      elsif @game.black_ready == false
+        Pusher['broadcast'].trigger!('black_not_ready', {
+          :message => "Black Player is not ready for blitz chess game."
+          })
+         Player.where(id: @game.white_player_id).current_turn
+      end
+    end
+  end
   
   private
 
