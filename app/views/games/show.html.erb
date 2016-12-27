@@ -25,12 +25,12 @@
   &nbsp;
   <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
   &nbsp;
-  <button id="white-ready" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">White Ready</button>
+  <button id="white-ready" data-update-url="<%= game_player_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">White Ready</button>
   &nbsp;
-  <button id="black-ready" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Black Ready</button>
-  <button id="white-not-ready" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">White Not Ready</button>
+  <button id="black-ready" data-update-url="<%= game_player_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Black Ready</button>
+  <button id="white-not-ready" data-update-url="<%= game_player_not_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">White Not Ready</button>
   &nbsp;
-  <button id="black-not-ready" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Black Not Ready</button>
+  <button id="black-not-ready" data-update-url="<%= game_player_not_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Black Not Ready</button>
 </div>
 
 <h1>Captured Pieces:

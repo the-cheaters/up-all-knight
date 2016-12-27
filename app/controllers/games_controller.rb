@@ -150,35 +150,46 @@ class GamesController < ApplicationController
 
   def player_ready
     if @game.is_blitz
-      if @game.white_ready
+      if params['current_player'] == @game.white_player_id
         Pusher['broadcast'].trigger!('white_ready', {
           :message => "White Player is ready for blitz chess game."
           })
-         Player.where(id: @game.white_player_id).current_turn
-      elsif @game.black_ready
+          @game.update(white_ready: true)
+      elsif params['current_player'] == @game.black_player_id
         Pusher['broadcast'].trigger!('black_ready', {
           :message => "Black Player is ready for blitz chess game."
           })
-         Player.where(id: @game.white_player_id).current_turn
+          @game.update(black_ready: true)
+      end
+      if @game.white_ready && @game.black_ready
+        Pusher['broadcast'].trigger!('start_game', {
+          has_started: true })
+        Pusher['broadcast'].trigger!('hide_ready_buttons', {})
       end
     end
   end
 
   def player_not_ready
     if @game.is_blitz
-      if @game.white_ready == false
+      if params['current_player'] == @game.white_player_id
         Pusher['broadcast'].trigger!('white_not_ready', {
           :message => "White Player is not ready for blitz chess game."
           })
-         Player.where(id: @game.white_player_id).current_turn
-      elsif @game.black_ready == false
+         @game.update(white_ready: false)
+      elsif params['current_player'] == @game.black_player_id
         Pusher['broadcast'].trigger!('black_not_ready', {
           :message => "Black Player is not ready for blitz chess game."
           })
-         Player.where(id: @game.white_player_id).current_turn
+          @game.update(black_ready: false)
+      end
+      if @game.white_ready && @game.black_ready == false
+        Pusher['broadcast'].trigger!('stop_game', {
+          has_started: false })
+        Pusher['broadcast'].trigger!('hide_not_ready_buttons', {})
       end
     end
   end
+  
   
   private
 
@@ -215,5 +226,4 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
   end
-
 end
