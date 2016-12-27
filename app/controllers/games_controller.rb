@@ -72,7 +72,7 @@ class GamesController < ApplicationController
   end
   
   def add_player
-    current_player.join_game!(@game, current_player)
+    current_player.join_game!(@game)
     @game.update_timer(current_player)
     redirect_to game_path
   end
