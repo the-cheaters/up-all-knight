@@ -1,0 +1,127 @@
+@import 'variables';
+
+body {
+  background: $main-color !important;
+}
+
+.form--container {
+  background-color: $main-color;
+}
+
+.form--columns {
+  @include make-xs-column(4);
+  @include make-xs-column-offset(4);
+}
+
+.form--header {
+  font-family: $primary-font;
+  font-size: 24px;
+  font-weight: 700;
+  color: $lightest-color;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.form--subheader {
+  font-family: $secondary-font;
+  font-size: 14px;
+  color: $lightest-color;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.simple_form {
+  div.input {
+    clear: both;
+    border-radius: 2px;
+    height: 55px;
+    margin-bottom: 15px;
+    /* Required for Webkit, but not for Gecko */
+  }
+  label {
+    font-family: $secondary-font;
+    font-size: 16px;
+    color: $lightest-color;
+    font-weight: 400;
+  }
+}
+
+div.boolean, .simple_form input[type='submit'] {
+  color: white;
+  background-color: $contrast-color;
+  font-family: $primary-font;
+  font-weight: 700;
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 25px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: $light-color;
+    color: $contrast-color;
+    text-decoration: none;
+  }
+}
+
+div.boolean label {
+  float: none;
+  margin: 0;
+}
+
+.field_with_errors {
+  background-color: #ff3333;
+}
+
+.simple_form {
+  .error {
+    clear: left;
+    color: black;
+    display: block;
+    margin-left: 120px;
+  }
+  .hint {
+    display: none;
+  }
+}
+
+input {
+  &.radio {
+    margin-right: 5px;
+    vertical-align: -3px;
+  }
+  &.check_boxes {
+    margin-left: 3px;
+    vertical-align: -3px;
+  }
+}
+
+label.collection_check_boxes {
+  float: none;
+  margin: 0;
+  vertical-align: -2px;
+  margin-left: 2px;
+}
+
+a {
+  color: white;
+}
+
+.form-control {
+  height: 37px !important;
+  border-radius: 2px !important;
+  border: 0px;
+  margin-bottom: 15px;
+}
