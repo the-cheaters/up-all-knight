@@ -59,15 +59,6 @@ class GamesController < ApplicationController
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
-    if @game.check?(@game.players.where(id: @opponent.id))
-      Pusher["private-user_#{@opponent_id}"].trigger!('check_message', {
-        :message => "You are in check."
-      })
-    elsif @game.check?(@game.players.where(id: current_player.id))
-      Pusher["private-user_#{current_player.id}"].trigger!('check_message', {
-        :message => "You are in check."
-      })
-    end
   end
   
   def destroy
@@ -166,25 +157,6 @@ class GamesController < ApplicationController
       @color = :white
     else
       @color = nil
-    end
-  end
-
-  def set_opponent_id
-    if current_player.id == @game.black_player_id
-      @opponent_id = @game.white_player_id
-    elsif current_player.id == @game.white_player_id
-      @opponent_id = @game.black_player_id
-    else
-      @opponent_id = nil
-    end
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_game
-    if params[:id].nil?
-      @game ||= Game.find(params[:game_id])
-    else
-      @game ||= Game.find(params[:id])
     end
   end
 
