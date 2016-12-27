@@ -27,11 +27,11 @@ class PiecesController < ApplicationController
       render json: {response: {error: 'Invalid Move'}}, status: :unprocessable_entity
     end
 
-    if @game.check?(@game.players.where(id: @opponent.id))
+    if @game.check?(Player.where(id: @opponent_id).take)
       Pusher["private-user_#{@opponent_id}"].trigger!('check_message', {
         :message => "You are in check."
       })
-    elsif @game.check?(@game.players.where(id: current_player.id))
+    elsif @game.check?(Player.where(id: current_player.id).take)
       Pusher["private-user_#{current_player.id}"].trigger!('check_message', {
         :message => "You are in check."
       })
