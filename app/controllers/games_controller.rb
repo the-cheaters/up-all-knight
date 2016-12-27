@@ -38,7 +38,11 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-    @game.black_player_id = current_player.id if @game.white_player_id == 0
+    if @game.white_player_id == 0
+      @game.black_player_id = current_player.id
+    else
+      @game.black_player_id = 0
+    end
     @game.save
     @game.set_default_turn!
     if @game.save && @game.is_blitz
