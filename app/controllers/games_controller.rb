@@ -151,20 +151,20 @@ class GamesController < ApplicationController
   def player_ready
     if @game.is_blitz
       if params['current_player'] == @game.white_player_id
-        Pusher['broadcast'].trigger!('white_ready', {
+        Pusher["private-user_#{@opponent_id}"].trigger!('white_ready', {
           :message => "White Player is ready for blitz chess game."
           })
           @game.update(white_ready: true)
       elsif params['current_player'] == @game.black_player_id
-        Pusher['broadcast'].trigger!('black_ready', {
+        Pusher["private-user_#{@opponent_id}"].trigger!('black_ready', {
           :message => "Black Player is ready for blitz chess game."
           })
           @game.update(black_ready: true)
       end
       if @game.white_ready && @game.black_ready
-        Pusher['broadcast'].trigger!('start_game', {
+        Pusher['broadcast_#{@game.id}'].trigger!('start_game', {
           has_started: true })
-        Pusher['broadcast'].trigger!('hide_ready_buttons', {})
+        Pusher['broadcast_#{@game.id}'].trigger!('hide_ready_buttons', {})
       end
     end
   end

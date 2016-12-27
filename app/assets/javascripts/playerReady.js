@@ -14,12 +14,17 @@ $(document).ready(function() {
   var timeLeft = 30;
   var elem = document.getElementById('player_not_ready');
 
-  var timerId = setInterval(countdown, 30,000);
+  var timerId = setInterval(countdown, 1,000);
 
   function countdown() {
     if (timeLeft == 0) {
       clearTimeout(timerId);
-      doSomething("player forfeits");
+    $.ajax({
+      type: 'PUT',
+      url: updateURL
+      dataType: 'json',
+      data: { current_player: window.player_id  }
+    });
     } else {
       elem.innerHTML = timeLeft + ' seconds remaining';
       timeLeft--;
