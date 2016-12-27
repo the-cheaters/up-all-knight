@@ -41,7 +41,7 @@ class GamesController < ApplicationController
     if @game.white_player_id == 0  
       @game.black_player_id = current_player.id 
     else 
-      @game.black_player_id = 1
+      @game.black_player_id = 0
     end
     @game.save
     @game.set_default_turn!
