@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit, :add_player]
-  before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit, :add_player, :player_ready, :player_not_ready]
+  before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit, :player_ready, :player_not_ready]
   before_action :authenticate_player!, only: [:show, :new, :create, :update, :destroy, :add_player, :draw, :reject_draw, :forfeit]
   
   
@@ -149,7 +149,6 @@ class GamesController < ApplicationController
   end
 
   def player_ready
-    byebug
     if @game.is_blitz
       if !@game.white_ready && !@game.black_ready
       Pusher["private-user_#{@opponent_id}"].trigger!('start_ready_timer', {
@@ -175,9 +174,11 @@ class GamesController < ApplicationController
         Pusher['broadcast_#{@game.id}'].trigger!('hide_ready_buttons', {})
       end
     end
+    render json: {}
   end
 
   def player_not_ready
+    byebug
     if params['current_player'] == @game.white_player_id 
       @game.white_forfeit == true
     elsif params['current_player'] == @game.black_player_id 

@@ -9,7 +9,7 @@ $(document).ready(function() {
   });
   var timerId = null
   window.broadcast_channel.bind('start_ready_timer', function(data) {
-  
+  console.log("inside_start_ready_timer")
   var updateURL = $(event.currentTarget).data("update-url");
   var timeLeft = 30;
   var elem = $('.ready-timer');
