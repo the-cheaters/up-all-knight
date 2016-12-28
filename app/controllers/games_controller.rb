@@ -149,7 +149,13 @@ class GamesController < ApplicationController
   end
 
   def player_ready
+    byebug
     if @game.is_blitz
+      if !@game.white_ready && !@game.black_ready
+      Pusher["private-user_#{@opponent_id}"].trigger!('start_ready_timer', {
+          :message => "Start Ready Timer."
+          })
+      end
       if params['current_player'] == @game.white_player_id
         Pusher["private-user_#{@opponent_id}"].trigger!('white_ready', {
           :message => "White Player is ready for blitz chess game."
@@ -164,30 +170,20 @@ class GamesController < ApplicationController
       if @game.white_ready && @game.black_ready
         Pusher['broadcast_#{@game.id}'].trigger!('start_game', {
           has_started: true })
+        Pusher['broadcast_#{@game.id}'].trigger!('clear_ready_timer', {
+          })
         Pusher['broadcast_#{@game.id}'].trigger!('hide_ready_buttons', {})
       end
     end
   end
 
   def player_not_ready
-    if @game.is_blitz
-      if params['current_player'] == @game.white_player_id
-        Pusher['broadcast'].trigger!('white_not_ready', {
-          :message => "White Player is not ready for blitz chess game."
-          })
-         @game.update(white_ready: false)
-      elsif params['current_player'] == @game.black_player_id
-        Pusher['broadcast'].trigger!('black_not_ready', {
-          :message => "Black Player is not ready for blitz chess game."
-          })
-          @game.update(black_ready: false)
-      end
-      if @game.white_ready && @game.black_ready == false
-        Pusher['broadcast'].trigger!('stop_game', {
-          has_started: false })
-        Pusher['broadcast'].trigger!('hide_not_ready_buttons', {})
-      end
+    if params['current_player'] == @game.white_player_id 
+      @game.white_forfeit == true
+    elsif params['current_player'] == @game.black_player_id 
+      @game.black_forfeit == true
     end
+    @game.forfeit
   end
   
   

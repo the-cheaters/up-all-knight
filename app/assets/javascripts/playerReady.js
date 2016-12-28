@@ -1,33 +1,40 @@
 $(document).ready(function() {
-  $(".player-ready").click(function() {
-  var updateURL = $(event.currentTarget).data("update-url");
+  $("#player-ready").click(function() {
     $.ajax({
       type: 'PUT',
-      url: updateURL
+      url: $("#player-ready").data("update-url"),
       dataType: 'json',
       data: { current_player: window.player_id  }
     });
   });
-
-  $(".player-not-ready").click(function() {
+  var timerId = null
+  window.broadcast_channel.bind('start_ready_timer', function(data) {
+  
   var updateURL = $(event.currentTarget).data("update-url");
   var timeLeft = 30;
-  var elem = document.getElementById('player_not_ready');
+  var elem = $('.ready-timer');
 
-  var timerId = setInterval(countdown, 1,000);
+  timerId = setInterval(countdown, 1000);
 
-  function countdown() {
-    if (timeLeft == 0) {
-      clearTimeout(timerId);
-    $.ajax({
-      type: 'PUT',
-      url: updateURL
-      dataType: 'json',
-      data: { current_player: window.player_id  }
-    });
-    } else {
-      elem.innerHTML = timeLeft + ' seconds remaining';
-      timeLeft--;
+    function countdown() {
+      if (timeLeft == 0) {
+        clearTimeout(timerId);
+      $.ajax({
+        type: 'PUT',
+        url: $(event.currentTarget).data("player_not_ready"),
+        dataType: 'json',
+        data: { current_player: window.player_id  }
+      });
+      } else {
+        elem.innerHTML = timeLeft + ' seconds remaining until you forfeit';
+        timeLeft--;
+      }
     }
-  }
+  });
+  window.broadcast_channel.bind('hide_not_ready_buttons', function(data) {
+    $('#player-ready').css('display', 'none')
+  });
+  window.broadcast_channel.bind('clear_ready_timer', function(data) {
+    clearTimeout(timerId);
+  });
 });
