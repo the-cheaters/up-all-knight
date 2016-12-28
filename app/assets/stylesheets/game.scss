@@ -1,5 +1,7 @@
 @import 'variables';
 
+// Games index
+
 .games--header {
   font-family: $primary-font;
   font-size: 36px;
@@ -147,6 +149,26 @@ label {
   }
 }
 
+// Games show
+
+.games--background {
+  width: 100%;
+  background-color: white !important;
+}
+
+.board--header {
+  font-family: $secondary-font;
+  font-size: 24px;
+  font-weight: 700;
+  color: $light-color;
+  margin-bottom: 20px;
+}
+
+.chessboard {
+  margin-top: 30px;
+  margin-bottom: 80px;
+}
+
 // Columns
 
 .games--columns {
@@ -157,4 +179,18 @@ label {
 .games--columns__new {
   @include make-xs-column(4);
   @include make-xs-column-offset(4);
+}
+
+.board--columns {
+  @include make-xs-column(10);
+  @include make-xs-column-offset(1); 
+  background-color: white !important;
+}
+
+.board--columns__left {
+  @include make-xs-column(4);
+}
+
+.board--columns__right {
+  @include make-xs-column(8);
 }
