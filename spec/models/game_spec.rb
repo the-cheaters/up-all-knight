@@ -60,6 +60,18 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  describe "checkmate?" do
+    let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
+
+    it "should be in checkmate" do
+      king = FactoryGirl.create(:king, x_position: 0, y_position: 0, player: black_player, game: game)
+      queen = FactoryGirl.create(:queen, x_position: 0, y_position: 1, player: white_player, game: game)
+      queen_2 = FactoryGirl.create(:queen, x_position: 1, y_position: 1, player: white_player, game: game)
+      expect(game.checkmate?(black_player)).to eq(true)
+    end
+
+  end
+
   describe "game.stalemate?" do
 
     context "not stalemate" do
@@ -109,4 +121,3 @@ RSpec.describe Game, type: :model do
     end
   end
 end
-
