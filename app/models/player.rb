@@ -21,12 +21,15 @@ class Player < ActiveRecord::Base
       player.password = Devise.friendly_token[0,20]
     end
   end
-  
+
   def join_game!(game)
     if game.white_player_id == 0
       game.update_attributes(:white_player_id => id)
     else
       game.update_attributes(:black_player_id => id)
+    end
+    game.pieces.each do |piece|
+      piece.update_attributes(:player_id => id) if piece.player_id == 0
     end
   end
 
