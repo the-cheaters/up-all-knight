@@ -33,13 +33,8 @@ $ ->
     window.pawnPromotionUpdateURL = event.pawnPromotionUpdateURL
     $('#message').css('display', 'block')
     $('#message').html(event.message)
-    $('#Queen-promotion').css('display', 'inline')
-    $('#Rook-promotion').css('display', 'inline')
-    $('#Knight-promotion').css('display', 'inline')
-    $('#Bishop-promotion').css('display', 'inline')
+    $('.pawn-promotion').css('display', 'inline')
+
 
   window.private_channel.bind 'pawn-promotion-choosen', (event) ->
-    $('#Queen-promotion').css('display', 'none')
-    $('#Rook-promotion').css('display', 'none')
-    $('#Knight-promotion').css('display', 'none')
-    $('#Bishop-promotion').css('display', 'none')
+    $('.pawn-promotion').css('display', 'none')

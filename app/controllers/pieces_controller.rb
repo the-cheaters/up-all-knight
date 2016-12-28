@@ -13,6 +13,7 @@ class PiecesController < ApplicationController
           Pusher["broadcast_#{@game.id}"].trigger!('start_game', {
             has_started: true })
         end
+
       if selected_piece.game.is_blitz
         @white_timer = selected_piece.game.timers.where(player_id: selected_piece.game.white_player_id).last
         @black_timer = selected_piece.game.timers.where(player_id: selected_piece.game.black_player_id).last
@@ -57,6 +58,6 @@ class PiecesController < ApplicationController
   def set_game
     @game ||= Game.find(params[:game_id])
   end
-  
+
 end
 
