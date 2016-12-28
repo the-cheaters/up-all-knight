@@ -24,6 +24,14 @@
   <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
   &nbsp;
   <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Queen</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Rook</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Knight</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Bishop</button>
 </div>
 
 <h1>Captured Pieces:
@@ -65,6 +73,6 @@
       <% if @game.is_blitz %>
       <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
       <% end %>
-    </div>
   </div>
+</div>
   

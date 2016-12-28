@@ -32,3 +32,13 @@ $ ->
   window.private_channel.bind 'check_message', (event) ->
     $('#message').css('display', 'block')
     $('#message').html(event.message)
+
+  window.private_channel.bind 'pawn-promotion', (event) ->
+    window.pawnPromotionUpdateURL = event.pawnPromotionUpdateURL
+    $('#message').css('display', 'block')
+    $('#message').html(event.message)
+    $('.pawn-promotion').css('display', 'inline')
+
+
+  window.private_channel.bind 'pawn-promotion-choosen', (event) ->
+    $('.pawn-promotion').css('display', 'none')
