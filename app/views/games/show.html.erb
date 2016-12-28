@@ -1,7 +1,5 @@
 <div class="games--background">
 
-  <p id="notice"><%= notice %></p>
-
   <% if @game.white_draw && @game.black_draw %>
       <p class="alert alert-danger text-center">This game ended in a draw.</p>
     <% elsif @game.white_forfeit || @game.black_forfeit %>
@@ -10,6 +8,7 @@
 
   <div class="board--columns">
 
+    <p id="notice"><%= notice %></p>
     <div class="board--columns__left">
 
         <h2 class="board--header">White Player</h2>
@@ -63,5 +62,6 @@
     </div>
 
     </div>
+      <br class="clear" />
 
   </div>
