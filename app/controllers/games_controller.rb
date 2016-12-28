@@ -38,9 +38,14 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-    @game.black_player_id = current_player.id if @game.white_player_id == 0
+    if @game.white_player_id == 0
+      @game.black_player_id = current_player.id
+    else
+      @game.black_player_id = 0
+    end
     @game.save
     @game.set_default_turn!
+
     if @game.save && @game.is_blitz
       @game.create_timers(params[:time_left])
     end
@@ -74,16 +79,17 @@ class GamesController < ApplicationController
   
   def draw
     if @game.white_draw && @game.black_draw
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "The game has come to a draw."
-        })
-      Pusher['broadcast'].trigger!('hide_buttons', {})
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "The game has come to a draw."
+      })
+
+      Pusher["broadcast_#{@game.id}"].trigger!('hide_buttons', {})
       Player.where(id: @game.white_player_id).take.add_draw!
       Player.where(id: @game.black_player_id).take.add_draw!
     elsif @game.white_draw && !@game.black_draw
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "White has requested a draw. Black may accept or reject the draw."
-        })
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "White has requested a draw. Black may accept or reject the draw."
+      })
       if @color == :white
         Pusher["private-user_#{current_player.id}"].trigger!('hide_buttons', {})
         Pusher["private-user_#{@opponent_id}"].trigger!('show_draw_response_buttons', {})
@@ -92,9 +98,9 @@ class GamesController < ApplicationController
         Pusher["private-user_#{@opponent_id}"].trigger!('hide_buttons', {})
       end
     elsif @game.black_draw && !@game.white_draw
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "Black has requested a draw. White may accept or reject the draw."
-        })
+      Pusher['broadcast_#{@game.id}'].trigger!('draw_forfeit', {
+      :message => "Black has requested a draw. White may accept or reject the draw."
+      })
       if @color == :black
         Pusher["private-user_#{current_player.id}"].trigger!('hide_buttons', {})
         Pusher["private-user_#{@opponent_id}"].trigger!('show_draw_response_buttons', {})
@@ -107,9 +113,9 @@ class GamesController < ApplicationController
 
   def reject_draw
     if @game.white_draw && !@game.black_draw
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "Black has rejected the draw. White, you may forfeit or play on."
-        })
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "Black has rejected the draw. White, you may forfeit or play on."
+      })
       if @color == :white
         Pusher["private-user_#{current_player.id}"].trigger!('show_forfeit_button', {})
         Pusher["private-user_#{@opponent_id}"].trigger!('show_default_button', {})
@@ -118,9 +124,9 @@ class GamesController < ApplicationController
         Pusher["private-user_#{@opponent_id}"].trigger!('show_forfeit_button', {})
       end
     elsif @game.black_draw && !@game.white_draw
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "White has rejected the draw. Black, you may forfeit or play on."
-        })
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "White has rejected the draw. Black, you may forfeit or play on."
+      })
       if @color == :black
         Pusher["private-user_#{current_player.id}"].trigger!('show_forfeit_button', {})
         Pusher["private-user_#{@opponent_id}"].trigger!('show_default_button', {})
@@ -130,22 +136,22 @@ class GamesController < ApplicationController
       end
     end
   end
-
+            
   def forfeit
     if @game.white_forfeit
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "White has forfeited. Black is the victor. Congratulations!"
-        })
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "White has forfeited. Black is the victor. Congratulations!"
+      })
       Player.where(id: @game.white_player_id).take.add_loss!
       Player.where(id: @game.black_player_id).take.add_win!
     elsif @game.black_forfeit
-      Pusher['broadcast'].trigger!('draw_forfeit', {
-        :message => "Black has forfeited. White is the victor. Congratulations!"
-        })
+      Pusher["broadcast_#{@game.id}"].trigger!('draw_forfeit', {
+      :message => "Black has forfeited. White is the victor. Congratulations!"
+      })
       Player.where(id: @game.white_player_id).take.add_win!
       Player.where(id: @game.black_player_id).take.add_loss!
     end
-    Pusher['broadcast'].trigger!('hide_buttons', {})
+    Pusher["broadcast_#{@game.id}"].trigger!('hide_buttons', {})
   end
 
   def player_ready
@@ -178,18 +184,18 @@ class GamesController < ApplicationController
   end
 
   def player_not_ready
-    byebug
     if params['current_player'] == @game.white_player_id 
       @game.white_forfeit == true
     elsif params['current_player'] == @game.black_player_id 
       @game.black_forfeit == true
     end
-    @game.forfeit
+    forfeit
+    redirect_to games_path
   end
   
   
   private
-
+                
   def set_user_color
     if current_player.id == @game.black_player_id
       @color = :black
@@ -199,18 +205,12 @@ class GamesController < ApplicationController
       @color = nil
     end
   end
-
-  def set_opponent_id
-    if current_player.id == @game.black_player_id
-      @opponent_id = @game.white_player_id
-    elsif current_player.id == @game.white_player_id
-      @opponent_id = @game.black_player_id
-    else
-      @opponent_id = nil
-    end
+                
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def game_params
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
   end
-
-  # Use callbacks to share common setup or constraints between actions.
+  
   def set_game
     if params[:id].nil?
       @game ||= Game.find(params[:game_id])
@@ -218,9 +218,18 @@ class GamesController < ApplicationController
       @game ||= Game.find(params[:id])
     end
   end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def game_params
-    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
+                
+  def set_opponent_id
+    if @game.black_player_id != nil
+      if current_player.id == @game.black_player_id
+        @opponent_id = @game.white_player_id
+      elsif current_player.id == @game.white_player_id
+        @opponent_id = @game.black_player_id
+      else
+        @opponent_id = nil
+      end
+    end
   end
+
 end
+

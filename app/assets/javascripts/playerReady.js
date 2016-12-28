@@ -7,29 +7,29 @@ $(document).ready(function() {
       data: { current_player: window.player_id  }
     });
   });
-  var timerId = null
-  window.broadcast_channel.bind('start_ready_timer', function(data) {
-  console.log("inside_start_ready_timer")
-  var updateURL = $(event.currentTarget).data("update-url");
-  var timeLeft = 30;
-  var elem = $('.ready-timer');
+  var timerId = null;
+  window.private_channel.bind('start_ready_timer', function(data) {
+    console.log("inside_start_ready_timer")
+    var updateURL = $(event.currentTarget).data("update-url");
+    var timeLeft = 30;
 
-  timerId = setInterval(countdown, 1000);
+    timerId = setInterval(countdown, 1000);
 
-    function countdown() {
-      if (timeLeft == 0) {
-        clearTimeout(timerId);
-      $.ajax({
-        type: 'PUT',
-        url: $(event.currentTarget).data("player_not_ready"),
-        dataType: 'json',
-        data: { current_player: window.player_id  }
-      });
-      } else {
-        elem.innerHTML = timeLeft + ' seconds remaining until you forfeit';
-        timeLeft--;
+      function countdown() {
+        $('.ready-timer').text(timeLeft + ' seconds remaining until you forfeit') 
+        if (timeLeft === 0) {
+          clearTimeout(timerId);
+        $.ajax({
+          type: 'PUT',
+          url: $("#player-ready").data('player-not-ready-url'),
+          dataType: 'json',
+          data: { current_player: window.player_id  }
+        });
+        } else {
+          timeLeft--;
+          
+        }
       }
-    }
   });
   window.broadcast_channel.bind('hide_not_ready_buttons', function(data) {
     $('#player-ready').css('display', 'none')
