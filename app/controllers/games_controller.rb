@@ -38,9 +38,9 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-    if @game.white_player_id == 0  
-      @game.black_player_id = current_player.id 
-    else 
+    if @game.white_player_id == 0
+      @game.black_player_id = current_player.id
+    else
       @game.black_player_id = 0
     end
     @game.save
