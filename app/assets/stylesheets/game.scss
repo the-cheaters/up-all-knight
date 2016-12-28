@@ -175,6 +175,36 @@ label {
   margin-bottom: 15px;
 }
 
+#board--button {
+  color: white;
+  background-color: $contrast-color;
+  font-family: $primary-font;
+  font-weight: 700;
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 25px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+
+  &:hover {
+    background-color: $light-color;
+    color: $contrast-color;
+    text-decoration: none;
+  }
+}
+
 .chessboard {
   margin-bottom: 100px;
 }
