@@ -9,7 +9,10 @@
   <div class="board--columns">
 
     <p id="notice"><%= notice %></p>
+
     <div class="board--columns__left">
+
+        <h1 class="board--game__id">GAME #<%= @game.id %></h1>
 
         <h2 class="board--header">White Player</h2>
 
@@ -32,9 +35,11 @@
 
         <div class="board--captured-pieces">
           <h2 class="board--header">Captured Pieces:</h2>
+          <div style="font-size: 40px; font-weight: 700;">
           <% @game.pieces.where(captured: true).each do |piece| %>
             <%= piece.unicode_symbol.html_safe %>
           <% end %>
+          </div>
         </div>
 
       </div>

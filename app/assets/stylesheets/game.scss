@@ -163,10 +163,19 @@ label {
   font-weight: 700;
   color: $light-color;
   margin-bottom: 20px;
+  margin-top: 0px;
+}
+
+.board--game__id {
+  font-family: $secondary-font;
+  color: $contrast-color;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 .chessboard {
-  margin-top: 30px;
   margin-bottom: 80px;
 }
 
@@ -187,6 +196,7 @@ label {
   @include make-xs-column(10);
   @include make-xs-column-offset(1); 
   background-color: white !important;
+  padding-top: 30px;
 }
 
 .board--columns__left {
