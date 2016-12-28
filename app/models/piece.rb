@@ -38,7 +38,6 @@ class Piece < ActiveRecord::Base
       self.game.change_turns!
       self.game.update(:last_moved_piece_id => self.id)
     end
-    
     valid
   end
   
