@@ -58,6 +58,28 @@ class Piece < ActiveRecord::Base
     end
   end
   
+  def can_pawn_promote?(destination_y)
+    if self.type == "Pawn"
+      if self.get_color == "white"
+        if destination_y == 0
+          return true
+        end
+      elsif self.get_color == "black"
+        if destination_y == 7
+          return true
+        end
+      end
+      return false
+    end
+  end
+  
+  def promote_pawn(new_piece)
+    if self.type == "Pawn"
+      self.type = new_piece
+      save
+    end
+  end
+  
   def valid_move?(destination_x, destination_y)
     valid = true
     
@@ -81,6 +103,7 @@ class Piece < ActiveRecord::Base
   end
   
   def get_color
+    
     if self.player_id == game.white_player_id
       return WHITE
     elsif self.player_id == game.black_player_id

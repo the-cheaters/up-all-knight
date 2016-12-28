@@ -45,6 +45,7 @@ class GamesController < ApplicationController
     end
     @game.save
     @game.set_default_turn!
+
     if @game.save && @game.is_blitz
       @game.create_timers(params[:time_left])
     end
@@ -191,4 +192,4 @@ class GamesController < ApplicationController
   end
   
 end
-              
+

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   var currentPlayer = $('.game-wrapper').data('player')
   var currentPlayersTurn = $('.game-wrapper').data('current-turn')
   var currentTimer = null
