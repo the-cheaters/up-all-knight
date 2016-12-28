@@ -23,23 +23,25 @@
 
     <!-- Button Selection For Pusher - Default is to Request Draw -->
 
+        <div class="board--captured-pieces">
+          <h2 class="board--header">Captured Pieces</h2>
+          <div style="font-size: 60px; margin-top: -10px;">
+          <% @game.pieces.where(captured: true).each do |piece| %>
+            <%= piece.unicode_symbol.html_safe %>
+          <% end %>
+          </div>
+        </div>
+
+        <br />
+
         <div class="button-panel">
-          <button class="games--button request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
+          <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
           &nbsp;
           <button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Accept Draw</button>
           &nbsp;
           <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
           &nbsp;
           <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
-        </div>
-
-        <div class="board--captured-pieces">
-          <h2 class="board--header">Captured Pieces:</h2>
-          <div style="font-size: 40px; font-weight: 700;">
-          <% @game.pieces.where(captured: true).each do |piece| %>
-            <%= piece.unicode_symbol.html_safe %>
-          <% end %>
-          </div>
         </div>
 
       </div>
