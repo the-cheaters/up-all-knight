@@ -173,11 +173,13 @@ class GamesController < ApplicationController
           @game.update(black_ready: true)
       end
       if @game.white_ready && @game.black_ready
-        Pusher['broadcast_#{@game.id}'].trigger!('start_game', {
+        @game.has_started = true
+        @game.save
+        Pusher["broadcast_#{@game.id}"].trigger!('start_game', {
           has_started: true })
-        Pusher['broadcast_#{@game.id}'].trigger!('clear_ready_timer', {
+        Pusher["broadcast_#{@game.id}"].trigger!('clear_ready_timer', {
           })
-        Pusher['broadcast_#{@game.id}'].trigger!('hide_ready_buttons', {})
+        Pusher["broadcast_#{@game.id}"].trigger!('hide_ready_buttons', {})
       end
     end
     render json: {}
@@ -208,7 +210,7 @@ class GamesController < ApplicationController
                 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit, :white_ready, :black_ready)
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit, :has_started, :white_ready, :black_ready)
   end
   
   def set_game
