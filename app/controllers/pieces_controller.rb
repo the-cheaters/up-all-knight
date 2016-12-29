@@ -1,5 +1,5 @@
 class PiecesController < ApplicationController
-  before_action :set_game
+  before_action :set_game, :set_opponent_id
   def update
     if selected_piece.move_to(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
         if selected_piece.can_pawn_promote?(params[:piece][:y_position].to_i)
@@ -32,6 +32,16 @@ class PiecesController < ApplicationController
       end
     else
       render json: {response: {error: 'Invalid Move'}}, status: :unprocessable_entity
+    end
+
+    if @game.check?(Player.where(id: @opponent_id).take)
+      Pusher["private-user_#{@opponent_id}"].trigger!('check_message', {
+        :message => "You are in check."
+      })
+    elsif @game.check?(Player.where(id: current_player.id).take)
+      Pusher["private-user_#{current_player.id}"].trigger!('check_message', {
+        :message => "You are in check."
+      })
     end
   end
   
