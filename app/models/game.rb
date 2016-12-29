@@ -70,20 +70,23 @@ class Game < ActiveRecord::Base
   end
 
   def checkmate?(player)
-    checkmate = true
-    king = pieces.where(type: 'King', player: player).last
-    (0..7).each do |x|
-      (0..7).each do |y|
-        if king.valid_move?(x, y)
-          original_x = king.x_position
-          original_y = king.y_position
-          king.move_to(x, y)
-          checkmate = false if !check?(player)
-          king.move_to(original_x, original_y)
+    if check?(player)
+      checkmate = true
+      king = pieces.where(type: 'King', player: player).last
+      (0..7).each do |x|
+        (0..7).each do |y|
+          if king.valid_move?(x, y)
+            original_x = king.x_position
+            original_y = king.y_position
+            king.move_to(x, y)
+            checkmate = false if !check?(player)
+            king.move_to(original_x, original_y)
+          end
         end
       end
+      return checkmate
     end
-    checkmate
+    return false
 
   end
 
