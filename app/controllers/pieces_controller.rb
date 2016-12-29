@@ -35,16 +35,26 @@ class PiecesController < ApplicationController
     end
 
     if @game.check?(Player.where(id: @opponent_id).take)
-      Pusher["private-user_#{@opponent_id}"].trigger!('check_message', {
+      Pusher["private-user_#{@opponent_id}"].trigger!('message', {
         :message => "You are in check."
       })
     elsif @game.check?(Player.where(id: current_player.id).take)
-      Pusher["private-user_#{current_player.id}"].trigger!('check_message', {
+      Pusher["private-user_#{current_player.id}"].trigger!('message', {
         :message => "You are in check."
       })
     end
+
+    if @game.checkmate?(Player.where(id: @opponent_id).take)
+      Pusher["private-user_#{@opponent_id}"].trigger!('message', {
+        :message => "You are in checkmate!"
+      })
+    elsif @game.checkmate?(Player.where(id: current_player.id).take)
+      Pusher["private-user_#{current_player.id}"].trigger!('message', {
+        :message => "You are in checkmate!"
+      })
+    end
   end
-  
+
   def promote_pawn
     selected_piece.promote_pawn(params[:new_piece])
     Pusher["private-user_#{current_player.id}"].trigger!('pawn-promotion-choosen', {})
@@ -52,11 +62,11 @@ class PiecesController < ApplicationController
   end
 
   private
-  
+
   def piece_params
     params.require(:piece).permit(:x_position,:y_position)
   end
-  
+
   def selected_piece
     if params[:id].nil?
     @selected_piece ||= Piece.find(params[:piece_id])
@@ -64,10 +74,9 @@ class PiecesController < ApplicationController
     @selected_piece ||= Piece.find(params[:id])
     end
   end
-  
+
   def set_game
     @game ||= Game.find(params[:game_id])
   end
 
 end
-
