@@ -166,4 +166,16 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
+  describe "games#player_ready action" do
+    it "should start the countdown timer when players click on ready button" do
+      sign_in white_player
+      sign_in black_player
+      player_ready_game = FactoryGirl.create(:game, is_blitz: true, white_ready: true, white_player_id: white_player.id, black_ready: true, black_player_id: black_player.id)
+      put :player_ready, game_id: player_ready_game.id
+      white_player.reload
+      black_player.reload
+      expect(white_ready).to eq(true)
+    end
+  end
+
 end
