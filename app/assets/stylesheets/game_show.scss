@@ -24,6 +24,7 @@
   z-index: 1000;
 }
 
+
 #message {
   display: none;
 }
@@ -33,6 +34,6 @@
   margin-bottom: 60px;
 }
 
-.accept-draw, .reject-draw, .forfeit {
+.accept-draw, .reject-draw, .forfeit, .pawn-promotion {
   display: none;
 }

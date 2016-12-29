@@ -7,9 +7,12 @@
 <p class="games--paragraph">I want to be the...</p>
 <%= f.collection_radio_buttons :white_player_id, [[current_player.id, 'White Player'] ,[0, 'Black Player']], :first, :last %>
 <br/>
-<br />
-<p class="games--paragraph">I want the game type to be...</p>
-<%= f.collection_radio_buttons :is_blitz, [[false, 'Standard'] ,[true, 'Blitz']], :first, :last, class: "games--label" %>
+  
+<p class="games--paragraph">I want game type to be...</p>
+<%= f.collection_radio_buttons :is_blitz, [[false, 'Standard'] ,[true, 'Blitz']], :first, :last %>
+<p>How many seconds on blitz timer?</p>
+<%= number_field_tag :time_left %>
+
 <br/>
 <%= f.button :submit, class: "games--button", id: "games--button__new" %>
 <% end %>

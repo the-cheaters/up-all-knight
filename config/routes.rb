@@ -4,14 +4,18 @@ Rails.application.routes.draw do
 
   root 'static_pages#index'
   get 'about', to: "static_pages#about"
+  match 'ranking', to: "static_pages#ranking", via: :get
   resources :games do
     resources :pieces, only: :update
+    resources :pieces do
+      match "promote_pawn", to: "pieces#promote_pawn", via: :put
+    end
     patch 'add_player', on: :member
     match 'draw', to: "games#draw", via: :put
     match 'reject_draw', to: "games#reject_draw", via: :put
     match 'forfeit', to: "games#forfeit", via: :put
   end
-
+  
   resources :pusher do
     post 'auth', on: :collection
   end

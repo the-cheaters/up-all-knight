@@ -8,16 +8,22 @@ RSpec.describe PiecesController, type: :controller do
   
   
   it "has a 200 status code" do
+    sign_in white_player
+    sign_in black_player
     patch :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '3' }
     expect(response.code).to eq('200')
   end
   
   it "has a 422 status code" do
+    sign_in white_player
+    sign_in black_player
     patch :update, game_id: game.id, id: knight.id , piece: { x_position: '2', y_position: '4' }
     expect(response.code).to eq('422')
   end
   
   it "has a 422 status code if passing nil" do
+    sign_in white_player
+    sign_in black_player
     patch :update, game_id: game.id, id: knight.id , piece: { x_position: nil, y_position: nil }
     expect(response.code).to eq('422')
   end

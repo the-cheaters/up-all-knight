@@ -359,5 +359,4 @@ RSpec.describe Piece, type: :model do
       expect(pawn.unicode_symbol).to eq "&#9823;"
     end
   end
-  
 end

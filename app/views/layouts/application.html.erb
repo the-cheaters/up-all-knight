@@ -2,40 +2,41 @@
 <html>
 <head>
   <title>Chess</title>
-
+  
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:300,400,700" rel="stylesheet"/>
   <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-
+  
   <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
   <script>
-  window.pusher_key = '<%= ENV['PUSHER_KEY'] %>';
+  window.pusher_key = '<%= '69d78adae1cff6a25019' %>';
   <%= "window.player_id = #{current_player.id};" if current_player %>
+  <%= "window.game_id = #{@game.id};" if @game != nil %>
   </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
-
+  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to "UP ALL KNIGHT", root_path, class: "navbar-brand" %>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <% if player_signed_in? %>
+  
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "UP ALL KNIGHT", root_path, class: "navbar-brand" %>
+      </div>
+      
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <% if player_signed_in? %>
           <li>
           <%= link_to new_game_path do %>
               <i class="glyphicon glyphicon-plus"></i>
@@ -66,17 +67,16 @@
   <% end %>
   
   <%= yield %>
-
+  
   <footer class="footer">
-      <div class="container">
+    <div class="container">
       <ul class="nav navbar-nav navbar-right">
-      <li><%= link_to 'About this app', about_path, class: "navbar--link" %></li>
-      <li><a href="https://github.com/the-cheaters/up-all-knight" class="footer--link">Check out Github</a></li>
+        <li><%= link_to 'About this app', about_path, class: "navbar--link" %></li>
+        <li><%= link_to 'Top 10 Players', ranking_path, class: "footer--link" %></li>
+        <li><a href="https://github.com/the-cheaters/up-all-knight" class="footer--link">Check out Github</a></li>
       </ul>
-      </div>
+    </div>
   </footer>
-
-
+  
 </body>
 </html>
- 
