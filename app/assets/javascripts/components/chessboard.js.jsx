@@ -1,10 +1,22 @@
 var Chessboard = React.createClass({
 
+
+
   render: function() { 
-    return (
-      <div className={this.props.color + " tile"}>
-        <Piece />
-      </div>
-    );
+
+    function key(r,c) {
+      return (r + c * Math.random())
+    }
+    var squares = [];
+    for (var row = 0; row < 8; row++) {
+      for (var column = 0; column < 8; column++) {
+       squares.push(<Square c={column} r={row} key={key(row,column)} />)
+      }   
+    }
+    return (  
+          <div>
+          {squares} 
+          </div>
+        );
   }
 });

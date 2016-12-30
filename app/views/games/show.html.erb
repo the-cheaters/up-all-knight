@@ -43,27 +43,11 @@
     <% end %>
 
     <div class="chessboard">
-          <% (0..7).each do |row| %>
-      <div id="row">
-        <% (0..7).each do |column| %>
-          <% @pieces.each do |piece| %>
-          <% if piece.x_position == column && piece.y_position == row %>
-            <% if piece.player_id == @game.white_player_id %>
-              <%= react_component 'Chessboard', {color: square_color(row,column), pieceColor: "white", unicode: piece.unicode_symbol.html_safe } %>
-            <% else %>
-              <%= react_component 'Chessboard', {color: square_color(row,column), pieceColor: "black", unicode: piece.unicode_symbol.html_safe } %>
-            <% end %>
-      </div>
-            <% end %>
-            <% end %>
-          </div>
-          <% end %>
-        </div>
-        <% end %>
-      </div>
+     <%= react_component 'Chessboard' %>
+    </div>  
       <% if @game.is_blitz %>
       <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
       <% end %>
-    </div>
-  </div>
+    
+</div>
   
