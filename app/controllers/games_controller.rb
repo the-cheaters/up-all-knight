@@ -215,25 +215,6 @@ class GamesController < ApplicationController
     params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit, :has_started, :white_ready, :black_ready)
   end
   
-  def set_game
-    if params[:id].nil?
-      @game ||= Game.find(params[:game_id])
-    else
-      @game ||= Game.find(params[:id])
-    end
-  end
-                
-  def set_opponent_id
-    if @game.black_player_id != nil
-      if current_player.id == @game.black_player_id
-        @opponent_id = @game.white_player_id
-      elsif current_player.id == @game.white_player_id
-        @opponent_id = @game.black_player_id
-      else
-        @opponent_id = nil
-      end
-    end
-  end
 
 end
 
