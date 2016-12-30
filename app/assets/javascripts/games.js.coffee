@@ -29,7 +29,7 @@ $ ->
   window.private_channel.bind 'show_forfeit_button', (event) ->
     $('.forfeit').css('display', 'inline')
 
-  window.private_channel.bind 'check_message', (event) ->
+  window.private_channel.bind 'message', (event) ->
     $('#message').css('display', 'block')
     $('#message').html(event.message)
 

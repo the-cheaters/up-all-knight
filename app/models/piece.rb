@@ -112,8 +112,8 @@ class Piece < ActiveRecord::Base
   
   
   def is_obstructed?(destination_x, destination_y)
-    location_x = self.x_position
-    location_y = self.y_position
+    location_x = self.x_position.to_i
+    location_y = self.y_position.to_i
     if vertical(destination_x)
       # check for vertical obstruction
       location_y > destination_y ? incrementer = -1 : incrementer = 1
@@ -136,8 +136,8 @@ class Piece < ActiveRecord::Base
       return false
     elsif diagonal(destination_x, destination_y)
       # check for diagonal obstruction
-      location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
-      location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
+      location_x > destination_x.to_i ? x_incrementer = -1 : x_incrementer = 1
+      location_y > destination_y.to_i ? y_incrementer = -1 : y_incrementer = 1
       position_x = location_x + x_incrementer
       position_y = location_y + y_incrementer
       min_x, max_x = [position_x, destination_x].minmax
@@ -181,8 +181,8 @@ class Piece < ActiveRecord::Base
   end
   
   def diagonal(destination_x, destination_y)
-    (destination_x - self.x_position).abs ==
-    (destination_y - self.y_position).abs
+    (destination_x.to_i - self.x_position.to_i).abs ==
+    (destination_y.to_i - self.y_position.to_i).abs
   end
   
 end
