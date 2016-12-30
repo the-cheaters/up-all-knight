@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     match 'draw', to: "games#draw", via: :put
     match 'reject_draw', to: "games#reject_draw", via: :put
     match 'forfeit', to: "games#forfeit", via: :put
+    match 'player_ready', to: "games#player_ready", via: :put
+    match 'player_not_ready', to: "games#player_not_ready", via: :put
   end
   
   resources :pusher do

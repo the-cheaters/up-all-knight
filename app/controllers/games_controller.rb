@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit, :add_player]
-  before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :draw, :reject_draw, :forfeit, :add_player, :player_ready, :player_not_ready]
+  before_action :set_user_color, :set_opponent_id, only: [:show, :draw, :reject_draw, :forfeit, :player_ready, :player_not_ready]
   before_action :authenticate_player!, only: [:show, :new, :create, :update, :destroy, :add_player, :draw, :reject_draw, :forfeit]
   
   
@@ -153,7 +153,51 @@ class GamesController < ApplicationController
     end
     Pusher["broadcast_#{@game.id}"].trigger!('hide_buttons', {})
   end
-                
+
+  def player_ready
+    if @game.is_blitz
+      if !@game.white_ready && !@game.black_ready
+        Pusher["private-user_#{@opponent_id}"].trigger!('start_ready_timer', {
+          :message => "Start Ready Timer."
+          })
+      end
+      if params[:current_player].to_i == @game.white_player_id
+        Pusher["private-user_#{@opponent_id}"].trigger!( "message", {
+          :message => "White Player is ready for blitz chess game."
+          })
+          @game.white_ready = true
+          @game.save
+      elsif params[:current_player].to_i == @game.black_player_id
+        Pusher["private-user_#{@opponent_id}"].trigger!( "message", {
+          :message => "Black Player is ready for blitz chess game."
+          })
+          @game.black_ready = true
+          @game.save
+      end
+      if @game.white_ready && @game.black_ready
+        @game.has_started = true
+        @game.save
+        Pusher["broadcast_#{@game.id}"].trigger!('start_game', {
+          has_started: true })
+        Pusher["broadcast_#{@game.id}"].trigger!('clear_ready_timer', {
+          })
+        Pusher["broadcast_#{@game.id}"].trigger!('hide_ready_buttons', {})
+      end
+    end
+    render json: {}
+  end
+
+  def player_not_ready
+    if params['current_player'] == @game.white_player_id 
+      @game.white_forfeit == true
+    elsif params['current_player'] == @game.black_player_id 
+      @game.black_forfeit == true
+    end
+    forfeit
+    redirect_to games_path
+  end
+  
+  
   private
                 
   def set_user_color
@@ -168,9 +212,9 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit)
-
+    params.require(:game).permit(:current_turn, :white_player_id, :is_blitz, :black_draw, :white_draw, :black_forfeit, :white_forfeit, :has_started, :white_ready, :black_ready)
   end
   
+
 end
 

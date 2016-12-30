@@ -102,7 +102,14 @@ RSpec.describe GamesController, type: :controller do
       game.reload
       expect(game.black_forfeit).to eq(true)
     end
-    
+
+    it "should update the white_ready or black_ready field in json format" do
+      sign_in white_player
+      game = FactoryGirl.create(:game)
+      patch :update, id: game.id, format: :json, game: { black_ready: true }
+      game.reload
+      expect(game.black_ready).to eq(true)
+    end
   end
   
   describe "games#joingame action" do
@@ -163,6 +170,21 @@ RSpec.describe GamesController, type: :controller do
       black_player.reload
       expect(white_player.losses).to eq(1)
       expect(black_player.wins).to eq(1)
+    end
+  end
+
+  describe "games#player_ready action" do
+    it "should start the countdown timer when players click on ready button" do
+      sign_in white_player
+      sign_in black_player
+      player_ready_game = FactoryGirl.create(:game, is_blitz: true, white_ready: true, white_player_id: white_player.id, black_ready: true, black_player_id: black_player.id)
+      put :player_ready, game_id: player_ready_game.id
+      white_player.reload
+      black_player.reload
+      player_ready_game.reload
+      expect(player_ready_game.white_ready).to eq(true)
+      expect(player_ready_game.black_ready).to eq(true)
+      expect(player_ready_game.has_started).to eq(true)
     end
   end
 
