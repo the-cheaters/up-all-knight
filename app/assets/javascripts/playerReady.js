@@ -9,7 +9,6 @@ $(document).ready(function() {
   });
   var timerId = null;
   window.private_channel.bind('start_ready_timer', function(data) {
-    console.log("inside_start_ready_timer")
     var updateURL = $(event.currentTarget).data("update-url");
     var timeLeft = 30;
 
@@ -31,10 +30,13 @@ $(document).ready(function() {
         }
       }
   });
-  window.broadcast_channel.bind('hide_not_ready_buttons', function(data) {
+  window.broadcast_channel.bind('hide_ready_buttons', function(data) {
+    console.log("hide_not_ready_buttons")
     $('#player-ready').css('display', 'none')
+    $('.ready-timer').css('display', 'none')
   });
   window.broadcast_channel.bind('clear_ready_timer', function(data) {
+    console.log("inside_clear_timer_ready")
     clearTimeout(timerId);
   });
 });
