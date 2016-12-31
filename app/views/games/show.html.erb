@@ -25,6 +25,41 @@
 
         <h2 class="board--header">White Player</h2>
 
+<!-- Button Selection For Pusher -->
+<!-- Default is the button to Request Draw -->
+<div class="button-panel">
+  <button class="request-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Request Draw</button>
+  &nbsp;
+  <button class="accept-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Accept Draw</button>
+  &nbsp;
+  <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
+  &nbsp;
+  <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
+  &nbsp;
+  <% if !@game.has_started %>
+  <button id="player-ready" data-update-url="<%= game_player_ready_path(@game) %>" data-player-not-ready-url="<%= game_player_not_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Player Ready</button>
+  <% end %>
+  &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Queen</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Rook</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Knight</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Bishop</button>
+
+</div>
+  <% if @game.is_blitz %>
+  <div class="ready-timer">
+
+  </div>
+  <% end %>
+<h1>Captured Pieces:
+  <% @game.pieces.where(captured: true).each do |piece| %>
+  <%= piece.unicode_symbol.html_safe %>
+  <% end %>
+</h1>
+
         <h2 class="board--header">Black Player</h2>
 
         <div class="board--captured-pieces">
@@ -72,7 +107,9 @@
       <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
       <% end %>
   </div>
+
 </div>
+
 
       </div>
 

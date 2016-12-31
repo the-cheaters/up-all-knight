@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161225034110) do
+ActiveRecord::Schema.define(version: 20161227190020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20161225034110) do
     t.boolean  "white_forfeit"
     t.boolean  "black_forfeit"
     t.boolean  "has_started",         default: false
+    t.boolean  "white_ready",         default: false
+    t.boolean  "black_ready",         default: false
   end
 
   create_table "pieces", force: true do |t|
