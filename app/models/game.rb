@@ -65,8 +65,10 @@ class Game < ActiveRecord::Base
   def check?(player)
     king = pieces.where(type: 'King', player: player).last
     opponents_pieces = pieces.where(player: opponent_player(player))
-
-    opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+    if king !=nil
+      return opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+    end
+      return false
   end
 
   def checkmate?(player)
