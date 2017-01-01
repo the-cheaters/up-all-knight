@@ -24,6 +24,14 @@
   <button class="reject-draw" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Reject Draw</button>
   &nbsp;
   <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Queen</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Rook</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Knight</button>
+   &nbsp;
+  <button class="pawn-promotion" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Bishop</button>
 </div>
 
 <h1>Captured Pieces:
@@ -39,15 +47,13 @@
 <div class="game-wrapper" data-current-turn="<%= @game.current_player_turn %>" data-player="<%= get_player %>" data-black-time-left="<%= @black_player_timer.time_left %>" data-white-time-left="<%= @white_player_timer.time_left %>" data-game-id="<%= @game.id %>" data-time-now="<%= Time.now.to_i %>" data-white-start-time="<%= @white_player_timer.start_time.to_i %>" data-black-start-time="<%= @black_player_timer.start_time.to_i %>" data-game-type="<%= @game.is_blitz %>" data-has-started="<%= @game.has_started %>">
   <div class="white-player">White Player's Time Left:<div id="white-player-timer"></div></div>
   <% else %>
-  <div class="game-wrapper">
+  <div class="game-wrapper" data-player="<%= get_player %>" data-current-turn="<%= @game.current_player_turn %>" data-has-started="<%= @game.has_started %>">
     <% end %>
-
     <div class="chessboard">
      <%= react_component 'Chessboard' %>
     </div>  
       <% if @game.is_blitz %>
       <div class="black-player">Black Player's Time Left:<div id="black-player-timer"></div></div>
       <% end %>
-    
 </div>
   

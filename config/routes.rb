@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   root 'static_pages#index'
+  match 'ranking', to: "static_pages#ranking", via: :get
   resources :games do
     resources :pieces, only: :update
+    resources :pieces do
+      match "promote_pawn", to: "pieces#promote_pawn", via: :put
+    end
     patch 'add_player', on: :member
     match 'draw', to: "games#draw", via: :put
     match 'reject_draw', to: "games#reject_draw", via: :put
@@ -12,7 +16,7 @@ Rails.application.routes.draw do
   end
   namespace :api do 
     namespace :v1 do 
-      resources :pieces, only: [:index] 
+      resources :pieces, only: :index 
     end 
   end
 

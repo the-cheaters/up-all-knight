@@ -12,9 +12,11 @@
       <div class="game_info col-xs-10">
         <p class="game_num">Game #<%= game.id %></p>
         <p class="game_name"><%= game.name%> hosted by
+          <% if game.black_player_id != nil && game.white_player_id != nil %>
           <%= game.white_player_id == 0 ?
             Player.where(id: game.black_player_id).take.email : 
-            Player.where(id: game.white_player_id).take.email %>      
+            Player.where(id: game.white_player_id).take.email %>
+          <% end %>
         </p>
       </div>
       <%= link_to 'Join', add_player_game_path(game.id), class: "join_game col-xs-2 btn btn-primary", method: :patch %>

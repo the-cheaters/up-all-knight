@@ -38,7 +38,6 @@ class Piece < ActiveRecord::Base
       self.game.change_turns!
       self.game.update(:last_moved_piece_id => self.id)
     end
-    
     valid
   end
   
@@ -55,6 +54,28 @@ class Piece < ActiveRecord::Base
           self.capture_piece(destination_x, incremented_y)
         end
       end
+    end
+  end
+  
+  def can_pawn_promote?(destination_y)
+    if self.type == "Pawn"
+      if self.get_color == "white"
+        if destination_y == 0
+          return true
+        end
+      elsif self.get_color == "black"
+        if destination_y == 7
+          return true
+        end
+      end
+      return false
+    end
+  end
+  
+  def promote_pawn(new_piece)
+    if self.type == "Pawn"
+      self.type = new_piece
+      save
     end
   end
   
@@ -81,6 +102,7 @@ class Piece < ActiveRecord::Base
   end
   
   def get_color
+    
     if self.player_id == game.white_player_id
       return WHITE
     elsif self.player_id == game.black_player_id
@@ -90,8 +112,8 @@ class Piece < ActiveRecord::Base
   
   
   def is_obstructed?(destination_x, destination_y)
-    location_x = self.x_position
-    location_y = self.y_position
+    location_x = self.x_position.to_i
+    location_y = self.y_position.to_i
     if vertical(destination_x)
       # check for vertical obstruction
       location_y > destination_y ? incrementer = -1 : incrementer = 1
@@ -114,8 +136,8 @@ class Piece < ActiveRecord::Base
       return false
     elsif diagonal(destination_x, destination_y)
       # check for diagonal obstruction
-      location_x > destination_x ? x_incrementer = -1 : x_incrementer = 1
-      location_y > destination_y ? y_incrementer = -1 : y_incrementer = 1
+      location_x > destination_x.to_i ? x_incrementer = -1 : x_incrementer = 1
+      location_y > destination_y.to_i ? y_incrementer = -1 : y_incrementer = 1
       position_x = location_x + x_incrementer
       position_y = location_y + y_incrementer
       min_x, max_x = [position_x, destination_x].minmax
@@ -159,8 +181,12 @@ class Piece < ActiveRecord::Base
   end
   
   def diagonal(destination_x, destination_y)
-    (destination_x - self.x_position).abs ==
-    (destination_y - self.y_position).abs
+    (destination_x.to_i - self.x_position.to_i).abs ==
+    (destination_y.to_i - self.y_position.to_i).abs
+  end
+
+  def serializable_hash options=nil
+    super.merge "type" => type
   end
   
 end

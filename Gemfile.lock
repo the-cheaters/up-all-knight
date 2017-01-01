@@ -158,6 +158,11 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (12.0.0)
     rdoc (4.3.0)
+    react-dnd-html5-backend-rails (2.1.2)
+      rails (>= 4.0)
+    react-dnd-rails (2.1.4)
+      rails (>= 4.0)
+      react-dnd-html5-backend-rails
     react-rails (1.10.0)
       babel-transpiler (>= 0.7.0)
       coffee-script-source (~> 1.8)
@@ -250,6 +255,8 @@ DEPENDENCIES
   pusher
   rails (= 4.1.9)
   rails_12factor
+  react-dnd-html5-backend-rails
+  react-dnd-rails
   react-rails
   rspec-rails (~> 3.0)
   sass-rails

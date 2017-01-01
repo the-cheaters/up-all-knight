@@ -8,8 +8,13 @@
   
   <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
   <script>
-  window.pusher_key = '<%= ENV['PUSHER_KEY'] %>';
+  window.pusher_key = '<%= '69d78adae1cff6a25019' %>';
+  <% if @game != nil %>
   <%= "window.player_id = #{current_player.id};" if current_player %>
+  <%= "window.game_id = #{@game.id};" %>
+  <%= "window.white_player_id = #{@game.white_player_id};" if @game.white_player_id != nil %>
+  <%= "window.black_player_id = #{@game.black_player_id};" if @game.black_player_id != nil %>
+  <% end %>
   </script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700" rel="stylesheet"/>
   
@@ -65,6 +70,7 @@
     <div class="container">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" class="footer--link">About this app</a></li>
+        <li><%= link_to 'Top 10 Players', ranking_path, class: "footer--link" %></li>
         <li><a href="https://github.com/the-cheaters/up-all-knight" class="footer--link">Check out Github</a></li>
       </ul>
     </div>
