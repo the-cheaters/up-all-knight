@@ -64,8 +64,7 @@ class Game < ActiveRecord::Base
 
   def check?(player)
     king = pieces.where(type: 'King', player: player).last
-    opponents_pieces = pieces.where(player: opponent_player(player))
-
+    opponents_pieces = pieces.where("player_id = #{opponent_player(player)} and x_position != null and y_position != null")
     opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
   end
 
@@ -135,7 +134,7 @@ class Game < ActiveRecord::Base
   private
 
   def opponent_player(player)
-    player == white_player ? black_player : white_player
+    player == white_player ? black_player.id : white_player.id
   end
 
 end
