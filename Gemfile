@@ -60,3 +60,5 @@ end
 group :test do
   gem 'coveralls', require: false
 end
+
+gem 'mini_racer', platforms: :ruby

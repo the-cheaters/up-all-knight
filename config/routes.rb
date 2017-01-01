@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  get 'hello_world', to: 'hello_world#index'
   devise_for :players, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   root 'static_pages#index'

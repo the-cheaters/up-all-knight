@@ -91,11 +91,14 @@ GEM
       railties (>= 3.2.16)
     json (1.8.3)
     jwt (1.5.6)
+    libv8 (5.3.332.38.3)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mini_racer (0.1.7)
+      libv8 (~> 5.3)
     minitest (5.10.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
@@ -245,6 +248,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
+  mini_racer
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
