@@ -63,12 +63,20 @@ class Game < ActiveRecord::Base
   end
 
   def check?(player)
+    check = false
     king = pieces.where(type: 'King', player: player).last
-    opponents_pieces = pieces.where("player_id = #{opponent_player(player)} and x_position != null and y_position != null")
-    opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+    opponents_pieces = pieces.where(player_id: opponent_player(player), captured: false)
+
+    if king != nil
+      if opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+        check = true
+      end
+    end
+    check
   end
 
   def checkmate?(player)
+
     if check?(player)
       checkmate = true
       king = pieces.where(type: 'King', player: player).last
@@ -77,9 +85,14 @@ class Game < ActiveRecord::Base
           if king.valid_move?(x, y)
             original_x = king.x_position
             original_y = king.y_position
+            captured_piece = pieces.where(x_position: x,y_position: y, game_id: id).last
             king.move_to(x, y)
             checkmate = false if !check?(player)
             king.move_to(original_x, original_y)
+            if captured_piece != nil
+              piece = Piece.find(captured_piece.id)
+              piece.update_attributes(x_position: x, y_position: y, captured: false)
+            end
           end
         end
       end
@@ -100,9 +113,14 @@ class Game < ActiveRecord::Base
             if piece.valid_move?(x, y)
               original_x = piece.x_position
               original_y = piece.y_position
+              captured_piece = pieces.where(x_position: x,y_position: y, game_id: id).last
               piece.move_to(x, y)
               stalemate = false if !check?(player)
               piece.move_to(original_x, original_y)
+              if captured_piece != nil
+                piece = Piece.find(captured_piece.id)
+                piece.update_attributes(x_position: x, y_position: y, captured: false)
+              end
             end
           end
         end
