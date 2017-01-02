@@ -67,8 +67,6 @@ RSpec.describe Game, type: :model do
       king = FactoryGirl.create(:king, x_position: 0, y_position: 0, player: black_player, game: game)
       queen = FactoryGirl.create(:queen, x_position: 0, y_position: 1, player: white_player, game: game)
       queen_2 = FactoryGirl.create(:queen, x_position: 1, y_position: 1, player: white_player, game: game)
-      queen.reload
-      queen_2.reload
       expect(game.reload.checkmate?(black_player)).to eq(true)
     end
 

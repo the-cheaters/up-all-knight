@@ -43,6 +43,9 @@ class GamesController < ApplicationController
     else
       @game.black_player_id = 0
     end
+    if !@game.is_blitz
+      @game.has_started = true
+    end
     @game.save
     @game.set_default_turn!
 
