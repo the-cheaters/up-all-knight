@@ -21,7 +21,9 @@ class Piece < ActiveRecord::Base
   
   def move_to(destination_x, destination_y)
     valid = self.valid_move?(destination_x, destination_y)
-    
+    if game.check?(player_id) && self.type != "King"
+      valid = false
+    end
     if valid
       if self.moves < 2
         moves_updated = self.moves + 1

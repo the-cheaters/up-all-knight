@@ -64,11 +64,10 @@ RSpec.describe Game, type: :model do
     let(:game) { FactoryGirl.create(:game, white_player_id: white_player.id, black_player_id: black_player.id) }
 
     it "should be in checkmate if king is currently in check and cannot move out of check" do
-      game.check?(black_player) == true
       king = FactoryGirl.create(:king, x_position: 0, y_position: 0, player: black_player, game: game)
       queen = FactoryGirl.create(:queen, x_position: 0, y_position: 1, player: white_player, game: game)
       queen_2 = FactoryGirl.create(:queen, x_position: 1, y_position: 1, player: white_player, game: game)
-      expect(game.checkmate?(black_player)).to eq(true)
+      expect(game.reload.checkmate?(black_player)).to eq(true)
     end
 
     it "should have checkmate value equal to false if king is not in check" do
@@ -92,7 +91,7 @@ RSpec.describe Game, type: :model do
 
       it "should say that black is in stalemate" do
         black_king = FactoryGirl.create(:king, game_id: g.id, x_position: 0, y_position: 0, moves: 2, player_id: black_player.id)
-        white_rook = FactoryGirl.create(:rook, game_id: g.id, x_position: 1, y_position: 1, player_id: white_player.id)
+        white_rook = FactoryGirl.create(:rook, game_id: g.id, x_position: 1, y_position: 1, moves: 2, player_id: white_player.id)
         white_king = FactoryGirl.create(:king, game_id: g.id, x_position: 2, y_position: 2, moves: 2, player_id: white_player.id)
         expect(g.stalemate?(black_player)).to eq(true)
       end
