@@ -97,6 +97,7 @@ $(document).ready(function() {
     }
     $('.current-turn h3').text(data.current_turn + " players turn")
     disablePieces(currentPlayer, data.current_turn)
+    
   });
   
   window.broadcast_channel.bind('pusher:subscription_succeeded', function() {
@@ -108,7 +109,18 @@ $(document).ready(function() {
     disablePieces(currentPlayer, currentPlayersTurn)
   });
 
-   window.broadcast_channel.bind('game_has_started', function(data) {
+  window.broadcast_channel.bind('game_has_started', function(data) {
     gameStarted = data.game_has_started
+  });
+
+  window.private_channel.bind('move_piece_onscreen', function(data) {
+    console.log(data.event)
+    $(data.event).html("")
+    origin = "#C" + data.piece.original_x + "R" + data.piece.original_y
+    destination = "#C" + data.piece.destination_x + "R" + data.piece.destination_y
+    originalPositionPiece = $(origin).html()
+    $(origin).html("")
+    $(destination).html("")
+    $(destination).html(originalPositionPiece)
   });
 });

@@ -6,14 +6,15 @@ $(document).ready(function() {
   });
   
   function movePiece(event, ui) {
-    
+    $(event.target.id).html("")
     $.ajax({
       type: 'PUT',
       url: ui.draggable.data("update-url"),
       dataType: 'json',
-      data: { piece: { x_position: $(this).data('column'), y_position: $(this).data('row') }},
+      data: { piece: { x_position: $(this).data('column'), y_position: $(this).data('row') }, event: event.target.id},
       error: function() {
-        alert("Invalid Move!")
+        console.log("error: reload window")
+        window.location.reload()
       }
     });
   };

@@ -1,19 +1,24 @@
 class PiecesController < ApplicationController
   before_action :set_game, :set_opponent_id
   def update
-    if selected_piece.move_to(params[:piece][:x_position].to_i,params[:piece][:y_position].to_i)
-        if selected_piece.can_pawn_promote?(params[:piece][:y_position].to_i)
-           Pusher["private-user_#{current_player.id}"].trigger!('pawn-promotion', {
-          pawnPromotionUpdateURL: game_piece_promote_pawn_path(@game, selected_piece.id), message: "You made it to the other side! Click one of the buttons to pick your new piece."
-        })
-        end
-        if !selected_piece.game.has_started
-          selected_piece.game.has_started = true
-          selected_piece.game.save
-          Pusher["broadcast_#{@game.id}"].trigger!('start_game', {
-            has_started: true })
-        end
-
+    @original_x = selected_piece.x_position
+    @original_y = selected_piece.y_position
+    @destination_x = params[:piece][:x_position].to_i
+    @destination_y = params[:piece][:y_position].to_i
+    if selected_piece.move_to(@destination_x,@destination_y)
+      if selected_piece.can_pawn_promote?(@destination_y)
+         Pusher["private-user_#{current_player.id}"].trigger!('pawn-promotion', {
+        pawnPromotionUpdateURL: game_piece_promote_pawn_path(@game, selected_piece.id), message: "You made it to the other side! Click one of the buttons to pick your new piece."
+      })
+      end
+      if !selected_piece.game.has_started
+        selected_piece.game.has_started = true
+        selected_piece.game.save
+        Pusher["broadcast_#{@game.id}"].trigger!('start_game', {
+          has_started: true })
+      end
+        Pusher["private-user_#{@opponent_id}"].trigger!('move_piece_onscreen', {
+          piece: {original_x: @original_x, original_y: @original_y, destination_x: @destination_x, destination_y: @destination_y}, event: params[:event]})
       if selected_piece.game.is_blitz
         @white_timer = selected_piece.game.timers.where(player_id: selected_piece.game.white_player_id).last
         @black_timer = selected_piece.game.timers.where(player_id: selected_piece.game.black_player_id).last
@@ -33,24 +38,27 @@ class PiecesController < ApplicationController
     else
       render json: {response: {error: 'Invalid Move'}}, status: :unprocessable_entity
     end
-    if @game.check?(Player.where(id: @opponent_id).take)
-      Pusher["private-user_#{@opponent_id}"].trigger!('message', {
-        :message => "You are in check."
-      })
-    elsif @game.check?(Player.where(id: current_player.id).take)
-      Pusher["private-user_#{current_player.id}"].trigger!('message', {
-        :message => "You are in check."
-      })
-    end
 
-    if @game.checkmate?(Player.where(id: @opponent_id).take)
-      Pusher["private-user_#{@opponent_id}"].trigger!('message', {
-        :message => "You are in checkmate!"
-      })
-    elsif @game.checkmate?(Player.where(id: current_player.id).take)
-      Pusher["private-user_#{current_player.id}"].trigger!('message', {
-        :message => "You are in checkmate!"
-      })
+    if @opponent_id != (nil || 0)
+      if @game.check?(Player.where(id: @opponent_id).take)
+        Pusher["private-user_#{@opponent_id}"].trigger!('message', {
+          :message => "You are in check."
+        })
+      elsif @game.check?(Player.where(id: current_player.id).take)
+        Pusher["private-user_#{current_player.id}"].trigger!('message', {
+          :message => "You are in check."
+        })
+      end
+
+      if @game.checkmate?(Player.where(id: @opponent_id).take)
+        Pusher["private-user_#{@opponent_id}"].trigger!('message', {
+          :message => "You are in checkmate!"
+        })
+      elsif @game.checkmate?(Player.where(id: current_player.id).take)
+        Pusher["private-user_#{current_player.id}"].trigger!('message', {
+          :message => "You are in checkmate!"
+        })
+      end
     end
   end
 

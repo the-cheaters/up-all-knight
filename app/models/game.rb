@@ -63,7 +63,6 @@ class Game < ActiveRecord::Base
   end
 
   def check?(player)
-    check = false
     king = pieces.where(type: 'King', player: player).last
     opponents_pieces = pieces.where(player: opponent_player(player), captured: false)
     if king !=nil
