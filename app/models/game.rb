@@ -88,8 +88,7 @@ class Game < ActiveRecord::Base
             checkmate = false if !check?(player)
             king.move_to(original_x, original_y)
             if captured_piece != nil
-              piece = Piece.find(captured_piece.id)
-              piece.update_attributes(x_position: x, y_position: y, captured: false)
+              captured_piece.reload.update_attributes(x_position: x, y_position: y, captured: false)
             end
           end
         end
@@ -97,15 +96,13 @@ class Game < ActiveRecord::Base
       return checkmate
     end
     return false
-
   end
-
 
   def stalemate?(player)
     stalemate = false
     if !check?(player)
       stalemate = true
-      self.pieces.where(player_id: player.id, captured: false).each do |piece|
+      pieces.where(player_id: player.id, captured: false).each do |piece|
         (0..7).each do |x|
           (0..7).each do |y|
             if piece.valid_move?(x, y)
@@ -116,8 +113,7 @@ class Game < ActiveRecord::Base
               stalemate = false if !check?(player)
               piece.move_to(original_x, original_y)
               if captured_piece != nil
-                piece = Piece.find(captured_piece.id)
-                piece.update_attributes(x_position: x, y_position: y, captured: false)
+                captured_piece.reload.update_attributes(x_position: x, y_position: y, captured: false)
               end
             end
           end
