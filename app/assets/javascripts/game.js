@@ -6,7 +6,7 @@ $(document).ready(function() {
   });
   
   function movePiece(event, ui) {
-    $(event.target.id).html("")
+
     $.ajax({
       type: 'PUT',
       url: ui.draggable.data("update-url"),
