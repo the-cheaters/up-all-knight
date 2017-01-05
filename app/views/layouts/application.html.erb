@@ -38,9 +38,15 @@
         <ul class="nav navbar-nav navbar-right">
           <% if player_signed_in? %>
           <li>
+          <%= link_to new_game_path do %>
+              <i class="glyphicon glyphicon-plus"></i>
+              New game
+            <% end %>
+          </li>
+          <li>
             <%= link_to games_path do %>
-            <i class="glyphicon glyphicon-user"></i>
-            <%= current_player.email %>
+              <i class="glyphicon glyphicon-user"></i>
+              My games
             <% end %>
           </li>
           <li><%= link_to 'Sign out', destroy_player_session_path, method: :delete, class: "navbar--link" %></li>
@@ -65,7 +71,7 @@
   <footer class="footer">
     <div class="container">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="footer--link">About this app</a></li>
+        <li><%= link_to 'About this app', about_path, class: "navbar--link" %></li>
         <li><%= link_to 'Top 10 Players', ranking_path, class: "footer--link" %></li>
         <li><a href="https://github.com/the-cheaters/up-all-knight" class="footer--link">Check out Github</a></li>
       </ul>

@@ -1,18 +1,29 @@
-<p id="notice"><%= notice %></p>
+<div class="games--background">
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+  <% if @game.white_draw && @game.black_draw %>
+      <p class="alert alert-danger text-center">This game ended in a draw.</p>
+    <% elsif @game.white_forfeit || @game.black_forfeit %>
+      <p class="alert alert-danger text-center">This game ended in a forfeit.</p>
+  <% end %>
 
-<% if @game.white_draw && @game.black_draw %>
-<p class="alert alert-danger text-center">This game ended in a draw.</p>
-<% elsif @game.white_forfeit || @game.black_forfeit %>
-<p class="alert alert-danger text-center">This game ended in a forfeit.</p>
-<% end %>
+  <div class="board--columns">
 
-<p class="text-center">You are the <%= @color %> player.</p>
+    <p id="notice"><%= notice %></p>
 
-<!-- Message from Pusher -->
-<p id="message" class="alert alert-warning text-center"></p>
+    <% if @game.white_draw && @game.black_draw %>
+    <p class="alert alert-danger text-center">This game ended in a draw.</p>
+    <% elsif @game.white_forfeit || @game.black_forfeit %>
+    <p class="alert alert-danger text-center">This game ended in a forfeit.</p>
+    <% end %>
+
+   <!-- Message from Pusher -->
+     <p id="message" class="alert alert-warning text-center"></p>
+
+    <div class="board--columns__left">
+
+        <h1 class="board--game__id">GAME #<%= @game.id %></h1>
+
+        <h2 class="board--header">White Player</h2>
 
 <!-- Button Selection For Pusher -->
 <!-- Default is the button to Request Draw -->
@@ -49,7 +60,20 @@
   <% end %>
 </h1>
 
-<div class="current-turn">
+        <h2 class="board--header">Black Player</h2>
+
+        <div class="board--captured-pieces">
+          <h2 class="board--header">Captured Pieces</h2>
+          <div style="font-size: 60px; margin-top: -10px;">
+          <% @game.pieces.where(captured: true).each do |piece| %>
+            <%= piece.unicode_symbol.html_safe %>
+          <% end %>
+          </div>
+        </div>
+
+        <br />
+      
+      <div class="current-turn">
   <h3></h3>
 </div>
 <% if @game.is_blitz %>
@@ -85,5 +109,14 @@
   </div>
 
 </div>
-  
+
+
+      </div>
+
+              <br class="clear" />
+
+    </div>
+      <br class="clear" />
+
+  </div>
 
