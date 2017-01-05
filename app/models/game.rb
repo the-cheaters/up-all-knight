@@ -63,10 +63,13 @@ class Game < ActiveRecord::Base
   end
 
   def check?(player)
+    check = false
     king = pieces.where(type: 'King', player: player).last
-    opponents_pieces = pieces.where(player: opponent_player(player))
-
-    opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+    opponents_pieces = pieces.where(player: opponent_player(player), captured: false)
+    if king !=nil
+      return opponents_pieces.any? { |piece| piece.valid_move?(king.x_position, king.y_position) }
+    end
+      return false
   end
 
   def checkmate?(player)
@@ -78,32 +81,38 @@ class Game < ActiveRecord::Base
           if king.valid_move?(x, y)
             original_x = king.x_position
             original_y = king.y_position
+            captured_piece = pieces.where(x_position: x,y_position: y, game_id: id).last
             king.move_to(x, y)
             checkmate = false if !check?(player)
             king.move_to(original_x, original_y)
+            if captured_piece != nil
+              captured_piece.reload.update_attributes(x_position: x, y_position: y, captured: false)
+            end
           end
         end
       end
       return checkmate
     end
     return false
-
   end
-
 
   def stalemate?(player)
     stalemate = false
     if !check?(player)
       stalemate = true
-      self.pieces.where(player_id: player.id, captured: false).each do |piece|
+      pieces.where(player_id: player.id, captured: false).each do |piece|
         (0..7).each do |x|
           (0..7).each do |y|
             if piece.valid_move?(x, y)
               original_x = piece.x_position
               original_y = piece.y_position
+              captured_piece = pieces.where(x_position: x,y_position: y, game_id: id).last
               piece.move_to(x, y)
               stalemate = false if !check?(player)
               piece.move_to(original_x, original_y)
+              if captured_piece != nil
+                captured_piece.reload.update_attributes(x_position: x, y_position: y, captured: false)
+              end
             end
           end
         end
@@ -135,7 +144,7 @@ class Game < ActiveRecord::Base
   private
 
   def opponent_player(player)
-    player == white_player ? black_player : white_player
+    player == white_player ? black_player.id : white_player.id
   end
 
 end

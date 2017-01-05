@@ -36,7 +36,7 @@
   &nbsp;
   <button class="forfeit" data-update-url="<%= game_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Forfeit</button>
   &nbsp;
-  <% if !@game.has_started %>
+  <% if !@game.has_started && @game.is_blitz %>
   <button id="player-ready" data-update-url="<%= game_player_ready_path(@game) %>" data-player-not-ready-url="<%= game_player_not_ready_path(@game) %>" data-color="<%= @color %>" data-game-id="<%= @game.id %>">Player Ready</button>
   <% end %>
   &nbsp;
